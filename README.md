@@ -3,12 +3,12 @@ DIRECT 2019
 
 Geopandas is the one! 
 <<<<<<< HEAD
+<<<<<<< HEAD
 We will compare Folium to two other GIS visualization packages.
 
 =======
 <<<<<<< HEAD
 
-One Folium to rule them all!
 =======
 Here is the other one! 
 And a second one.
@@ -21,3 +21,6 @@ And other one again!
 
 sdsadge
 >>>>>>> 2ace8faa4a14210263f94c6bb512548e34e744db
+=======
+Lets clean!
+>>>>>>> 4ed9f471ff23ae2bc93d044e45749df2f401c0de
