@@ -20,12 +20,12 @@ along the given route, there is also a z value.
 
 * Python 3.6
 * folium
-*geopandas
-*matplotlib
-*numpy
-*pandas
-*rasterio
-*rasterstats
+* geopandas
+* matplotlib
+* numpy
+* pandas
+* rasterio
+* rasterstats
 
 A virtual environment is included in the repository.
 
