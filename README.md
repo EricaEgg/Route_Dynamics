@@ -1,4 +1,7 @@
 # Route Dynamics
+![alt text][logo]
+
+[logo]: https://github.com/EricaEgg/Route_Dynamics/blob/master/logo.JPG
 
 This tool was created to visualize the elevation changes for King County Metro bus routes. More broadly, it can be 
 used to analyze any path along any terrain. The required inputs are a shapefile (.shp) for the route of interest and a 
