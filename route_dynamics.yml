@@ -14,15 +14,15 @@ dependencies:
   - botocore=1.12.82=py_0
   - branca=0.3.1=py_0
   - bzip2=1.0.6=hfa6e2cd_5
-  - ca-certificates=2018.11.29=ha4d7672_0
+  - ca-certificates=2019.3.9=hecc5488_0
   - cartopy=0.17.0=py37h814cdbc_1004
-  - certifi=2018.11.29=py37_1000
+  - certifi=2019.3.9=py37_0
   - cffi=1.12.2=py37hfa6e2cd_0
   - chardet=3.0.4=py37_1003
   - click=7.0=py37_0
   - click-plugins=1.0.4=py37_0
   - cligj=0.5.0=py37_0
-  - cryptography=2.5=py37h7a1dbc1_0
+  - cryptography=2.5=py37h74b6da3_1
   - curl=7.63.0=h2a8f88b_1000
   - cycler=0.10.0=py37_0
   - decorator=4.3.2=py_0
@@ -30,16 +30,19 @@ dependencies:
   - docutils=0.14=py37_0
   - entrypoints=0.3=py37_1000
   - expat=2.2.5=he025d50_0
-  - fiona=1.8.4=py37h22081e2_0
+  - fiona=1.8.4=py37hce0be61_1002
   - folium=0.8.0=py_0
   - freetype=2.9.1=ha9979f8_1
   - freexl=1.0.5=hfa6e2cd_0
-  - gdal=2.3.3=py37hdf43c64_0
+  - gdal=2.4.0=py37hdf5ee75_1002
   - geographiclib=1.49=py_0
   - geopandas=0.4.0=py37_1
   - geoplot=0.2.3=py_1
   - geopy=1.18.1=py_0
   - geos=3.7.1=h33f27b4_0
+  - geotiff=1.4.3=h8408f58_1000
+  - gettext=0.19.8.1=hb01d8f6_1001
+  - glib=2.58.3=hc0c2ac7_1001
   - hdf4=4.2.13=h712560f_2
   - hdf5=1.10.4=h7ebc959_0
   - icc_rt=2019.0.0=h0cc432a_1
@@ -53,7 +56,7 @@ dependencies:
   - jedi=0.13.3=py37_0
   - jinja2=2.10=py_1
   - jmespath=0.9.3=py37_0
-  - jpeg=9b=hb83a4c4_2
+  - jpeg=9c=hfa6e2cd_1001
   - jsonschema=3.0.1=py37_0
   - jupyter=1.0.0=py37_7
   - jupyter_client=5.2.4=py37_0
@@ -61,30 +64,35 @@ dependencies:
   - jupyter_core=4.4.0=py37_0
   - jupyterlab=0.35.4=py37_0
   - jupyterlab_server=0.2.0=py_0
-  - kealib=1.4.7=h07cbb95_6
+  - kealib=1.4.10=heacb130_1002
   - kiwisolver=1.0.1=py37h6538335_0
-  - krb5=1.16.1=hc04afaa_7
+  - krb5=1.16.2=h038dc86_1000
   - libboost=1.67.0=hd9e427e_4
   - libcurl=7.63.0=h2a8f88b_1000
-  - libgdal=2.3.3=h10f50ba_0
+  - libffi=3.2.1=h6538335_1005
+  - libgdal=2.4.0=haf7df99_1002
   - libiconv=1.15=h1df5818_7
   - libkml=1.3.0=he5f2a48_4
-  - libnetcdf=4.6.1=h411e497_2
+  - libnetcdf=4.6.2=h396784b_1001
   - libpng=1.6.36=h2a8f88b_0
-  - libpq=11.1=h3235a2c_0
+  - libpq=10.6=h4c6b53d_1000
   - libsodium=1.0.16=h9d3ae62_0
   - libspatialindex=1.8.5=h6538335_2
   - libspatialite=4.3.0a=hc36aec2_19
-  - libssh2=1.8.0=h7a1dbc1_4
+  - libssh2=1.8.0=hc4dcbb0_1003
   - libtiff=4.0.10=hb898794_2
   - libxml2=2.9.9=h464c3ec_0
   - libxslt=1.1.32=heafd4d3_1002
   - lxml=4.3.2=py37heafd4d3_0
+  - m2w64-expat=2.1.1=2
   - m2w64-gcc-libgfortran=5.3.0=6
   - m2w64-gcc-libs=5.3.0=7
   - m2w64-gcc-libs-core=5.3.0=7
+  - m2w64-gettext=0.19.7=2
   - m2w64-gmp=6.1.0=2
+  - m2w64-libiconv=1.14=6
   - m2w64-libwinpthread-git=5.0.0.4634.697f757=2
+  - m2w64-xz=5.2.2=2
   - markupsafe=1.1.1=py37hfa6e2cd_0
   - matplotlib=3.0.2=py37hc8f65d3_0
   - mistune=0.8.4=py37he774522_0
@@ -100,7 +108,8 @@ dependencies:
   - numpy=1.16.2=py37h19fb1c0_0
   - numpy-base=1.16.2=py37hc3f5095_0
   - olefile=0.46=py_0
-  - openssl=1.1.1b=hfa6e2cd_0
+  - openjpeg=2.3.0=h25a6d84_1003
+  - openssl=1.0.2r=hfa6e2cd_0
   - osmnx=0.9=py_0
   - owslib=0.17.1=py_0
   - pandas=0.24.1=py37ha925a31_0
@@ -112,10 +121,13 @@ dependencies:
   - pickleshare=0.7.5=py37_0
   - pillow=5.4.1=py37hdc69c19_0
   - pip=19.0.3=py37_0
+  - poppler=0.67.0=heddaa77_6
+  - poppler-data=0.4.9=1
+  - postgresql=10.6=hdce66b5_1000
   - proj4=5.2.0=ha925a31_1
   - prometheus_client=0.6.0=py37_0
   - prompt_toolkit=2.0.9=py37_0
-  - psycopg2=2.7.6.1=py37h7a1dbc1_0
+  - psycopg2=2.7.7=py37h74b6da3_0
   - pycparser=2.19=py_0
   - pyepsg=0.4.0=py_0
   - pygments=2.3.1=py37_0
@@ -128,14 +140,14 @@ dependencies:
   - pysal=1.14.4=py37_0
   - pyshp=2.1.0=py_0
   - pysocks=1.6.8=py37_1002
-  - python=3.7.2=h8c8aaf0_10
+  - python=3.7.1=h9460c21_1002
   - python-dateutil=2.8.0=py37_0
   - pytz=2018.9=py37_0
   - pywinpty=0.5.5=py37_1000
   - pyzmq=18.0.0=py37ha925a31_0
-  - qt=5.9.7=vc14h73c81de_0
+  - qt=5.9.6=vc14h1e9a669_2
   - qtconsole=4.4.3=py37_0
-  - rasterio=1.0.18=py37h6bd7d87_0
+  - rasterio=1.0.21=py37hbf02ebe_0
   - requests=2.21.0=py37_1000
   - rtree=0.8.3=py37_0
   - s3transfer=0.1.13=py37_0
@@ -167,6 +179,7 @@ dependencies:
   - win_inet_pton=1.1.0=py37_0
   - wincertstore=0.2=py37_0
   - winpty=0.4.3=4
+  - xarray=0.11.3=py37_0
   - xerces-c=3.2.2=ha925a31_0
   - xz=5.2.4=h2fa13f4_4
   - zeromq=4.3.1=h33f27b4_3
@@ -191,7 +204,9 @@ dependencies:
     - pluggy==0.9.0
     - py==1.8.0
     - pytest==4.3.0
+    - rasterstats==0.13.0
     - retrying==1.3.3
+    - simplejson==3.16.0
     - werkzeug==0.14.1
 prefix: C:\users\erica\miniconda3\envs\route_dynamics
 
