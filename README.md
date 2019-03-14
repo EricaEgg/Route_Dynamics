@@ -19,6 +19,12 @@ along the given route, there is also a z value.
 
 * **Qualitatively compare routes**: Select multiple routes to see how the elevation profiles compare. 
 
+### Work Flow
+
+![alt text][flowchart]
+
+[flowchart]: https://github.com/EricaEgg/Route_Dynamics/blob/master/FlowChart.PNG 
+
 ### Software Dependencies and Packages
 
 * Python 3.6
