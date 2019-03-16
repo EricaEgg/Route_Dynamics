@@ -4,6 +4,8 @@ import geopandas as gpd
 import branca.colormap as cm
 import folium
 import rasterstats
+import matplotlib.pyplot as plt
+# %matplotlib inline
 
 from folium.features import GeoJson
 from shapely.geometry import mapping
@@ -46,7 +48,7 @@ def distance_measure(route_shp):
     return distance, cum_distance
 
 
-def gradient(route_shp, route_num, rasterfile):
+def gradient(route_shp, rasterfile):
     elevation = rasterstats.point_query(route_shp, rasterfile)
     elevation_meters = np.asarray(elevation) * 0.3048
     route_distance, route_cum_distance = distance_measure(route_shp)
@@ -111,6 +113,18 @@ def profile_plot(elevation, elevation_gradient, route_cum_distance, route_num):
     fig.suptitle('Elevation and Gradient Plot for Route {}'.format(route_num), fontsize=20, y=0.95)
     
     return plt
+
+def route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num):
+    metrics_1 = 100 * sum(elevation_gradient)/ max(route_cum_distance) 
+    metrics_2 = sum(abs(np.diff(elevation[0])))/ max(route_cum_distance)
+    metrics_3 = 100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) > 0])/ max(route_cum_distance)
+    metrics_4 = -100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) < 0])/ max(route_cum_distance)
+      
+    print_metrics = 'Normalized Gradient: {0:.4f} \n Differentiated Gradient: {0:.4f} \n Positive Gradient: {0:.4f} \n Negative Gradient: {0:.4f}'.format(metrics_1, metrics_2, metrics_3, metrics_4)
+    
+    return metrics_1, metrics_2, metrics_3, metrics_4, print_metrics
+
+
 
 
 
