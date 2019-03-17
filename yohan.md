@@ -1,10 +1,34 @@
+# Packages we only need 
+
+Below packages we only need I think so let's remove other unnecessary packasges from the list. 
+
+```
+import numpy as np
+import pandas as pd
+%matplotlib inline
+import matplotlib.pyplot as plt
+import geopandas as gpd
+import folium
+from folium.features import GeoJson
+import rasterio as rio
+import rasterstats 
+from shapely.geometry import Polygon, mapping, LineString
+from geopy.distance import geodesic
+import branca.colormap as cm
+```
+
 
 # Bar chart function
-* function module - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/route.py
-* test module - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Test_bar
-* demonstration functions - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Demonstration%20.ipynb (I tried all the functions in addion to the bar chart function. Everything is ok). 
 
-# Results after nosetests in my machine 
+* Function module - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/route.py
+* Test module - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Test_bar
+* Demonstration functions - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Demonstration%20.ipynb (I tried all the functions in addition to the bar chart function. Everything is ok). 
+
+
+# Results after nosetests in my machine
+
+The test results ok in my laptop as shown below. 
+
 Yohan_Min@CBE-30226746 MINGW64 ~/DIRECT/Route_Dynamics/project (master)
 $ nosetests
 
