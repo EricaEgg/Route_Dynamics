@@ -38,16 +38,5 @@ along the given route, there is also a z value.
 
 A virtual environment is included in the repository.
 
-
-
-#### After nosetests
-Yohan_Min@CBE-30226746 MINGW64 ~/DIRECT/Route_Dynamics/project (master)
-$ nosetests
-
-----------------------------------------------------------------------
-Ran 0 tests in 0.049s
-
-OK
-
  
  
