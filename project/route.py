@@ -154,7 +154,7 @@ def ss(shapefile, route, rasterfile):
     
     return(s1, s2, s3, s4)
 
-# Barchart and table 
+# Bar chart and table 
 def stress_cal(shapefile, num_list, rasterfile):
     '''
     Function: This function shows 4 metrics of stress measure in table and bar chart.

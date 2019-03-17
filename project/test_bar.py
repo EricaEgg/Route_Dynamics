@@ -15,6 +15,8 @@ from route import *
 shapefile = 'six_routes.shp'
 route = 40
 rasterfile = 'seattle_dtm.tif'
+num_list = [48, 50, 75, 7, 45, 40]
+
 
 def test_ss():
     m1, m2, m3, m4 = ss(shapefile, route, rasterfile)
