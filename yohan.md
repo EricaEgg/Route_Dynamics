@@ -20,9 +20,11 @@ import branca.colormap as cm
 
 # Bar chart function
 
+I put all the function I have to the `route.py` and added doc string only to the bar chart function. So you guys can refer to it if you need for the **wrap up function**. I created `test_bar.py` for testing. In addtion I tried all the function in a jupyter notebook for the demonstration purpose. Everything is ok.  
+
 * Function module - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/route.py
 * Test module - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Test_bar
-* Demonstration functions - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Demonstration%20.ipynb (I tried all the functions in addition to the bar chart function. Everything is ok). 
+* Demonstration functions - https://github.com/EricaEgg/Route_Dynamics/blob/master/project/Demonstration%20.ipynb 
 
 
 # Results after nosetests in my machine
