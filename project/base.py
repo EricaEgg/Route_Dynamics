@@ -5,7 +5,6 @@ import branca.colormap as cm
 import folium
 import rasterstats
 import matplotlib.pyplot as plt
-# %matplotlib inline
 
 from folium.features import GeoJson
 from shapely.geometry import mapping
@@ -119,10 +118,11 @@ def route_metrics(elevation, elevation_gradient, route_cum_distance, distance, r
     metrics_2 = sum(abs(np.diff(elevation[0])))/ max(route_cum_distance)
     metrics_3 = 100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) > 0])/ max(route_cum_distance)
     metrics_4 = -100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) < 0])/ max(route_cum_distance)
-      
-    print_metrics = 'Normalized Gradient: {0:.4f} \n Differentiated Gradient: {0:.4f} \n Positive Gradient: {0:.4f} \n Negative Gradient: {0:.4f}'.format(metrics_1, metrics_2, metrics_3, metrics_4)
+    metrics_values = (metrics_1, metrics_2, metrics_3, metrics_4)
     
-    return metrics_1, metrics_2, metrics_3, metrics_4, print_metrics
+    display_metrics = ' Route Evaluation Metrics for Bus {} \n Normalized Gradient = {:.4f} \n Differentiated Gradient = {:.4f} \n Positive Gradient = {:.4f} \n Negative Gradient = {:.4f}'.format(route_num, metrics_1, metrics_2, metrics_3, metrics_4)
+    
+    return display_metrics, metrics_values
 
 
 

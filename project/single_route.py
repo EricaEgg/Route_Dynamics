@@ -17,9 +17,9 @@ def route_analysis_all(route_num, shapefile, rasterfile):
     
     route_plot = base.profile_plot(elevation, elevation_gradient, route_cum_distance, route_num)
     
-    _, _, _, _, route_diff_metrics = base.route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num)
+    display_metrics, _ = base.route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num)
     
-    return map_display, route_plot, route_diff_metrics
+    return map_display, route_plot, display_metrics
 
 
 def route_analysis_profile(route_num, shapefile, rasterfile):
@@ -80,9 +80,7 @@ def route_analysis_metrics(route_num, shapefile, rasterfile):
     
     elevation, elevation_gradient, route_cum_distance, distance = base.gradient(route_shp, rasterfile)
     
-    _, _, _, _, route_diff_metrics = base.route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num)
+    display_metrics, _ = base.route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num)
     
-    print(route_diff_metrics)
-    
-    return 
+    return display_metrics
 
