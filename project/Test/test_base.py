@@ -1,4 +1,5 @@
 import base
+import geopandas as gpd
 
 shapefile = '../data/six_routes.shp'
 rasterfile = '../data/sea_dtm_north.tif'
