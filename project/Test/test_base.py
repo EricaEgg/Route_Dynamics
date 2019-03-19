@@ -1,8 +1,8 @@
 import base
 import geopandas as gpd
 
-shapefile = '../data/six_routes.shp'
-rasterfile = '../data/sea_dtm_north.tif'
+shapefile = '../../data/six_routes.shp'
+rasterfile = '../../data/sea_dtm_north.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
