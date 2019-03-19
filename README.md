@@ -1,7 +1,7 @@
 # Route Dynamics
 ![alt text][logo]
 
-[logo]: https://github.com/EricaEgg/Route_Dynamics/blob/master/logo.JPG
+[logo]: https://github.com/EricaEgg/Route_Dynamics/blob/master/Documentation/logo.JPG
 
 This tool was created to visualize the elevation changes for King County Metro bus routes. More broadly, it can be 
 used to analyze any path along any terrain. The required inputs are a shapefile (.shp) for the route of interest and a 
@@ -23,7 +23,18 @@ along the given route, there is also a z value.
 
 ![alt text][flowchart]
 
-[flowchart]: https://github.com/EricaEgg/Route_Dynamics/blob/master/FlowChart.PNG 
+[flowchart]: https://github.com/EricaEgg/Route_Dynamics/blob/master/Documentation/FlowChart.PNG
+
+### Folders in the Repository
+
+* **Documentation**: Contains project information, such as Use 
+Cases, work flow, and DIRECT poster
+
+* **data**: King County Metro route shapefiles
+
+* **examples**: Example notebook
+
+* **project**: Development notebooks and scripts
 
 ### Software Dependencies and Packages
 
@@ -36,7 +47,10 @@ along the given route, there is also a z value.
 * rasterio
 * rasterstats
 
-A virtual environment is included in the repository.
+A virtual environment is included in the repository called route_dynamics.yml.
 
- 
+### Acknowledements
+
+We would like to thank Dr. David Beck, Chad Curtis, and all DIRECT 2019 TA's for their 
+instruction, guidance, and support. 
  
