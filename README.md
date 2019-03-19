@@ -49,6 +49,19 @@ Cases, work flow, and DIRECT poster
 
 A virtual environment is included in the repository called route_dynamics.yml.
 
+### Getting Started
+
+1. Use `git clone` to download the repository.
+2. Import the `route_dynamics.yml` virtual environment.
+3. Download an elevation raster dataset and place it into the repository on your local 
+machine. The raster file used for the example (seattle_dtm.tif) can be found here. 
+
+### Example Outputs
+
+![alt text][map]
+
+[map]:https://github.com/EricaEgg/Route_Dynamics/blob/master/project/map_results/map_45.html
+
 ### Acknowledements
 
 We would like to thank Dr. David Beck, Chad Curtis, and all DIRECT 2019 TA's for their 
