@@ -1,8 +1,15 @@
 import base
 import geopandas as gpd
 
-shapefile = '../../data/six_routes.shp'
-rasterfile = '../../data/sea_dtm_north.tif'
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# module_path = os.path.abspath(os.path.join('..'))
+# if module_path not in sys.path:
+#     sys.path.append(module_path)
+
+shapefile = '../data/six_routes.shp'
+rasterfile = '../data/sea_dtm_north.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
@@ -25,7 +32,7 @@ def test_extract_point_df():
 
 
 def test_distance_measure():
-    """Test """
+    """Test if the number of points in distance is correct"""
     distance, cum_distance = base.distance_measure(route_shp)
     assert len(distance) == 207 and len(distance) == len(cum_distance) - 1, 'For route 45, there should be 207 linestring being calculated the distance, and distance = cum_distance -1'
     return
