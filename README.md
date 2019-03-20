@@ -67,15 +67,13 @@ Route 45
 
 #### Interactive Map:
 Route 45
-![map]
 
-[map]:
 
 #### Route Ranking:
 
-![rank]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
+![rank]
 
-[rank]
+[rank]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
 
 ### Acknowledements
 
