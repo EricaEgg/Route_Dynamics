@@ -28,7 +28,7 @@ install:
 
 
 script:
-- py.test --pyargs route_dynamics --cov-report term-missing --cov=route_dynamics
+- pytest --pyargs route_dynamics --cov-report term-missing --cov=route_dynamics
 #- tox
 
 - coverage report
