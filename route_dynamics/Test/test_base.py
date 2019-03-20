@@ -3,16 +3,17 @@ import geopandas as gpd
 
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-# module_path = os.path.abspath(os.path.join('..'))
-# if module_path not in sys.path:
-#     sys.path.append(module_path)
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+module_path = os.path.abspath(os.path.join('..'))
+if module_path not in sys.path:
+    sys.path.append(module_path)
 
 shapefile = '../data/six_routes.shp'
 rasterfile = '../data/sea_dtm_north.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
+
 
 def test_read_shape(shapefile):
     """Test if shapefile is for route number 45"""  
