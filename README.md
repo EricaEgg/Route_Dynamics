@@ -59,9 +59,23 @@ machine. The raster file used for the example (seattle_dtm.tif) can be found
 
 ### Example Outputs
 
-![alt text][map]
+#### Elevation and Road Grade Profiles:
+Route 45
+![elevation]
 
-[map]:https://github.com/EricaEgg/Route_Dynamics/blob/master/project/map_results/map_45.html
+[elevation]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/route45_profile.png
+
+#### Interactive Map:
+Route 45
+![map]
+
+[map]:
+
+#### Route Ranking:
+
+![rank]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
+
+[rank]
 
 ### Acknowledements
 
