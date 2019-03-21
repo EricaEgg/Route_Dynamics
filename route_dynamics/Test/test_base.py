@@ -1,22 +1,30 @@
-import base
 import geopandas as gpd
-
-import os
+import numpy as np
+from shapely.geometry import LineString
+from os import path
 import sys
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-module_path = os.path.abspath(os.path.join('..'))
-if module_path not in sys.path:
-    sys.path.append(module_path)
+sys.path.append(path.abspath('../'))
 
-shapefile = '../data/six_routes.shp'
-rasterfile = '../data/sea_dtm_north.tif'
+import base
+
+
+shapefile = '../../data/six_routes.shp'
+rasterfile = '../../data/sea_dtm_north.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
 
 
+
 def test_read_shape(shapefile):
-    """Test if shapefile is for route number 45"""  
+    """
+        Test if shapefile is for route number 45
+        
+        Parameters
+        ----------
+        shapefile: The path of a shapefile(.shp)
+        
+    """
     assert shapefile.endswith('.shp'), 'Input should be shapefile.'
     assert base.read_shape(shapefile,45)['ROUTE_NUM'].values[0] == 45, 'ROUTE_NUM is wrong!'
     return
@@ -24,8 +32,6 @@ def test_read_shape(shapefile):
 
 def test_extract_point_df():
     """Test if the shape of dataframe is correct."""
-    shapefile = '../data/six_routes.shp'
-    route_num = 45
     df45 = base.read_shape(shapefile, route_num)
     shape = base.extract_point_df(df45).shape
     assert shape == (208,1), " Shape of df(route 45) coordinates should be (208,1)"
@@ -79,6 +85,7 @@ def test_route_map():
 
 def test_profile_plot():
     """Test if input data contain nan values."""
+    _, route_gradient, route_cum_distance, _ = base.gradient(route_shp, rasterfile)
     if np.isnan(route_cum_distance).any() or np.isnan(route_gradient).any() or np.isnan(route_cum_distance).any():
         raise ValueError('Check the source. Array should not contain nan value.')
     else:
@@ -88,6 +95,7 @@ def test_profile_plot():
 
 def test_route_metrics():
     """Test values of metrics are whether valid."""
+    elevation_meters, route_gradient, route_cum_distance, route_distance = base.gradient(route_shp, rasterfile)
     _, metrics = base.route_metrics(elevation_meters, route_gradient, route_cum_distance, route_distance,45)
     for idx in range(len(metrics)):
         assert metrics[idx] >= 0, 'Values of ranking should greater than 0.'
