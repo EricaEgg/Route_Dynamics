@@ -34,7 +34,7 @@ Cases, work flow, and DIRECT poster
 
 * **examples**: Example notebook
 
-* **project**: Development notebooks and scripts
+* **route_dynamics**: module scripts and tests
 
 ### Software Dependencies and Packages
 
@@ -46,6 +46,7 @@ Cases, work flow, and DIRECT poster
 * pandas
 * rasterio
 * rasterstats
+* branca
 
 A virtual environment is included in the repository called route_dynamics.yml.
 
@@ -80,6 +81,26 @@ Route 45
 #### Example notebook video
 Check out a short video that runs through the package functions in the example notebook and shows the corresponding results 
 [here](https://drive.google.com/open?id=1ZpiIEzNWV0T_pzcjw9jkn3GkSxMLdkwo).
+
+### Nosetest Results
+
+#### `test_base.py`
+----------------------------------------------------------------------
+Ran 9 tests in 8.113s
+
+OK
+
+#### `test_single_route.py`
+----------------------------------------------------------------------
+Ran 5 tests in 10.119s
+
+OK
+
+#### `test_multiple_route.py`
+----------------------------------------------------------------------
+Ran 1 test in 3.397s
+
+OK
 
 ### Acknowledements
 
