@@ -2,9 +2,22 @@ import base
 
 
 def route_analysis_all(route_num, shapefile, rasterfile):
-    """input the number of route, then output a GeoDataFrame with gradient and geometry
-    information of that route, and elevation_gradient for each line segment. 
-    Also will save the route as shapefile named 'route_num'."""
+    """
+       input the number of route, then output an interactive map of the route, elevation and road grade profiles, and metrics calculated for the route. 
+    Also will save the route as shapefile named 'route_shp'.
+    
+    Parameters
+    ----------
+    route_num: Desired route number (integer)
+    shapefile: route geospatial data (.shp file)
+    rasterfile: elevation data file (.tif)
+    
+    Returns
+    -------
+    map_display: interactive map for desired route
+    route_plot: elevation and grade profiles for desired route
+    display_metrics: results of metrics calculations
+    """
     route_shp = base.read_shape(shapefile, route_num)
     
     linestring_route_df = base.extract_point_df(route_shp)
@@ -23,9 +36,20 @@ def route_analysis_all(route_num, shapefile, rasterfile):
 
 
 def route_analysis_profile(route_num, shapefile, rasterfile):
-    """input the number of route, then output a GeoDataFrame with gradient and geometry
-    information of that route, and elevation_gradient for each line segment. 
-    Also will save the route as shapefile named 'route_num'."""
+    """
+       input the number of route, then output elevation and road grade profiles.
+    Also will save the route as shapefile named 'route_shp'.
+    
+    Parameters
+    ----------
+    route_num: desired route number (integer)
+    shapefile: route geospatial data (.shp file)
+    rasterfile: elevation data file (.tif)
+    
+    Returns
+    -------
+    route_plot: elevation and grade profiles for desired route
+    """
     route_shp = base.read_shape(shapefile, route_num)
     
     linestring_route_df = base.extract_point_df(route_shp)
@@ -40,9 +64,20 @@ def route_analysis_profile(route_num, shapefile, rasterfile):
 
 
 def route_analysis_map(route_num, shapefile, rasterfile):
-    """input the number of route, then output a GeoDataFrame with gradient and geometry
-    information of that route, and elevation_gradient for each line segment. 
-    Also will save the route as shapefile named 'route_num'."""
+    """
+       input the number of route, then output an interactive map showing the route and road grade. 
+    Also will save the route as shapefile named 'route_shp'.
+    
+    Parameters
+    ----------
+    route_num: desired route number (integer)
+    shapefile: route geospatial data (.shp file)
+    rasterfile: elevation data file (.tif)
+    
+    Returns
+    -------
+    map_display: interactive map for desired route
+    """
     route_shp = base.read_shape(shapefile, route_num)
     
     linestring_route_df = base.extract_point_df(route_shp)
@@ -56,9 +91,22 @@ def route_analysis_map(route_num, shapefile, rasterfile):
     return map_display
 
 def route_analysis_df(route_num, shapefile, rasterfile):
-    """input the number of route, then output a GeoDataFrame with gradient and geometry
+    """
+       input the number of route, then output a GeoDataFrame with gradient and geometry
     information of that route, and elevation_gradient for each line segment. 
-    Also will save the route as shapefile named 'route_num'."""
+    Also will save the route as shapefile named 'route_shp'.
+    
+    Parameters
+    ----------
+    route_num: desired route number (integer)
+    shapefile: route geospatial data (.shp file)
+    rasterfile: elevation data file (.tif)
+    
+    Returns
+    -------
+    gdf_route: geodataframe with columns ['gradient', 'geometry']
+    
+    """
     route_shp = base.read_shape(shapefile, route_num)
     
     linestring_route_df = base.extract_point_df(route_shp)
@@ -71,9 +119,20 @@ def route_analysis_df(route_num, shapefile, rasterfile):
 
 
 def route_analysis_metrics(route_num, shapefile, rasterfile):
-    """input the number of route, then output a GeoDataFrame with gradient and geometry
-    information of that route, and elevation_gradient for each line segment. 
-    Also will save the route as shapefile named 'route_num'."""
+    """
+       input the number of route, then output the metrics calculated for that route. 
+    Also will save the route as shapefile named 'route_shp'.
+    
+    Parameters
+    ----------
+    route_num: Desired route number (integer)
+    shapefile: route geospatial data (.shp file)
+    rasterfile: elevation data file (.tif)
+    
+    Returns
+    -------
+    display_metrics: results of metrics calculations
+    """
     route_shp = base.read_shape(shapefile, route_num)
     
     linestring_route_df = base.extract_point_df(route_shp)
