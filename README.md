@@ -79,7 +79,7 @@ Route 45
 
 #### Example notebook video
 Check out a short video that runs through the package functions in the example notebook and shows the corresponding results 
-[here](https://drive.google.com/drive/u/0/folders/1e6xOSFARvM0HwGD4KQGpcMIEcyJz_xWV).
+[here](https://drive.google.com/open?id=1ZpiIEzNWV0T_pzcjw9jkn3GkSxMLdkwo).
 
 ### Acknowledements
 
