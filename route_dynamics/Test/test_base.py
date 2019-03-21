@@ -9,7 +9,7 @@ import base
 
 
 shapefile = '../../data/six_routes.shp'
-rasterfile = '../../data/sea_dtm_north.tif'
+rasterfile = '../../data/seattle_dtm.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]

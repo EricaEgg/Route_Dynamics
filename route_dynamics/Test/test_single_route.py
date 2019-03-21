@@ -8,7 +8,7 @@ import base
 import single_route
 
 shapefile = '../../data/six_routes.shp'
-rasterfile = '../../data/sea_dtm_north.tif'
+rasterfile = '../../data/seattle_dtm.tif'
 
 
 def test_route_analysis_all():
@@ -35,7 +35,8 @@ def test_route_analysis_profile():
     example = single_route.route_analysis_profile(route_num, shapefile, 
 rasterfile)
     
-    # assert type(example) == object, 'Wrong display structure'
+    assert rasterfile.endswith('.tif'), 'Rasterfile should be .tif.'
+    assert shapefile.endswith('.shp'), 'Shapefile should be .shp.' 
     
     return
 
@@ -77,7 +78,8 @@ def test_route_analysis_metrics():
     example = single_route.route_analysis_df(route_num, shapefile, 
 rasterfile)
     
-    # assert type(example[0]) == str, 'Wrong route metrics structure'
+    assert rasterfile.endswith('.tif'), 'Rasterfile should be .tif.'
+    assert shapefile.endswith('.shp'), 'Shapefile should be .shp.'
     
     return
     

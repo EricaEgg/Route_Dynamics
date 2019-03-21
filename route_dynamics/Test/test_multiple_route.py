@@ -8,7 +8,7 @@ import base
 import multiple_route
 
 shapefile = '../../data/six_routes.shp'
-rasterfile = '../../data/sea_dtm_north.tif'
+rasterfile = '../../data/seattle_dtm.tif'
 
 
 def test_routes_analysis_ranking():
@@ -19,6 +19,8 @@ def test_routes_analysis_ranking():
     
     temp = multiple_route.routes_analysis_ranking(route_list, shapefile, rasterfile)
     
-    assert type(temp) == matplotlib.axes._subplots.AxesSubplot, 'Wrong figure display format'
+    assert rasterfile.endswith('.tif'), 'Rasterfile should be .tif.'
+    assert shapefile.endswith('.shp'), 'Shapefile should be .shp.'
+
 
     return
