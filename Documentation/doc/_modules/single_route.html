@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>single_route &#8212; Route_Dynamics  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for single_route</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">base</span>
+
+
+<div class="viewcode-block" id="route_analysis_all"><a class="viewcode-back" href="../index.html#single_route.route_analysis_all">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_all</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
+<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
+    
+    <span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">route_shp</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">)</span>
+
+    <span class="n">gdf_route</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">make_multi_lines</span><span class="p">(</span> <span class="n">linestring_route_df</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">)</span> 
+    
+    <span class="n">map_display</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">route_map</span><span class="p">(</span><span class="n">gdf_route</span><span class="p">)</span>
+    
+    <span class="n">route_plot</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">profile_plot</span><span class="p">(</span><span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="n">display_metrics</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">route_metrics</span><span class="p">(</span><span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">map_display</span><span class="p">,</span> <span class="n">route_plot</span><span class="p">,</span> <span class="n">display_metrics</span></div>
+
+
+<div class="viewcode-block" id="route_analysis_profile"><a class="viewcode-back" href="../index.html#single_route.route_analysis_profile">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_profile</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
+<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
+    
+    <span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">route_shp</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">)</span>
+
+    <span class="n">gdf_route</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">make_multi_lines</span><span class="p">(</span> <span class="n">linestring_route_df</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">)</span> 
+    
+    <span class="n">route_plot</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">profile_plot</span><span class="p">(</span><span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">route_plot</span></div>
+
+
+<div class="viewcode-block" id="route_analysis_map"><a class="viewcode-back" href="../index.html#single_route.route_analysis_map">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_map</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
+<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
+    
+    <span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">route_shp</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">)</span>
+
+    <span class="n">gdf_route</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">make_multi_lines</span><span class="p">(</span> <span class="n">linestring_route_df</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">)</span> 
+    
+    <span class="n">map_display</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">route_map</span><span class="p">(</span><span class="n">gdf_route</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">map_display</span></div>
+
+<div class="viewcode-block" id="route_analysis_df"><a class="viewcode-back" href="../index.html#single_route.route_analysis_df">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_df</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
+<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
+    
+    <span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">route_shp</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">)</span>
+
+    <span class="n">gdf_route</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">make_multi_lines</span><span class="p">(</span> <span class="n">linestring_route_df</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">)</span> 
+    
+    <span class="k">return</span> <span class="n">gdf_route</span></div>
+
+
+<div class="viewcode-block" id="route_analysis_metrics"><a class="viewcode-back" href="../index.html#single_route.route_analysis_metrics">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_metrics</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
+<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
+    
+    <span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">route_shp</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">)</span>
+    
+    <span class="n">display_metrics</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">route_metrics</span><span class="p">(</span><span class="n">elevation</span><span class="p">,</span> <span class="n">elevation_gradient</span><span class="p">,</span> <span class="n">route_cum_distance</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">display_metrics</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Route_Dynamics</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Route_Dynamics Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
