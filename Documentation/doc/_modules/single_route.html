@@ -37,9 +37,22 @@
 
 
 <div class="viewcode-block" id="route_analysis_all"><a class="viewcode-back" href="../index.html#single_route.route_analysis_all">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_all</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
-<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
-<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       input the number of route, then output an interactive map of the route, elevation and road grade profiles, and metrics calculated for the route. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_shp&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    route_num: Desired route number (integer)</span>
+<span class="sd">    shapefile: route geospatial data (.shp file)</span>
+<span class="sd">    rasterfile: elevation data file (.tif)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    map_display: interactive map for desired route</span>
+<span class="sd">    route_plot: elevation and grade profiles for desired route</span>
+<span class="sd">    display_metrics: results of metrics calculations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
     
     <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
@@ -58,9 +71,20 @@
 
 
 <div class="viewcode-block" id="route_analysis_profile"><a class="viewcode-back" href="../index.html#single_route.route_analysis_profile">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_profile</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
-<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
-<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       input the number of route, then output elevation and road grade profiles.</span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_shp&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    route_num: desired route number (integer)</span>
+<span class="sd">    shapefile: route geospatial data (.shp file)</span>
+<span class="sd">    rasterfile: elevation data file (.tif)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    route_plot: elevation and grade profiles for desired route</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
     
     <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
@@ -75,9 +99,20 @@
 
 
 <div class="viewcode-block" id="route_analysis_map"><a class="viewcode-back" href="../index.html#single_route.route_analysis_map">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_map</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
-<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
-<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       input the number of route, then output an interactive map showing the route and road grade. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_shp&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    route_num: desired route number (integer)</span>
+<span class="sd">    shapefile: route geospatial data (.shp file)</span>
+<span class="sd">    rasterfile: elevation data file (.tif)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    map_display: interactive map for desired route</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
     
     <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
@@ -91,9 +126,22 @@
     <span class="k">return</span> <span class="n">map_display</span></div>
 
 <div class="viewcode-block" id="route_analysis_df"><a class="viewcode-back" href="../index.html#single_route.route_analysis_df">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_df</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       input the number of route, then output a GeoDataFrame with gradient and geometry</span>
 <span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
-<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_shp&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    route_num: desired route number (integer)</span>
+<span class="sd">    shapefile: route geospatial data (.shp file)</span>
+<span class="sd">    rasterfile: elevation data file (.tif)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gdf_route: geodataframe with columns [&#39;gradient&#39;, &#39;geometry&#39;]</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
     
     <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>
@@ -106,9 +154,20 @@
 
 
 <div class="viewcode-block" id="route_analysis_metrics"><a class="viewcode-back" href="../index.html#single_route.route_analysis_metrics">[docs]</a><span class="k">def</span> <span class="nf">route_analysis_metrics</span><span class="p">(</span><span class="n">route_num</span><span class="p">,</span> <span class="n">shapefile</span><span class="p">,</span> <span class="n">rasterfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;input the number of route, then output a GeoDataFrame with gradient and geometry</span>
-<span class="sd">    information of that route, and elevation_gradient for each line segment. </span>
-<span class="sd">    Also will save the route as shapefile named &#39;route_num&#39;.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       input the number of route, then output the metrics calculated for that route. </span>
+<span class="sd">    Also will save the route as shapefile named &#39;route_shp&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    route_num: Desired route number (integer)</span>
+<span class="sd">    shapefile: route geospatial data (.shp file)</span>
+<span class="sd">    rasterfile: elevation data file (.tif)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    display_metrics: results of metrics calculations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">route_shp</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">read_shape</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span> <span class="n">route_num</span><span class="p">)</span>
     
     <span class="n">linestring_route_df</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">extract_point_df</span><span class="p">(</span><span class="n">route_shp</span><span class="p">)</span>

@@ -140,44 +140,78 @@ metric_values: results of metrics calculations</p>
 <span class="target" id="module-single_route"></span><dl class="function">
 <dt id="single_route.route_analysis_all">
 <code class="descclassname">single_route.</code><code class="descname">route_analysis_all</code><span class="sig-paren">(</span><em>route_num</em>, <em>shapefile</em>, <em>rasterfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/single_route.html#route_analysis_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#single_route.route_analysis_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>input the number of route, then output a GeoDataFrame with gradient and geometry
-information of that route, and elevation_gradient for each line segment. 
-Also will save the route as shapefile named ‘route_num’.</p>
+<dd><blockquote>
+<div>input the number of route, then output an interactive map of the route, elevation and road grade profiles, and metrics calculated for the route.</div></blockquote>
+<p>Also will save the route as shapefile named ‘route_shp’.</p>
+<p>route_num: Desired route number (integer)
+shapefile: route geospatial data (.shp file)
+rasterfile: elevation data file (.tif)</p>
+<p>map_display: interactive map for desired route
+route_plot: elevation and grade profiles for desired route
+display_metrics: results of metrics calculations</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="single_route.route_analysis_df">
 <code class="descclassname">single_route.</code><code class="descname">route_analysis_df</code><span class="sig-paren">(</span><em>route_num</em>, <em>shapefile</em>, <em>rasterfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/single_route.html#route_analysis_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#single_route.route_analysis_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>input the number of route, then output a GeoDataFrame with gradient and geometry
-information of that route, and elevation_gradient for each line segment. 
-Also will save the route as shapefile named ‘route_num’.</p>
+<dd><blockquote>
+<div>input the number of route, then output a GeoDataFrame with gradient and geometry</div></blockquote>
+<p>information of that route, and elevation_gradient for each line segment. 
+Also will save the route as shapefile named ‘route_shp’.</p>
+<p>route_num: desired route number (integer)
+shapefile: route geospatial data (.shp file)
+rasterfile: elevation data file (.tif)</p>
+<p>gdf_route: geodataframe with columns [‘gradient’, ‘geometry’]</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="single_route.route_analysis_map">
 <code class="descclassname">single_route.</code><code class="descname">route_analysis_map</code><span class="sig-paren">(</span><em>route_num</em>, <em>shapefile</em>, <em>rasterfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/single_route.html#route_analysis_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#single_route.route_analysis_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>input the number of route, then output a GeoDataFrame with gradient and geometry
-information of that route, and elevation_gradient for each line segment. 
-Also will save the route as shapefile named ‘route_num’.</p>
+<dd><blockquote>
+<div>input the number of route, then output an interactive map showing the route and road grade.</div></blockquote>
+<p>Also will save the route as shapefile named ‘route_shp’.</p>
+<p>route_num: desired route number (integer)
+shapefile: route geospatial data (.shp file)
+rasterfile: elevation data file (.tif)</p>
+<p>map_display: interactive map for desired route</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="single_route.route_analysis_metrics">
 <code class="descclassname">single_route.</code><code class="descname">route_analysis_metrics</code><span class="sig-paren">(</span><em>route_num</em>, <em>shapefile</em>, <em>rasterfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/single_route.html#route_analysis_metrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#single_route.route_analysis_metrics" title="Permalink to this definition">¶</a></dt>
-<dd><p>input the number of route, then output a GeoDataFrame with gradient and geometry
-information of that route, and elevation_gradient for each line segment. 
-Also will save the route as shapefile named ‘route_num’.</p>
+<dd><blockquote>
+<div>input the number of route, then output the metrics calculated for that route.</div></blockquote>
+<p>Also will save the route as shapefile named ‘route_shp’.</p>
+<p>route_num: Desired route number (integer)
+shapefile: route geospatial data (.shp file)
+rasterfile: elevation data file (.tif)</p>
+<p>display_metrics: results of metrics calculations</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="single_route.route_analysis_profile">
 <code class="descclassname">single_route.</code><code class="descname">route_analysis_profile</code><span class="sig-paren">(</span><em>route_num</em>, <em>shapefile</em>, <em>rasterfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/single_route.html#route_analysis_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#single_route.route_analysis_profile" title="Permalink to this definition">¶</a></dt>
-<dd><p>input the number of route, then output a GeoDataFrame with gradient and geometry
-information of that route, and elevation_gradient for each line segment. 
-Also will save the route as shapefile named ‘route_num’.</p>
+<dd><blockquote>
+<div>input the number of route, then output elevation and road grade profiles.</div></blockquote>
+<p>Also will save the route as shapefile named ‘route_shp’.</p>
+<p>route_num: desired route number (integer)
+shapefile: route geospatial data (.shp file)
+rasterfile: elevation data file (.tif)</p>
+<p>route_plot: elevation and grade profiles for desired route</p>
 </dd></dl>
 
-<span class="target" id="module-multiple_route"></span></div>
+<span class="target" id="module-multiple_route"></span><dl class="function">
+<dt id="multiple_route.routes_analysis_ranking">
+<code class="descclassname">multiple_route.</code><code class="descname">routes_analysis_ranking</code><span class="sig-paren">(</span><em>route_list</em>, <em>shapefile</em>, <em>rasterfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiple_route.html#routes_analysis_ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#multiple_route.routes_analysis_ranking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the four chosen metrics values for each bus routes in route_list and display them on a bar plot for
+ease of comparison</p>
+<p>route_list: A list of bus routes to be compared (Integers)
+shapefile: route geospatial data (.shp file)
+rasterfile: elevation data file (.tif)</p>
+<p>bar plot: showing results comparison between bus routes according to the four metrics chosen</p>
+</dd></dl>
+
+</div>
 
 
           </div>
