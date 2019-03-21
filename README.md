@@ -77,6 +77,10 @@ Route 45
 
 [rank]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
 
+#### Example notebook video
+Check out a short video that runs through the package functions in the example notebook and shows the corresponding results 
+[here](https://drive.google.com/drive/u/0/folders/1e6xOSFARvM0HwGD4KQGpcMIEcyJz_xWV).
+
 ### Acknowledements
 
 We would like to thank Dr. David Beck, Chad Curtis, and all DIRECT 2019 TA's for their 
