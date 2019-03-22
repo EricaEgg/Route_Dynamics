@@ -1,6 +1,6 @@
 import pandas as pd
 
-import route_dynamics.base as base
+import base
 
 
 def routes_analysis_ranking(route_list, shapefile, rasterfile):

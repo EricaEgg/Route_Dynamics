@@ -2,10 +2,10 @@ import folium
 import matplotlib.pyplot as plt
 from os import path
 import sys
-#sys.path.append(path.abspath('..'))
+sys.path.append(path.abspath('..'))
 
-import route_dynamics.base as base
-import route_dynamics.single_route as single_route
+import base
+import single_route
 
 shapefile = '../../data/six_routes.shp'
 rasterfile = '../../data/seattle_dtm.tif'

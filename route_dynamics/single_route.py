@@ -1,4 +1,4 @@
-import route_dynamics.base as base
+import base
 
 
 def route_analysis_all(route_num, shapefile, rasterfile):
