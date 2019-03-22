@@ -3,9 +3,9 @@ import numpy as np
 from shapely.geometry import LineString
 from os import path
 import sys
-sys.path.append(path.abspath('..'))
+#sys.path.append(path.abspath('..'))
 
-import base
+import route_dynamics.base as base
 
 
 shapefile = '../../data/six_routes.shp'

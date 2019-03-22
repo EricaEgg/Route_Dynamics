@@ -4,8 +4,8 @@ from os import path
 import sys
 sys.path.append(path.abspath('..'))
 
-import base
-import multiple_route
+import route_dynamics.base as base
+import route_dynamics.multiple_route as multiple_route
 
 shapefile = '../../data/six_routes.shp'
 rasterfile = '../../data/seattle_dtm.tif'
