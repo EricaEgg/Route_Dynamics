@@ -26,8 +26,9 @@ def read_shape(shapefile, route_num):
         Returns
         -------
         route_shp: Load shape file into GeoDataFrame
-          with extra column ROUTE_NUM = (last argument)
-    """
+            with extra column ROUTE_NUM = (last argument)
+        """
+
     routes_shp = gpd.read_file(shapefile)
     route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
     return route_shp
@@ -35,24 +36,28 @@ def read_shape(shapefile, route_num):
 
 def extract_point_df(route_shp):
     """
-        Extracts coordinates for all points along the route.
+        Extracts coordinates from route GeoDataFrame for all points
+        along the route.
 
         Parameters
         ----------
         route_shp: GeoDataFrame for the selected route;
-            output of read_shape()
+            output of read_shape().
 
         Returns
         -------
-        linestring_route_df: dataframe containing the coordinates for every point along the route
-    """
-    # list of shapely geometries intrinsic to a GeoDataFrame,
-    # store values only
+        linestring_route_df: DataFrame containing the coordinates for
+            every point along the route.
+        """
+
+    # list shapely geometries intrinsic to a GeoDataFrame,
+    # and store values only in nd.array
     route_geometry = route_shp.geometry.values
 
-    # I think this makes a copy? not sure why it's needed
+    #HJG: I think this makes a copy? not sure why it's needed
     route_geometry = [mapping(route_geometry[0])]
 
+    # Return route coordinates in seperate pd.DataFrame.
     # Coordinates are first row with name 'coordinates'
     coordinates_route = route_geometry[0]['coordinates']
     linestring_route = []
@@ -65,26 +70,43 @@ def extract_point_df(route_shp):
 
 def distance_measure(route_shp):
     """
-       Calculates the distance between points along the route and calculates the cumulative distance.
+        Calculates the distance between points along the route and
+        calculates the cumulative distance. ASSUMES geodesic distances
+        connecting each point
 
-       Parameters
-       ----------
-       route_shp: shapefile for the selected route; output of read_shape()
+        Parameters
+        ----------
+        route_shp: GeoDataFrame for the selected route;
+            output of read_shape().
 
-       Returns
-       -------
-       distance: list containing the distance between each point [meters]
-       cum_distance: array of the total route distance at each point along the route (e.g. the first point will have a distance of 0, and    the last point will equal the total route distance) [meters]
+        Returns
+        -------
+        distance: list containing the distance between each point.
+             In units = [meters].
+        cum_distance: array of the total route distance at each point
+            along the route (e.g. the first point will have a distance
+            of 0, and the last point will equal the total route
+            distance). In units = [meters]
     """
+
+    # Convert GeoDataFrame to simple pd.DataFrame containing only
+    # list of 2D coordinates along route.
     lines_gdf = extract_point_df(route_shp)
+
+    # Calculate distance from one point to the next
     distance = []
     for idx in range(len(lines_gdf)-1):
+        # x and y coordinates
         coordinate_1 = lines_gdf.loc[idx]['coordinates']
         coordinate_2 = lines_gdf.loc[idx + 1]['coordinates']
-        swap_coord_1= (coordinate_1[1], coordinate_1[0])
-        swap_coord_2= (coordinate_2[1], coordinate_2[0])
+        # organize into tuples as: (Latatude, Longetude)
+        swap_coord_1 = (coordinate_1[1], coordinate_1[0])
+        swap_coord_2 = (coordinate_2[1], coordinate_2[0])
+        # Calculate geodesic distances in meters and add to list
         distance.append(geodesic(swap_coord_1,swap_coord_2).m)
 
+    # Calculate cumulative sum of distances along route with zero at
+    # the beginning of the list for first point
     cum_distance = np.insert(np.cumsum(distance), 0, 0)
 
     return distance, cum_distance
@@ -96,7 +118,8 @@ def gradient(route_shp, rasterfile):
 
        Parameters
        ----------
-       route_shp: shapefile for the selected route; output of read_shape()
+       route_shp: GeoDataFrame for the selected route;
+            output of read_shape().
        rasterfile: elevation data file (.tif)
 
        Returns
@@ -107,32 +130,56 @@ def gradient(route_shp, rasterfile):
        route_distance: the distance between each point [m]
 
     """
+
+    # from the 'rasterstats' userguide:
+        # "rasterstats, exists solely to extract information from
+        # geospatial raster data based on vector geometries"
+
+    # 'point_query' returns the values defined in the 'rasterfild'
+    # at the points defined within the GeoDataFrame 'route_shp'
     elevation = rasterstats.point_query(route_shp, rasterfile)
+
+    # Convert elevations to meters
     elevation_meters = np.asarray(elevation) * 0.3048
+
+    # Calculate geodesic distances between points as well as cumulative
+    # distances along route.
     route_distance, route_cum_distance = distance_measure(route_shp)
-    route_gradient =  np.insert(abs(np.diff(elevation)/ route_distance),0, 0)
+
+    # Calculate route gradient at each point along route
+    #HJG: I am confused as to why we add zero to the beggining of the
+        # list here, and also why we take the abs value. Seems like
+        # the sign of the gradient would determine if we the bus is
+        # going up or down a hill. I do see that we get back the right
+        # length list
+    route_gradient =  np.insert(abs(np.diff(elevation) / route_distance), 0, 0)
 
     return elevation_meters, route_gradient, route_cum_distance, route_distance
 
 
 def make_lines(gdf, gradient, idx, geometry = 'geometry'):
     """
-       Creates a line between each point; iterative function for make_multi_lines(), so it is not called directly.
+       Creates a line between each point; iterative function for
+       make_multi_lines(), so it is not called directly.
 
        Parameters
        ----------
-       gdf: dataframe of coordinates; output of extract_pts_df()
+       gdf: DataFrame of coordinates; output of extract_pts_df()
        gradient: the road grade (e.g. slope) at each point along the route; output of gradient()
        idx: index
        geometry: DEFAULT = 'geometry'
 
        Returns
        -------
-       df_line: dataframe containing the line segments
+       df_line: DataFrame containing the line segments
     """
+
     coordinate_1 = gdf.loc[idx]['coordinates']
     coordinate_2 = gdf.loc[idx + 1]['coordinates']
+    # Create shapely.Line object connection coordinates
     line = LineString([coordinate_1, coordinate_2])
+    # Organize gradient input argument with shapely.Line for insertion
+    # into output DataFrame.
     data = {'gradient': gradient,
             'geometry':[line]}
     df_line = pd.DataFrame(data, columns = ['gradient', 'geometry'])
@@ -142,18 +189,23 @@ def make_lines(gdf, gradient, idx, geometry = 'geometry'):
 
 def make_multi_lines(linestring_route_df, elevation_gradient):
     """
-       Creates a geo dataframe containing the road grade and linestring for each point along the route.
+       Creates a GeoDataFrame containing the road grade and linestring
+       for each point along the route.
 
        Parameters
        ----------
-       linestring_route_df: dataframe of coordinates; output of extract_pts_df()
+       linestring_route_df: DataFrame of coordinates; output of extract_pts_df()
        elevation_gradient: the road grade (e.g. slope) at each point along the route; output of gradient()
 
        Returns
        -------
-       gdf_route: geodataframe with columns ['gradient', 'geometry']
+       gdf_route: geoDataFrame with columns ['gradient', 'geometry']
     """
+
+    # Initialize output DataFrame
     df_route = pd.DataFrame(columns = ['gradient', 'geometry'])
+
+    # Loop through row indicies of 'linestring_route_df' input.
     for idx in range(len(linestring_route_df) - 1):
         df_linestring = make_lines(linestring_route_df, elevation_gradient[idx], idx)
         df_route = pd.concat([df_route, df_linestring])
@@ -167,7 +219,7 @@ def route_map(gdf_route):
 
        Parameters
        ----------
-       gdf_route: geodataframe output from make_multi_lines()
+       gdf_route: geoDataFrame output from make_multi_lines()
 
        Returns
        -------

@@ -26,12 +26,21 @@ def route_analysis_all(route_num, shapefile, rasterfile):
     # with extra column ROUTE_NUM = (last argument)
     route_shp = base.read_shape(shapefile, route_num)
 
+    # Use 2D coordinates and elevation rasterfile to generate
+    # elevations and elevation gradiant at each point.
+    (
+        elevation,
+        elevation_gradient,
+        route_cum_distance,
+        distance
+        ) = base.gradient(route_shp, rasterfile)
+
     # Build dataframe of 2D coordinates making up bus route
     linestring_route_df = base.extract_point_df(route_shp)
 
-    elevation, elevation_gradient, route_cum_distance, distance = base.gradient(route_shp, rasterfile)
-
-    gdf_route = base.make_multi_lines( linestring_route_df, elevation_gradient)
+    # From dataframe containing route coordinates and list of gradients
+    # at each point on route, do something...
+    gdf_route = base.make_multi_lines(linestring_route_df, elevation_gradient)
 
     map_display = base.route_map(gdf_route)
 
