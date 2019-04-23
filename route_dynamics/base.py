@@ -286,27 +286,51 @@ def profile_plot(elevation, elevation_gradient, route_cum_distance, route_num):
 
     return plt
 
-def route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num):
+def route_metrics(
+    elevation,
+    elevation_gradient,
+    route_cum_distance,
+    distance,
+    route_num,
+    ):
     """
-       Estimates route difficulty based on four test metrics.
+        Estimates route difficulty based on four test metrics.
 
-       Parameters
-       ----------
-       elevation: the elevation at each point along the route
-       elevation_gradient: the road grade at each point along the route
-       route_cum_distance: the total route distance at each point along the route [m]
-       distance: the distance between each point [m]
-       route_num: route number (integer)
+        Parameters
+        ----------
+        elevation: the elevation at each point along the route
+        elevation_gradient: the road grade at each point along the route
+        route_cum_distance: the total route distance at each point along
+            the route [m]
+        distance: the distance between each point [m]
+        route_num: route number (integer)
 
-       Returns
-       -------
-       display_metrics: string of metrics results
-       metric_values: results of metrics calculations
-    """
+        Returns
+        -------
+        display_metrics: string of metrics results
+        metric_values: results of metrics calculations
+        """
+
     metrics_1 = 100 * sum(elevation_gradient)/ max(route_cum_distance)
     metrics_2 = sum(abs(np.diff(elevation[0])))/ max(route_cum_distance)
-    metrics_3 = 100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) > 0])/ max(route_cum_distance)
-    metrics_4 = -100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) < 0])/ max(route_cum_distance)
+    metrics_3 = 100 * (
+        sum(
+            np.insert(
+                np.diff(elevation)/ distance, 0, 0
+                )[np.insert(np.diff(elevation)/ distance, 0, 0) > 0]
+            )
+        /
+        max(route_cum_distance)
+        )
+    metrics_4 = -100 * (
+        sum(
+            np.insert(
+                np.diff(elevation)/ distance, 0, 0
+                )[np.insert(np.diff(elevation)/ distance, 0, 0) < 0]
+            )
+        /
+        max(route_cum_distance)
+        )
     metrics_values = (metrics_1, metrics_2, metrics_3, metrics_4)
 
     display_metrics = (
