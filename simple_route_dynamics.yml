@@ -1,0 +1,15 @@
+name: simple_route_dynamics
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.6
+  - numpy 
+  - pandas
+  - geopandas
+  - folium
+  - matplotlib
+  - rasterio
+  - branca
+
+
