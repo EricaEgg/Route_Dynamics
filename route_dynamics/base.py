@@ -10,7 +10,7 @@ from folium.features import GeoJson
 from shapely.geometry import mapping
 from shapely.geometry import LineString
 from shapely.geometry import Polygon
-from rasterio.mask import mask
+# from rasterio.mask import mask
 from geopy.distance import geodesic
 
 
