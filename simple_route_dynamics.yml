@@ -11,5 +11,9 @@ dependencies:
   - matplotlib
   - rasterio
   - branca
-
+  - jupyter
+  - pip
+  - pip:
+    - rasterstats
+    - geopy
 
