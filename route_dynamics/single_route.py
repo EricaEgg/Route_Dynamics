@@ -39,12 +39,25 @@ def route_analysis_all(route_num, shapefile, rasterfile):
     linestring_route_df = base.extract_point_df(route_shp)
 
     # From dataframe containing route coordinates and list of gradients
-    # at each point on route, do something...
+    # at each point on route, combine into route GeoDataFrame with rows
+    # corresponsing to points on route and columns;
+    #   'gradient'
+    #       - value of gratent per rout point
+    #   'geometry'
+    #       - contains shapely.Line objects conneting each point on
+    # route
     gdf_route = base.make_multi_lines(linestring_route_df, elevation_gradient)
 
+    # Use package folium to create an interactive map for the desired
+    # route.
     map_display = base.route_map(gdf_route)
 
-    route_plot = base.profile_plot(elevation, elevation_gradient, route_cum_distance, route_num)
+    route_plot = base.profile_plot(
+        elevation,
+        elevation_gradient,
+        route_cum_distance,
+        route_num,
+        )
 
     display_metrics, _ = base.route_metrics(elevation, elevation_gradient, route_cum_distance, distance, route_num)
 

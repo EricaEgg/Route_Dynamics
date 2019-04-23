@@ -77,17 +77,17 @@ def distance_measure(route_shp):
         Parameters
         ----------
         route_shp: GeoDataFrame for the selected route;
-            output of read_shape().
+        output of read_shape().
 
         Returns
         -------
         distance: list containing the distance between each point.
-             In units = [meters].
+         In units = [meters].
         cum_distance: array of the total route distance at each point
-            along the route (e.g. the first point will have a distance
-            of 0, and the last point will equal the total route
-            distance). In units = [meters]
-    """
+        along the route (e.g. the first point will have a distance
+        of 0, and the last point will equal the total route
+        distance). In units = [meters]
+        """
 
     # Convert GeoDataFrame to simple pd.DataFrame containing only
     # list of 2D coordinates along route.
@@ -114,22 +114,22 @@ def distance_measure(route_shp):
 
 def gradient(route_shp, rasterfile):
     """
-       Calculates the elevation and road grade at each point along the route.
+        Calculates the elevation and road grade at each point along the route.
 
-       Parameters
-       ----------
-       route_shp: GeoDataFrame for the selected route;
-            output of read_shape().
-       rasterfile: elevation data file (.tif)
+        Parameters
+        ----------
+        route_shp: GeoDataFrame for the selected route;
+        output of read_shape().
+        rasterfile: elevation data file (.tif)
 
-       Returns
-       -------
-       elevation_meters: the elevation at each point along the route
-       route_gradient: the road grade (e.g. slope) at each point along the route
-       route_cum_distance: the total route distance at each point along the route [m]
-       route_distance: the distance between each point [m]
+        Returns
+        -------
+        elevation_meters: the elevation at each point along the route
+        route_gradient: the road grade (e.g. slope) at each point along the route
+        route_cum_distance: the total route distance at each point along the route [m]
+        route_distance: the distance between each point [m]
 
-    """
+        """
 
     # from the 'rasterstats' userguide:
         # "rasterstats, exists solely to extract information from
@@ -159,20 +159,20 @@ def gradient(route_shp, rasterfile):
 
 def make_lines(gdf, gradient, idx, geometry = 'geometry'):
     """
-       Creates a line between each point; iterative function for
-       make_multi_lines(), so it is not called directly.
+        Creates a line between each point; iterative function for
+        make_multi_lines(), so it is not called directly.
 
-       Parameters
-       ----------
-       gdf: DataFrame of coordinates; output of extract_pts_df()
-       gradient: the road grade (e.g. slope) at each point along the route; output of gradient()
-       idx: index
-       geometry: DEFAULT = 'geometry'
+        Parameters
+        ----------
+        gdf: DataFrame of coordinates; output of extract_pts_df()
+        gradient: the road grade (e.g. slope) at each point along the route; output of gradient()
+        idx: index
+        geometry: DEFAULT = 'geometry'
 
-       Returns
-       -------
-       df_line: DataFrame containing the line segments
-    """
+        Returns
+        -------
+        df_line: DataFrame containing the line segments
+        """
 
     coordinate_1 = gdf.loc[idx]['coordinates']
     coordinate_2 = gdf.loc[idx + 1]['coordinates']
@@ -189,18 +189,18 @@ def make_lines(gdf, gradient, idx, geometry = 'geometry'):
 
 def make_multi_lines(linestring_route_df, elevation_gradient):
     """
-       Creates a GeoDataFrame containing the road grade and linestring
-       for each point along the route.
+        Creates a GeoDataFrame containing the road grade and linestring
+        for each point along the route.
 
-       Parameters
-       ----------
-       linestring_route_df: DataFrame of coordinates; output of extract_pts_df()
-       elevation_gradient: the road grade (e.g. slope) at each point along the route; output of gradient()
+        Parameters
+        ----------
+        linestring_route_df: DataFrame of coordinates; output of extract_pts_df()
+        elevation_gradient: the road grade (e.g. slope) at each point along the route; output of gradient()
 
-       Returns
-       -------
-       gdf_route: geoDataFrame with columns ['gradient', 'geometry']
-    """
+        Returns
+        -------
+        gdf_route: GeoDataFrame with columns ['gradient', 'geometry']
+        """
 
     # Initialize output DataFrame
     df_route = pd.DataFrame(columns = ['gradient', 'geometry'])
@@ -215,48 +215,57 @@ def make_multi_lines(linestring_route_df, elevation_gradient):
 
 def route_map(gdf_route):
     """
-       Creates interactive map for the desired route.
+        Use package folium to create an interactive map for the desired route.
 
-       Parameters
-       ----------
-       gdf_route: geoDataFrame output from make_multi_lines()
+        Parameters
+        ----------
+        gdf_route: GeoDataFrame output from make_multi_lines()
 
-       Returns
-       -------
-       route_map: interactive map that displays the desired route and road grade
-    """
+        Returns
+        -------
+        route_map: interactive map that displays the desired route and road grade
+        """
+
     UW_coords = [47.655548, -122.303200]
-    figure_size = folium.Figure(height = 400)
+
+    # initialize figure of certain size at specific coordinates
+    sized_figure = folium.Figure(height = 400)
     route_map = folium.Map(location = UW_coords, zoom_start = 12)
     min_grade = min(gdf_route['gradient'])
     max_grade = max(gdf_route['gradient'])
     route_json = gdf_route.to_json()
+
+    # assign colormap of grade
     linear_map = cm.linear.Paired_06.scale(min_grade, max_grade )
+
     route_layer = folium.GeoJson(route_json, style_function = lambda feature: {
         'color': linear_map(feature['properties']['gradient']),
         'weight': 8})
     route_layer.add_child
     route_map.add_child(linear_map)
     route_map.add_child(route_layer)
-    route_map.add_to(figure_size)
+    route_map.add_to(sized_figure)
     return route_map
 
 
 def profile_plot(elevation, elevation_gradient, route_cum_distance, route_num):
     """
-       Creates two plots. First shows elevation vs. distance. Second shows absolute grade vs. distance.
+        Creates two plots. First shows elevation vs. distance. Second
+        shows absolute grade vs. distance.
 
-       Parameters
-       ----------
-       elevation: the elevation at each point along the route
-       elevation_gradient: the road grade at each point along the route
-       route_cum_distance: the total route distance at each point along the route [m]
-       route_num: route number (integer)
+        Parameters
+        ----------
+        elevation: the elevation at each point along the route
+        elevation_gradient: the road grade at each point along the route
+        route_cum_distance: the total route distance at each point along
+            the route [m]
+        route_num: route number (integer)
 
-       Returns
-       -------
-       plt: Elevation vs. distance and absolute grade vs. distance plots
-    """
+        Returns
+        -------
+        plt: Elevation vs. distance and absolute grade vs. distance plots
+        """
+
     fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(15, 8))
     ax[0].plot(route_cum_distance, elevation.T, color='b', linewidth=4)
     ax[0].set_ylabel('Elevation (meter)', color='b')
@@ -269,7 +278,11 @@ def profile_plot(elevation, elevation_gradient, route_cum_distance, route_num):
     ax[1].tick_params('y', colors='r')
     ax[1].grid()
 
-    fig.suptitle('Elevation and Gradient Plot for Route {}'.format(route_num), fontsize=20, y=0.95)
+    fig.suptitle(
+        'Elevation and Gradient Plot for Route {}'.format(route_num),
+        fontsize=20,
+        y=0.95,
+        )
 
     return plt
 
@@ -296,7 +309,13 @@ def route_metrics(elevation, elevation_gradient, route_cum_distance, distance, r
     metrics_4 = -100 * sum(np.insert(np.diff(elevation)/ distance, 0, 0)[np.insert(np.diff(elevation)/ distance, 0, 0) < 0])/ max(route_cum_distance)
     metrics_values = (metrics_1, metrics_2, metrics_3, metrics_4)
 
-    display_metrics = ' Route Evaluation Metrics for Bus {} \n Normalized Gradient = {:.4f} \n Differentiated Gradient = {:.4f} \n Positive Gradient = {:.4f} \n Negative Gradient = {:.4f}'.format(route_num, metrics_1, metrics_2, metrics_3, metrics_4)
+    display_metrics = (
+        ' Route Evaluation Metrics for Bus {} \n Normalized Gradient = {:.4f} '
+        +
+        '\n Differentiated Gradient = {:.4f} \n Positive Gradient = {:.4f} '
+        +
+        '\n Negative Gradient = {:.4f}'
+        ).format(route_num, metrics_1, metrics_2, metrics_3, metrics_4)
 
     return display_metrics, metrics_values
 
