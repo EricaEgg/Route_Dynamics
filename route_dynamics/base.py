@@ -10,7 +10,7 @@ from folium.features import GeoJson
 from shapely.geometry import mapping
 from shapely.geometry import LineString
 from shapely.geometry import Polygon
-from rasterio.mask import mask
+# from rasterio.mask import mask
 from geopy.distance import geodesic
 
 
@@ -152,7 +152,16 @@ def gradient(route_shp, rasterfile):
         # the sign of the gradient would determine if we the bus is
         # going up or down a hill. I do see that we get back the right
         # length list
-    route_gradient =  np.insert(abs(np.diff(elevation) / route_distance), 0, 0)
+    route_gradient =  np.insert(
+        (
+            np.diff(elevation)
+            /
+            route_distance
+            )
+        ,
+        0,
+        0,
+        )
 
     return elevation_meters, route_gradient, route_cum_distance, route_distance
 
@@ -312,7 +321,11 @@ def route_metrics(
         """
 
     metrics_1 = 100 * sum(elevation_gradient)/ max(route_cum_distance)
-    metrics_2 = sum(abs(np.diff(elevation[0])))/ max(route_cum_distance)
+    metrics_2 = sum(
+        abs(
+            np.diff(elevation[0])
+            )
+        )/ max(route_cum_distance)
     metrics_3 = 100 * (
         sum(
             np.insert(

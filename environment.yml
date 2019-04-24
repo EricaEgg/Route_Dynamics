@@ -1,4 +1,4 @@
-name: simple_route_dynamics
+name: route_dynamics
 channels:
   - conda-forge
   - defaults
