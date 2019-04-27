@@ -225,10 +225,11 @@ def make_multi_lines(linestring_route_df, elevation_gradient):
             # elevation_gradient[idx],
             )
         lin_col.append(df_line)
+    lin_col.append(None)
 
 
-    route_df = linestring_route_df.iloc[:-1].assign(
-        gradient=elevation_gradient[:-1],
+    route_df = linestring_route_df.assign(
+        gradient=elevation_gradient,
         geometry=lin_col
         )
 
@@ -271,9 +272,12 @@ def route_map(gdf_route):
     # assign colormap of grade
     linear_map = cm.linear.Paired_06.scale(min_grade, max_grade )
 
-    route_layer = folium.GeoJson(route_json, style_function = lambda feature: {
-        'color': linear_map(feature['properties']['gradient']),
-        'weight': 8})
+    route_layer = folium.GeoJson(
+        route_json, style_function = lambda feature: {
+            'color': linear_map(feature['properties']['gradient']),
+            'weight': 8
+            }
+        )
     route_layer.add_child
     route_map.add_child(linear_map)
     route_map.add_child(route_layer)
