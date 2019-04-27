@@ -166,7 +166,7 @@ def gradient(route_shp, rasterfile):
     return elevation_meters, route_gradient, route_cum_distance, route_distance
 
 
-def make_lines(gdf, gradient, idx, geometry = 'geometry'):
+def _make_lines(gdf, idx, geometry = 'geometry'):
     """
         Creates a line between each point; iterative function for
         make_multi_lines(), so it is not called directly.
@@ -187,13 +187,13 @@ def make_lines(gdf, gradient, idx, geometry = 'geometry'):
     coordinate_2 = gdf.loc[idx + 1]['coordinates']
     # Create shapely.Line object connection coordinates
     line = LineString([coordinate_1, coordinate_2])
-    # Organize gradient input argument with shapely.Line for insertion
-    # into output DataFrame.
-    data = {'gradient': gradient,
-            'geometry':[line]}
-    df_line = pd.DataFrame(data, columns = ['gradient', 'geometry'])
+    # # Organize gradient input argument with shapely.Line for insertion
+    # # into output DataFrame.
+    # data = {'gradient': gradient,
+    #         'geometry':[line]}
+    # df_line = pd.DataFrame(data, columns = ['gradient', 'geometry'])
 
-    return df_line
+    return line
 
 
 def make_multi_lines(linestring_route_df, elevation_gradient):
@@ -211,15 +211,39 @@ def make_multi_lines(linestring_route_df, elevation_gradient):
         gdf_route: GeoDataFrame with columns ['gradient', 'geometry']
         """
 
-    # Initialize output DataFrame
-    df_route = pd.DataFrame(columns = ['gradient', 'geometry'])
+    num_pt_connections = len(linestring_route_df) - 1
 
-    # Loop through row indicies of 'linestring_route_df' input.
-    for idx in range(len(linestring_route_df) - 1):
-        df_linestring = make_lines(linestring_route_df, elevation_gradient[idx], idx)
-        df_route = pd.concat([df_route, df_linestring])
-    gdf_route = gpd.GeoDataFrame(df_route)
+    # Initialize output column to contain Lines
+    lin_col = []
+
+    # Loop through row indicies of 'linestring_route_df' input to
+    # generate Shapely Lines.
+    for idx in range(num_pt_connections):
+        df_line = _make_lines(
+            linestring_route_df,
+            idx
+            # elevation_gradient[idx],
+            )
+        lin_col.append(df_line)
+
+
+    route_df = linestring_route_df.iloc[:-1].assign(
+        gradient=elevation_gradient[:-1],
+        geometry=lin_col
+        )
+
+    gdf_route = gpd.GeoDataFrame(route_df)
     return gdf_route
+
+    # # Initialize output DataFrame
+    # df_route = pd.DataFrame(columns = ['gradient', 'geometry'])
+
+    # # Loop through row indicies of 'linestring_route_df' input.
+    # for idx in range(len(linestring_route_df) - 1):
+    #     df_linestring = make_lines(linestring_route_df, elevation_gradient[idx], idx)
+    #     df_route = pd.concat([df_route, df_linestring])
+    # gdf_route = gpd.GeoDataFrame(df_route)
+    # return gdf_route
 
 
 def route_map(gdf_route):

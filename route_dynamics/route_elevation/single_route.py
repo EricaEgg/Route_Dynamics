@@ -1,4 +1,4 @@
-import base
+from . import base
 
 
 def route_analysis_all(route_num, shapefile, rasterfile):
