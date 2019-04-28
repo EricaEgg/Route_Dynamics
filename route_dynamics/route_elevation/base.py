@@ -215,6 +215,9 @@ def make_multi_lines(linestring_route_df, elevation_gradient):
 
     # Initialize output column to contain Lines
     lin_col = []
+    # Add None as first element corresponding to first route point of
+    # zero gradient.
+    lin_col.append(None)
 
     # Loop through row indicies of 'linestring_route_df' input to
     # generate Shapely Lines.
@@ -225,7 +228,7 @@ def make_multi_lines(linestring_route_df, elevation_gradient):
             # elevation_gradient[idx],
             )
         lin_col.append(df_line)
-    lin_col.append(None)
+
 
 
     route_df = linestring_route_df.assign(
