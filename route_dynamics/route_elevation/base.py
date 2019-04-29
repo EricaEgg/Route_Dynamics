@@ -16,7 +16,8 @@ from geopy.distance import geodesic
 
 def read_shape(shapefile, route_num):
     """
-        Reads shapefile and selects desired route.
+        Loads shapefile into GeoDataFrame and selects desired route by
+        ROUTE_NUM column.
 
         Parameters
         ----------
@@ -25,8 +26,8 @@ def read_shape(shapefile, route_num):
 
         Returns
         -------
-        route_shp: Load shape file into GeoDataFrame
-            with extra column ROUTE_NUM = (last argument)
+        route_shp: Filered gdf containing just points on route
+            'route_num'
         """
 
     routes_shp = gpd.read_file(shapefile)
@@ -54,7 +55,9 @@ def extract_point_df(route_shp):
     # and store values only in nd.array
     route_geometry = route_shp.geometry.values
 
-    #HJG: I think this makes a copy? not sure why it's needed
+    # Convert Linestring object into dictionary with keys 'type' and
+    # 'coordinates', the second containing a tuple of 3D coordinate
+    # tuples that we use to build the route coordinate dataframe.
     route_geometry = [mapping(route_geometry[0])]
 
     # Return route coordinates in seperate pd.DataFrame.
