@@ -24,24 +24,195 @@ class RouteTrajectory(object)
         trajectory dataframe.
         """
 
-    def __init__(self, xy_route_coords, route_elevation):
+    def __init__(self, shp_filename, elv_raster_filename, bus_speed):
         """ Build DataFrame with bus trajectory and shapely connections
             for plotting.
             """
             # route_df = gpd.dataframe()
 
+        self.route_df = self.build_route_coordinate_df(
+            route_shp=shp_filename,
+            elv_filename=elv_raster_filename,
+            )
 
-    def calculate_forces(self):
+        self.route_df = self.add_velocities_to_df(self.route_df)
+
+        self.route_df = self.add_accelerations_to_df(self.route_df)
+
+        self.route_df = self.add_forces_to_df(self.route_df)
+
+        self.route_df = self.add_power_to_df(self.route_df)
+
+
+    def build_route_coordinate_df(self, route_shp, elv_filename):
+        """ Builds GeoDataFrame with rows cooresponding to points on
+            route with columns corresponding to elevation, elevation
+            gradiant, and connecting line segments between points in
+            the form of Shapely Linstring objects.
+            """
+
+        # Build the df of 2D route coordinates and
+        route_2Dcoord_df = rbs.extract_point_df(route_shp)
+
+        (
+            elevation,
+            elevation_gradient,
+            route_cum_distance,
+            distance
+            ) = rbs.gradient(route_shp, rasterfile)
+
+        route_df = rbs.make_multi_lines(
+            route_2Dcoord_df,
+            elevation_gradient
+            )
+
+        route_df = add_elevation_to_df(elevation, route_df)
+
+        return route_df
+
+
+    def add_elevation_to_df(self, elevation, route_df):
+
+        rdf = route_df.assign(
+            velocity=np.ones(len(route_df))
+            )
+
+        return rdf
+
+
+    def add_velocities_to_df(self, route_df):
+        """ For now just adds a constant velocity as a placeholder.
+            """
+        rdf = route_df.assign(
+            velocity=np.ones(len(route_df))
+            )
+        return rdf
+
+
+    def add_accelerations_to_df(self, route_df):
+        """ For now just adds a acceleration velocity as a placeholder.
+            """
+        rdf = route_df.assign(
+            acceleration=np.zeros(len(route_df))
+            )
+        return rdf
+
+
+    def add_forces_to_df(self, route_df):
         """ Calculate forces on bus relevant to the Longitudinate
             dynamics model.
             """
 
+        (grav_force, roll_fric, aero_drag, inertia) = self.calculate_forces()
 
-    def calculate_energy_demand(self):
+        route_df = route_df.assign(
+            grav_force = grav_force,
+            roll_fric = roll_fric,
+            aero_drag = aero_drag,
+            inertia = inertia,
+            )
+
+        return route_df
 
 
-    def calculate_power(self)
+    def calculate_forces(self, rdf):
 
+
+        vels = rdf.velocity.values
+        acce = rdf.acceleration.values
+        grad = rdf.gradient.values
+        grad_angle = np.arctan(grad)
+
+        # Physical parameters
+        gravi_accel = 9.81
+        air_density = 1.225 # air density in kg/m3; consant for now, eventaully input from weather API
+        v_wind = 0.0 #wind speed in km per hour; figure out component, and also will come from weather API
+        fric_coeff = 0.01
+
+        # List of Bus Parameters for 40 foot bus
+        mass = 12927 # Mass of bus in kg
+        width = 2.6 # in m
+        height = 3.3 # in m
+        bus_front_area = width * height
+        drag_coeff = 0.34 # drag coefficient estimate from paper (???)
+        rw = 0.28575 # radius of wheel in m
+
+        # Calculate the gravitational force
+        grav_force = mass * gravi_accel * np.sin(grad_angle)
+
+        # Calculate the rolling friction
+        roll_fric = fric_coeff * mass * gravi_accel * np.cos(grad_angle)
+
+        # Calculate the aerodynamic drag
+        aero_drag = (
+            drag_coeff
+            *
+            bus_front_area
+            *
+            (air_density/2)
+            *
+            (vels-v_wind)
+            )
+
+    #     # Calculate the inertial force
+        inertia = mass * acce
+
+        return (grav_force, roll_fric, aero_drag, inertia)
+
+
+    def calculate_power(self, rdf):
+
+         f_resist = (
+            rdf.grav_force.values
+            +
+            rdf.roll_fric.values
+            +
+            rdf.aero_drag.values
+            )
+
+        f_traction = rdf.inertia.values - f_resist
+        velocity = rdf.velocity.values
+
+        batt_power_exert = f_traction * velocity
+
+        return batt_power_exert
+
+
+    def add_power_to_df(self, rdf):
+
+        batt_power_exert = calculate_batt_power_exert(rdf)
+
+        new_df = rdf.assign(
+            battery_power_exerted = batt_power_exert
+            )
+
+        return new_df
+
+
+    def calculate_energy_demand(self, power, delta_x, veloc):
+
+        delta_t = delta_x / veloc
+
+        energy = np.sum(power * delta_t)
+
+        return energy
+
+
+    def energy_from_route(self, rdf):
+
+        power = rdf.battery_power_exerted.values
+
+        # Calculate lengths of route segments
+        delta_x = []
+        for line in rdf.geometry.values:
+            if hasattr(line, 'length'):
+                delta_x.append(line.length)
+            else:
+                delta_x.append(0)
+
+        velocity = rdf.velocity.values
+
+        return self.calculate_energy(power, delta_x, velocity)
 
 
 
