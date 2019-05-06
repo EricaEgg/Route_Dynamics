@@ -18,33 +18,47 @@ import geopandas as gpd
 
 # Thinking this is not the best implementation since I don't actually
 # know how to make objects print like pandas DataFrames.
-class RouteTrajectory(object)
+class RouteTrajectory(object):
     """ Takes 2d route coordinates extracted from shapefile and
         combines the information with elevation to create a route
         trajectory dataframe.
         """
 
-    def __init__(self, shp_filename, elv_raster_filename, bus_speed):
+    def __init__(self,
+        route_num,
+        shp_filename,
+        elv_raster_filename,
+        bus_speed=None
+        ):
         """ Build DataFrame with bus trajectory and shapely connections
             for plotting.
+
+            Right now the argument 'bus_speed' is not used, but left
+            here to note that it could be imput at this level once
+            we have a procedure for estimating it.
             """
-            # route_df = gpd.dataframe()
+
 
         self.route_df = self.build_route_coordinate_df(
-            route_shp=shp_filename,
+            route_num=route_num,
+            route_shp_filename=shp_filename,
             elv_filename=elv_raster_filename,
             )
 
-        self.route_df = self.add_velocities_to_df(self.route_df)
+        self.route_df = self._add_velocities_to_df(self.route_df)
 
-        self.route_df = self.add_accelerations_to_df(self.route_df)
+        self.route_df = self._add_accelerations_to_df(self.route_df)
 
-        self.route_df = self.add_forces_to_df(self.route_df)
+        self.route_df = self._add_forces_to_df(self.route_df)
 
-        self.route_df = self.add_power_to_df(self.route_df)
+        self.route_df = self._add_power_to_df(self.route_df)
 
 
-    def build_route_coordinate_df(self, route_shp, elv_filename):
+    def build_route_coordinate_df(self,
+        route_num,
+        route_shp_filename,
+        elv_filename
+        ):
         """ Builds GeoDataFrame with rows cooresponding to points on
             route with columns corresponding to elevation, elevation
             gradiant, and connecting line segments between points in
@@ -52,6 +66,8 @@ class RouteTrajectory(object)
             """
 
         # Build the df of 2D route coordinates and
+        route_shp = rbs.read_shape(route_shp_filename, route_num)
+
         route_2Dcoord_df = rbs.extract_point_df(route_shp)
 
         (
@@ -59,19 +75,19 @@ class RouteTrajectory(object)
             elevation_gradient,
             route_cum_distance,
             distance
-            ) = rbs.gradient(route_shp, rasterfile)
+            ) = rbs.gradient(route_shp, elv_filename)
 
         route_df = rbs.make_multi_lines(
             route_2Dcoord_df,
             elevation_gradient
             )
 
-        route_df = add_elevation_to_df(elevation, route_df)
+        route_df = self._add_elevation_to_df(elevation, route_df)
 
         return route_df
 
 
-    def add_elevation_to_df(self, elevation, route_df):
+    def _add_elevation_to_df(self, elevation, route_df):
 
         rdf = route_df.assign(
             velocity=np.ones(len(route_df))
@@ -80,7 +96,7 @@ class RouteTrajectory(object)
         return rdf
 
 
-    def add_velocities_to_df(self, route_df):
+    def _add_velocities_to_df(self, route_df):
         """ For now just adds a constant velocity as a placeholder.
             """
         rdf = route_df.assign(
@@ -89,7 +105,7 @@ class RouteTrajectory(object)
         return rdf
 
 
-    def add_accelerations_to_df(self, route_df):
+    def _add_accelerations_to_df(self, route_df):
         """ For now just adds a acceleration velocity as a placeholder.
             """
         rdf = route_df.assign(
@@ -98,12 +114,17 @@ class RouteTrajectory(object)
         return rdf
 
 
-    def add_forces_to_df(self, route_df):
+    def _add_forces_to_df(self, route_df):
         """ Calculate forces on bus relevant to the Longitudinate
             dynamics model.
             """
 
-        (grav_force, roll_fric, aero_drag, inertia) = self.calculate_forces()
+        (
+            grav_force,
+            roll_fric,
+            aero_drag,
+            inertia
+            ) = self.calculate_forces(route_df)
 
         route_df = route_df.assign(
             grav_force = grav_force,
@@ -160,9 +181,9 @@ class RouteTrajectory(object)
         return (grav_force, roll_fric, aero_drag, inertia)
 
 
-    def calculate_power(self, rdf):
+    def _calculate_batt_power_exert(self, rdf):
 
-         f_resist = (
+        f_resist = (
             rdf.grav_force.values
             +
             rdf.roll_fric.values
@@ -178,9 +199,9 @@ class RouteTrajectory(object)
         return batt_power_exert
 
 
-    def add_power_to_df(self, rdf):
+    def _add_power_to_df(self, rdf):
 
-        batt_power_exert = calculate_batt_power_exert(rdf)
+        batt_power_exert = self._calculate_batt_power_exert(rdf)
 
         new_df = rdf.assign(
             battery_power_exerted = batt_power_exert
@@ -189,7 +210,7 @@ class RouteTrajectory(object)
         return new_df
 
 
-    def calculate_energy_demand(self, power, delta_x, veloc):
+    def _calculate_energy_demand(self, power, delta_x, veloc):
 
         delta_t = delta_x / veloc
 
@@ -198,7 +219,9 @@ class RouteTrajectory(object)
         return energy
 
 
-    def energy_from_route(self, rdf):
+    def energy_from_route(self):
+
+        rdf = self.route_df
 
         power = rdf.battery_power_exerted.values
 
@@ -212,7 +235,7 @@ class RouteTrajectory(object)
 
         velocity = rdf.velocity.values
 
-        return self.calculate_energy(power, delta_x, velocity)
+        return self._calculate_energy_demand(power, delta_x, velocity)
 
 
 
