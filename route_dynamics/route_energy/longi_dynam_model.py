@@ -22,6 +22,8 @@ class RouteTrajectory(object):
     """ Takes 2d route coordinates extracted from shapefile and
         combines the information with elevation to create a route
         trajectory dataframe.
+
+        route_num: needs to be one that Erica made work.
         """
 
     def __init__(self,
@@ -90,7 +92,7 @@ class RouteTrajectory(object):
     def _add_elevation_to_df(self, elevation, route_df):
 
         rdf = route_df.assign(
-            velocity=np.ones(len(route_df))
+            elevation=elevation
             )
 
         return rdf
