@@ -2,46 +2,29 @@ language: python
 
 sudo: false
 
-
-
 env:
   global:
-  - PIP_DEPS="pytest coveralls pytest-cov flake8"
-
-
+    - PIP_DEPS="pytest coveralls pytest-cov flake8"
 
 python:
-- '3.6'
-
-
+  - '3.6'
 
 install:
-
-- pip install -U tox-travis coverage coveralls
-
-- pip install --upgrade pytest
-
-- travis_retry pip install $PIP_DEPS
-
-- travis_retry pip install -r requirements.txt
-
-- travis_retry pip install -e .
-
-
+  - pip install -U tox-travis coverage coveralls
+  - pip install --upgrade pytest
+  - travis_retry pip install $PIP_DEPS
+  - travis_retry pip install -r requirements.txt
+  - travis_retry pip install -e .
 
 script:
-- pytest --pyargs route_dynamics --cov-report term-missing --cov=route_dynamics
+  - pytest --pyargs route_dynamics --cov-report term-missing --cov=route_dynamics
 #- tox
 
-- coverage report
-
-
+  - coverage report
 
 after_success:
-- coveralls
-
-
+  - coveralls
 
 after_success:
-- ls -a
-- coveralls
+  - ls -a
+  - coveralls
