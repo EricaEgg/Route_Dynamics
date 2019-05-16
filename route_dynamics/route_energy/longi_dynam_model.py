@@ -33,14 +33,16 @@ class RouteTrajectory(object):
         bus_speed=None
         ):
         """ Build DataFrame with bus trajectory and shapely connections
-            for plotting.
+            for plotting. This object is mostly a wrapper object to
+            build and return the Route DataFrame, but will later
+            contain plotting methods as well.
 
             Right now the argument 'bus_speed' is not used, but left
             here to note that it could be imput at this level once
             we have a procedure for estimating it.
             """
 
-
+        # Build Route DataFrame
         self.route_df = self.build_route_coordinate_df(
             route_num=route_num,
             route_shp_filename=shp_filename,
