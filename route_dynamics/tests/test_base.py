@@ -5,11 +5,11 @@ from os import path
 import sys
 sys.path.append(path.abspath('..'))
 
-import base
+from ..route_elevation import base
 
 
-shapefile = '../../data/six_routes.shp'
-rasterfile = '../../data/seattle_dtm.tif'
+shapefile = '../data/six_routes.shp'
+rasterfile = '../data/seattle_dtm.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
@@ -19,11 +19,11 @@ route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
 def test_read_shape():
     """
         Test if shapefile is for route number 45
-        
+
         Parameters
         ----------
         shapefile: The path of a shapefile(.shp)
-        
+
     """
     assert shapefile.endswith('.shp'), 'Input should be shapefile.'
     assert base.read_shape(shapefile,45)['ROUTE_NUM'].values[0] == 45, 'ROUTE_NUM is wrong!'
