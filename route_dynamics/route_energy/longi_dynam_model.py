@@ -86,6 +86,8 @@ class RouteTrajectory(object):
 
         route_df = self._add_elevation_to_df(elevation, route_df)
 
+        route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
+
         return route_df
 
 
@@ -93,6 +95,15 @@ class RouteTrajectory(object):
 
         rdf = route_df.assign(
             elevation=elevation
+            )
+
+        return rdf
+
+
+    def _add_cum_dist_to_df(self, cum_distance, route_df):
+
+        rdf = route_df.assign(
+            cum_distance=cum_distance
             )
 
         return rdf
