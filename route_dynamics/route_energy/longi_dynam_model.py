@@ -90,7 +90,32 @@ class RouteTrajectory(object):
 
         route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
+        # Try to determine bus stops from list of coordinates
+        try:
+            route_df = self._mark_stops(stop_coords, route_df)
+        except AssertionError as aser:
+            print(aser)
+
         return route_df
+
+
+    def _mark_stops(self, stop_coords, route_df):
+        """ Find rows in route_df matching the stop_coordinates and
+            mark as bus stop under new column.
+            """
+
+        # Add new column to 'route_df' filled with 0 (or anything that
+        # evaluates to binary 'False').
+
+        # Look through coordinate column in 'route_df' and if matches
+        # element in 'stop_coordinates' change value in 'stops' column
+        # to 'True'.
+
+        # Raise 'AssersionError' if bus stop coordinate not found in
+        # 'route_df'.
+
+        # return modified 'route_df'
+        pass
 
 
     def _add_elevation_to_df(self, elevation, route_df):
