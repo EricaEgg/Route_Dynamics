@@ -61,7 +61,8 @@ class RouteTrajectory(object):
     def build_route_coordinate_df(self,
         route_num,
         route_shp_filename,
-        elv_filename
+        elv_filename,
+        stop_coords=None
         ):
         """ Builds GeoDataFrame with rows cooresponding to points on
             route with columns corresponding to elevation, elevation
@@ -104,8 +105,13 @@ class RouteTrajectory(object):
             mark as bus stop under new column.
             """
 
+        assert (stop_coordinates is not None), ("No stop coordinates given")
+
         # Add new column to 'route_df' filled with 0 (or anything that
         # evaluates to binary 'False').
+        rdf = route_df.assign(
+            stop=0
+            )
 
         # Look through coordinate column in 'route_df' and if matches
         # element in 'stop_coordinates' change value in 'stops' column
@@ -115,7 +121,9 @@ class RouteTrajectory(object):
         # 'route_df'.
 
         # return modified 'route_df'
-        pass
+        assert (True == False), ("Have not implemented stops yet")
+
+        return rdf
 
 
     def _add_elevation_to_df(self, elevation, route_df):
