@@ -30,31 +30,48 @@ class RouteTrajectory(object):
         route_num,
         shp_filename,
         elv_raster_filename,
-        bus_speed=None
+        bus_speed_model_name='test',
+        stop_coords=None,
         ):
         """ Build DataFrame with bus trajectory and shapely connections
             for plotting. This object is mostly a wrapper object to
             build and return the Route DataFrame, but will later
             contain plotting methods as well.
 
-            Right now the argument 'bus_speed' is not used, but left
-            here to note that it could be imput at this level once
-            we have a procedure for estimating it.
+            Args:
+                bus_speed_model_name:
+                    Right now the argument 'bus_speed_model_name' is
+                    set to 'test' by default, which causes the speed to
+                    be set at a constant velocity of 6.7056 [m/s],
+                    which is equal to 15 mph. Later this will accept
+                    arguments like 'parabolic_between_stops' or maybe
+                    even something smarter that includes trtaffic.
             """
 
-        # Build Route DataFrame
+        # Build Route DataFrame, starting with columns:
+        #     - 'elevation'
+        #     - 'cum_distance'
+        #     - 'is_bus_stop'
         self.route_df = self.build_route_coordinate_df(
             route_num=route_num,
             route_shp_filename=shp_filename,
             elv_filename=elv_raster_filename,
             )
 
+        # Add 'velocity' column to route_df
         self.route_df = self._add_velocities_to_df(self.route_df)
 
+        # Add 'acceleration' column to route_df
         self.route_df = self._add_accelerations_to_df(self.route_df)
 
+        # Add force columns to route_df:
+        #     - 'grav_force'
+        #     - 'roll_fric'
+        #     - 'aero_drag'
+        #     - 'inertia'
         self.route_df = self._add_forces_to_df(self.route_df)
 
+        # Add '' column to route_df
         self.route_df = self._add_power_to_df(self.route_df)
 
 
@@ -110,7 +127,7 @@ class RouteTrajectory(object):
         # Add new column to 'route_df' filled with 0 (or anything that
         # evaluates to binary 'False').
         rdf = route_df.assign(
-            stop=0
+            is_bus_stop=0
             )
 
         # Look through coordinate column in 'route_df' and if matches
@@ -147,9 +164,17 @@ class RouteTrajectory(object):
     def _add_velocities_to_df(self, route_df):
         """ For now just adds a constant velocity as a placeholder.
             """
+
+        if self.bus_speed_model_name is 'test':
+            # Assign constant velocity of 6.7056 m/s (= 15 mph)
+            constant_bus_speed_array = 6.7056 * np.ones(len(route_df))
+
+        elif self
+
         rdf = route_df.assign(
-            velocity=np.ones(len(route_df))
+            velocity=constant_bus_speed_array
             )
+
         return rdf
 
 
