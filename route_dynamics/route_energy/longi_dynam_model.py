@@ -23,7 +23,6 @@ class RouteTrajectory(object):
         combines the information with elevation to create a route
         trajectory dataframe.
 
-        route_num: needs to be one that Erica made work.
         """
 
     def __init__(self,
@@ -38,7 +37,11 @@ class RouteTrajectory(object):
             build and return the Route DataFrame, but will later
             contain plotting methods as well.
 
+
             Args:
+
+                route_num: needs to be one that Erica made work.
+
                 bus_speed_model_name:
                     Right now the argument 'bus_speed_model_name' is
                     set to 'test' by default, which causes the speed to
@@ -46,16 +49,28 @@ class RouteTrajectory(object):
                     which is equal to 15 mph. Later this will accept
                     arguments like 'parabolic_between_stops' or maybe
                     even something smarter that includes trtaffic.
+
+            Methods:
+
+                ...
+
             """
+
+        # Assign attributes from __init__ args
+        self.route_num = route_num
+        self.route_shp_filename = route_shp_filename
+        self.elv_filename = elv_filename
+        self.stop_coords = stop_coords
 
         # Build Route DataFrame, starting with columns:
         #     - 'elevation'
         #     - 'cum_distance'
         #     - 'is_bus_stop'
         self.route_df = self.build_route_coordinate_df(
-            route_num=route_num,
-            route_shp_filename=shp_filename,
-            elv_filename=elv_raster_filename,
+            route_num = self.route_num,
+            route_shp_filename = self.route_shp_filename,
+            elv_filename = self.elv_filename,
+            stop_coords = self.stop_coords,
             )
 
         # Add 'velocity' column to route_df
@@ -79,12 +94,21 @@ class RouteTrajectory(object):
         route_num,
         route_shp_filename,
         elv_filename,
-        stop_coords=None
+        stop_coords,
         ):
         """ Builds GeoDataFrame with rows cooresponding to points on
             route with columns corresponding to elevation, elevation
             gradiant, and connecting line segments between points in
             the form of Shapely Linstring objects.
+
+            Also adds bus stop column and assigns bus stops based on
+            'stop_coords' argument
+
+            Args:
+                'stop_coords': list of coordinates of bus stops. Will
+                    assign points along bus route based on these values
+                    .
+
             """
 
         # Build the df of 2D route coordinates and
@@ -109,10 +133,7 @@ class RouteTrajectory(object):
         route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
         # Try to determine bus stops from list of coordinates
-        try:
-            route_df = self._mark_stops(stop_coords, route_df)
-        except AssertionError as aser:
-            print(aser)
+        route_df = self._mark_stops(stop_coords, route_df)
 
         return route_df
 
@@ -122,23 +143,26 @@ class RouteTrajectory(object):
             mark as bus stop under new column.
             """
 
-        assert (stop_coordinates is not None), ("No stop coordinates given")
+        # By default, 'stop_coords' is set to 'None', if this is true,
+        # then 10 bus stops will be assigned randomly
+        if stop_coords is None:
 
-        # Add new column to 'route_df' filled with 0 (or anything that
-        # evaluates to binary 'False').
-        rdf = route_df.assign(
-            is_bus_stop=0
-            )
+            # Add new column to 'route_df' filled with 0 (or anything that
+            # evaluates to binary 'False').
+            rdf = route_df.assign(
+                is_bus_stop = ([False] * len(route_df.index))
+                )
 
-        # Look through coordinate column in 'route_df' and if matches
-        # element in 'stop_coordinates' change value in 'stops' column
-        # to 'True'.
+        else:
+            # Look through coordinate column in 'route_df' and if matches
+            # element in 'stop_coordinates' change value in 'stops' column
+            # to 'True'.
 
-        # Raise 'AssersionError' if bus stop coordinate not found in
-        # 'route_df'.
+            # Raise 'AssersionError' if bus stop coordinate not found in
+            # 'route_df'.
 
-        # return modified 'route_df'
-        assert (True == False), ("Have not implemented stops yet")
+            # return modified 'route_df'
+            assert (True == False), ("Have not implemented stops yet")
 
         return rdf
 
