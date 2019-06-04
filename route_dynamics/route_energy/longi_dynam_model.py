@@ -16,9 +16,18 @@ import numpy as np
 import geopandas as gpd
 
 
+class PlottingTools(object):
+    """ Place holder for now, but eventually this will wrap up the
+        plotting tools written by last quarter's RouteDynamics team.
+        """
+
+    def __init__(self):
+        pass
+
+
 # Thinking this is not the best implementation since I don't actually
 # know how to make objects print like pandas DataFrames.
-class RouteTrajectory(object):
+class RouteTrajectory(PlottingTools):
     """ Takes 2d route coordinates extracted from shapefile and
         combines the information with elevation to create a route
         trajectory dataframe.
@@ -65,7 +74,7 @@ class RouteTrajectory(object):
         # Build Route DataFrame, starting with columns:
         #     - 'elevation'
         #     - 'cum_distance'
-        #     - 'is_bus_stop'
+        #     - 'is_bus_stop
         self.route_df = self.build_route_coordinate_df(
             route_num = self.route_num,
             route_shp_filename = self.route_shp_filename,
@@ -74,6 +83,7 @@ class RouteTrajectory(object):
             )
 
         # Add 'velocity' column to route_df
+        # This will also involve calulating the velocity.
         self.route_df = self._add_velocities_to_df(self.route_df)
 
         # Add 'acceleration' column to route_df
