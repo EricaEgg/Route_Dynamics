@@ -210,11 +210,17 @@ class RouteTrajectory(PlottingTools):
         """ For now just adds a constant velocity as a placeholder.
             """
 
-        if self.bus_speed_model_name is 'test':
+        # 'test' algorithm set by default for now.
+        if self.bus_speed_model_name == 'test':
             # Assign constant velocity of 6.7056 m/s (= 15 mph)
             constant_bus_speed_array = 6.7056 * np.ones(len(route_df))
 
-        elif self
+        elif self.bus_speed_model_name == 'test_stops':
+            # Really I want something here to use the stop array to calcularte bus speed.
+            # Step !: Calculate distance to next stop, which should determine the strajectory (speed at point)
+                # can use difference of 'cum_dist's
+            # 2) Assign trajectory as function of distance
+            # 3) plug in each route point between stops intor trajectory function.
 
         rdf = route_df.assign(
             velocity=constant_bus_speed_array
@@ -226,9 +232,16 @@ class RouteTrajectory(PlottingTools):
     def _add_accelerations_to_df(self, route_df):
         """ For now just adds a acceleration velocity as a placeholder.
             """
+        velocity_array = route_df.velocity.values
+
+        delta_distance_array = self.distance_array_from_linestrings(route_df)
+
+        accelerations = np.diff(velocity_array) / delta_distance_array
+
         rdf = route_df.assign(
-            acceleration=np.zeros(len(route_df))
+            acceleration=accelerations
             )
+
         return rdf
 
 
@@ -344,6 +357,13 @@ class RouteTrajectory(PlottingTools):
         power = rdf.battery_power_exerted.values
 
         # Calculate lengths of route segments
+        delta_x = distance_array_from_linestrings(rdf)
+
+        return self._calculate_energy_demand(power, delta_x, velocity)
+
+
+    def distance_array_from_linestrings(self, rdf):
+        # Calculate lengths of route segments
         delta_x = []
         for line in rdf.geometry.values:
             if hasattr(line, 'length'):
@@ -351,9 +371,6 @@ class RouteTrajectory(PlottingTools):
             else:
                 delta_x.append(0)
 
-        velocity = rdf.velocity.values
-
-        return self._calculate_energy_demand(power, delta_x, velocity)
-
+        return delta_x
 
 
