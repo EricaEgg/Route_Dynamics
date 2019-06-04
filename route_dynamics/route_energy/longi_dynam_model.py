@@ -146,14 +146,25 @@ class RouteTrajectory(object):
         # By default, 'stop_coords' is set to 'None', if this is true,
         # then 10 bus stops will be assigned randomly
         if stop_coords is None:
+            # Randomly select certain route coordinates to be marked as
+            # a stop with 5% probability.
+            # Fix seed for reproducability
+            np.random.seed(5615423)
+            # Return binary array with value 'True' 5% of time
+            is_stop_binary_array = (
+                np.random.random(len(route_df.index)) < .05
+                )
 
+            rdf = route_df.assign(
+                is_bus_stop = ([False] * len(route_df.index))
+                )
+
+        else: # UNDER CONSTRUCTION
             # Add new column to 'route_df' filled with 0 (or anything that
             # evaluates to binary 'False').
             rdf = route_df.assign(
                 is_bus_stop = ([False] * len(route_df.index))
                 )
-
-        else:
             # Look through coordinate column in 'route_df' and if matches
             # element in 'stop_coordinates' change value in 'stops' column
             # to 'True'.
