@@ -95,14 +95,19 @@ class RouteTrajectory(PlottingTools):
         # Add 'acceleration' column to route_df
         self.route_df = self._add_accelerations_to_df(self.route_df)
 
+        # Add passenger mass column to route_df
+        self.route_df = self._add_passenger_mass_to_df(self.route_df)
+
         # Add force columns to route_df:
-        #     - 'grav_force'
-        #     - 'roll_fric'
-        #     - 'aero_drag'
-        #     - 'inertia'
+        #     - 'grav_force' : gravitation force determined by road grade
+        #     - 'roll_fric' : rolling friction
+        #     - 'aero_drag' : areodynamic drag
+        #     - 'inertia' : inertial force, F = ma. Changes with passenger load
+        #                   on bus.
         self.route_df = self._add_forces_to_df(self.route_df)
 
-        # Add '' column to route_df
+        # Add column to route_df containing instantaneous power experted by
+        # bus at each point along route.
         self.route_df = self._add_power_to_df(self.route_df)
 
 
@@ -172,7 +177,7 @@ class RouteTrajectory(PlottingTools):
                 )
 
             rdf = route_df.assign(
-                is_bus_stop = ([False] * len(route_df.index))
+                is_bus_stop = is_stop_binary_array
                 )
 
         else: # UNDER CONSTRUCTION
@@ -189,7 +194,8 @@ class RouteTrajectory(PlottingTools):
             # 'route_df'.
 
             # return modified 'route_df'
-            assert (True == False), ("Have not implemented stops yet")
+            raise IllegalArgumentError("'_mark_stops' method is not ready to "
+                    "accept any 'stop_coords' arg other than 'None'")
 
         return rdf
 
@@ -216,10 +222,14 @@ class RouteTrajectory(PlottingTools):
         """ For now just adds a constant velocity as a placeholder.
             """
 
+        lazy_choise_for_speed = 6.7056  # 6.7056 m/s (= 15 mph)
+
         # 'test' algorithm set by default for now.
         if bus_speed_model == 'constant_15mph':
-            # Assign constant velocity of 6.7056 m/s (= 15 mph)
-            bus_speed_array = 6.7056 * np.ones(len(route_df))
+            # Assign constant velocity
+            bus_speed_array = (
+                lazy_choise_for_speed * np.ones(len(route_df.index))
+                )
 
         elif bus_speed_model == 'test_stops':
             # Really I want something here to use the stop array to calcularte bus speed.
@@ -227,6 +237,15 @@ class RouteTrajectory(PlottingTools):
                 # can use difference of 'cum_dist's
             # 2) Assign trajectory as function of distance
             # 3) plug in each route point between stops intor trajectory function.
+            # ... This is all UNDER CONSTRUCTION ...
+
+            # Right now, this will just make stop points have zero velocity.
+            zero_if_stop__one_if_not = (
+                np.logical_not(route_df.is_bus_stop.values)*1
+                )
+            # if not stop, set velocity to 15 mph
+            bus_speed_array = zero_if_stop__one_if_not * lazy_choise_for_speed
+
 
         rdf = route_df.assign(
             velocity=bus_speed_array
@@ -265,6 +284,15 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
+    def _add_passenger_mass_to_df(self, route_df):
+        """ Compute number of passengers along the route.
+            """
+        # Placeholder for now.
+        route_df = route_df.assign(
+            passenger_mass = np.zeros(len(route_df.index))
+            )
+
+
     def _add_forces_to_df(self, route_df):
         """ Calculate forces on bus relevant to the Longitudinate
             dynamics model.
@@ -288,32 +316,40 @@ class RouteTrajectory(PlottingTools):
 
 
     def calculate_forces(self, rdf):
-
+        """ Requires GeoDataFrame input with mass column """
 
         vels = rdf.velocity.values
         acce = rdf.acceleration.values
         grad = rdf.gradient.values
         grad_angle = np.arctan(grad)
+        passenger_mass = rdf.passenger_mass.values
 
         # Physical parameters
         gravi_accel = 9.81
-        air_density = 1.225 # air density in kg/m3; consant for now, eventaully input from weather API
-        v_wind = 0.0 #wind speed in km per hour; figure out component, and also will come from weather API
+        air_density = 1.225 # air density in kg/m3; consant for now,
+            # eventaully input from weather API
+        v_wind = 0.0 # wind speed in km per hour; figure out component,
+            # and also will come from weather API
         fric_coeff = 0.01
 
         # List of Bus Parameters for 40 foot bus
-        mass = 12927 # Mass of bus in kg
+        bus_mass = 12927 # Mass of bus in kg
         width = 2.6 # in m
         height = 3.3 # in m
         bus_front_area = width * height
         drag_coeff = 0.34 # drag coefficient estimate from paper (???)
         rw = 0.28575 # radius of wheel in m
 
+        # Total bus mass along route is equal to the bus mass plus
+        # passenger load
+
         # Calculate the gravitational force
-        grav_force = mass * gravi_accel * np.sin(grad_angle)
+        grav_force = loaded_bus_mass * gravi_accel * np.sin(grad_angle)
 
         # Calculate the rolling friction
-        roll_fric = fric_coeff * mass * gravi_accel * np.cos(grad_angle)
+        roll_fric = (
+            fric_coeff * loaded_bus_mass * gravi_accel * np.cos(grad_angle)
+            )
 
         # Calculate the aerodynamic drag
         aero_drag = (
@@ -326,8 +362,8 @@ class RouteTrajectory(PlottingTools):
             (vels-v_wind)
             )
 
-    #     # Calculate the inertial force
-        inertia = mass * acce
+        # Calculate the inertial force
+        inertia = loaded_bus_mass * acce
 
         return (grav_force, roll_fric, aero_drag, inertia)
 
