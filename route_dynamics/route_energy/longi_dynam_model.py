@@ -213,7 +213,7 @@ class RouteTrajectory(PlottingTools):
         # 'test' algorithm set by default for now.
         if self.bus_speed_model_name == 'test':
             # Assign constant velocity of 6.7056 m/s (= 15 mph)
-            constant_bus_speed_array = 6.7056 * np.ones(len(route_df))
+            bus_speed_array = 6.7056 * np.ones(len(route_df))
 
         elif self.bus_speed_model_name == 'test_stops':
             # Really I want something here to use the stop array to calcularte bus speed.
@@ -223,20 +223,24 @@ class RouteTrajectory(PlottingTools):
             # 3) plug in each route point between stops intor trajectory function.
 
         rdf = route_df.assign(
-            velocity=constant_bus_speed_array
+            velocity=bus_speed_array
             )
 
         return rdf
 
 
-    def _add_accelerations_to_df(self, route_df):
+    def _add_accelerations_to_df(self, route_df, alg='finite_diff'):
         """ For now just adds a acceleration velocity as a placeholder.
             """
-        velocity_array = route_df.velocity.values
+        if alg=='finite_diff':
+            # Use finite difference of velocities to calculate accelerations
+            velocity_array = route_df.velocity.values
 
-        delta_distance_array = self.distance_array_from_linestrings(route_df)
+            delta_distance_array = self.distance_array_from_linestrings(route_df)
 
-        accelerations = np.diff(velocity_array) / delta_distance_array
+            accelerations = np.diff(velocity_array) / delta_distance_array
+        else:
+            assert (True = False), "Fix this shit."
 
         rdf = route_df.assign(
             acceleration=accelerations
