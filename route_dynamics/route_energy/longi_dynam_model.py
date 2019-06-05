@@ -16,6 +16,11 @@ import numpy as np
 import geopandas as gpd
 
 
+class IllegalArgumentError(ValueError):
+    """ """
+    pass
+
+
 class PlottingTools(object):
     """ Place holder for now, but eventually this will wrap up the
         plotting tools written by last quarter's RouteDynamics team.
@@ -38,7 +43,7 @@ class RouteTrajectory(PlottingTools):
         route_num,
         shp_filename,
         elv_raster_filename,
-        bus_speed_model_name='test',
+        bus_speed_model='constant_15mph',
         stop_coords=None,
         ):
         """ Build DataFrame with bus trajectory and shapely connections
@@ -51,8 +56,8 @@ class RouteTrajectory(PlottingTools):
 
                 route_num: needs to be one that Erica made work.
 
-                bus_speed_model_name:
-                    Right now the argument 'bus_speed_model_name' is
+                bus_speed_model:
+                    Right now the argument 'bus_speed_model' is
                     set to 'test' by default, which causes the speed to
                     be set at a constant velocity of 6.7056 [m/s],
                     which is equal to 15 mph. Later this will accept
@@ -69,6 +74,7 @@ class RouteTrajectory(PlottingTools):
         self.route_num = route_num
         self.route_shp_filename = route_shp_filename
         self.elv_filename = elv_filename
+        self.bus_speed_model = bus_speed_model
         self.stop_coords = stop_coords
 
         # Build Route DataFrame, starting with columns:
@@ -206,16 +212,16 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _add_velocities_to_df(self, route_df):
+    def _add_velocities_to_df(self, route_df, bus_speed_model):
         """ For now just adds a constant velocity as a placeholder.
             """
 
         # 'test' algorithm set by default for now.
-        if self.bus_speed_model_name == 'test':
+        if bus_speed_model == 'constant_15mph':
             # Assign constant velocity of 6.7056 m/s (= 15 mph)
             bus_speed_array = 6.7056 * np.ones(len(route_df))
 
-        elif self.bus_speed_model_name == 'test_stops':
+        elif bus_speed_model == 'test_stops':
             # Really I want something here to use the stop array to calcularte bus speed.
             # Step !: Calculate distance to next stop, which should determine the strajectory (speed at point)
                 # can use difference of 'cum_dist's
@@ -239,9 +245,19 @@ class RouteTrajectory(PlottingTools):
             delta_distance_array = self.distance_array_from_linestrings(route_df)
 
             accelerations = np.diff(velocity_array) / delta_distance_array
-        else:
-            assert (True = False), "Fix this shit."
 
+
+        else:
+            raise IllegalArgumentError((
+                "'alg' keywarg must be implemented algorithm. "
+                "Currently supported are; \n"
+                "    - 'finite_diff' : calculates finite difference in"
+                " velocities and distances and takes the ratio.\n"
+                "and nothing else... maybe one day it will have an analytic"
+                " option."
+                ))
+
+        #Assign acceleration values to new row in route DataFrame.
         rdf = route_df.assign(
             acceleration=accelerations
             )
