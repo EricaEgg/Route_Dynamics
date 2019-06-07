@@ -16,7 +16,8 @@ from geopy.distance import geodesic
 
 def read_shape(shapefile, route_num):
     """
-        Reads shapefile and selects desired route.
+        Loads shapefile into GeoDataFrame and selects desired route by
+        ROUTE_NUM column.
 
         Parameters
         ----------
@@ -25,8 +26,8 @@ def read_shape(shapefile, route_num):
 
         Returns
         -------
-        route_shp: Load shape file into GeoDataFrame
-            with extra column ROUTE_NUM = (last argument)
+        route_shp: Filered gdf containing just points on route
+            'route_num'
         """
 
     routes_shp = gpd.read_file(shapefile)
@@ -54,7 +55,9 @@ def extract_point_df(route_shp):
     # and store values only in nd.array
     route_geometry = route_shp.geometry.values
 
-    #HJG: I think this makes a copy? not sure why it's needed
+    # Convert Linestring object into dictionary with keys 'type' and
+    # 'coordinates', the second containing a tuple of 3D coordinate
+    # tuples that we use to build the route coordinate dataframe.
     route_geometry = [mapping(route_geometry[0])]
 
     # Return route coordinates in seperate pd.DataFrame.
@@ -166,7 +169,7 @@ def gradient(route_shp, rasterfile):
     return elevation_meters, route_gradient, route_cum_distance, route_distance
 
 
-def make_lines(gdf, gradient, idx, geometry = 'geometry'):
+def _make_lines(gdf, idx, geometry = 'geometry'):
     """
         Creates a line between each point; iterative function for
         make_multi_lines(), so it is not called directly.
@@ -187,13 +190,13 @@ def make_lines(gdf, gradient, idx, geometry = 'geometry'):
     coordinate_2 = gdf.loc[idx + 1]['coordinates']
     # Create shapely.Line object connection coordinates
     line = LineString([coordinate_1, coordinate_2])
-    # Organize gradient input argument with shapely.Line for insertion
-    # into output DataFrame.
-    data = {'gradient': gradient,
-            'geometry':[line]}
-    df_line = pd.DataFrame(data, columns = ['gradient', 'geometry'])
+    # # Organize gradient input argument with shapely.Line for insertion
+    # # into output DataFrame.
+    # data = {'gradient': gradient,
+    #         'geometry':[line]}
+    # df_line = pd.DataFrame(data, columns = ['gradient', 'geometry'])
 
-    return df_line
+    return line
 
 
 def make_multi_lines(linestring_route_df, elevation_gradient):
@@ -211,15 +214,43 @@ def make_multi_lines(linestring_route_df, elevation_gradient):
         gdf_route: GeoDataFrame with columns ['gradient', 'geometry']
         """
 
-    # Initialize output DataFrame
-    df_route = pd.DataFrame(columns = ['gradient', 'geometry'])
+    num_pt_connections = len(linestring_route_df) - 1
 
-    # Loop through row indicies of 'linestring_route_df' input.
-    for idx in range(len(linestring_route_df) - 1):
-        df_linestring = make_lines(linestring_route_df, elevation_gradient[idx], idx)
-        df_route = pd.concat([df_route, df_linestring])
-    gdf_route = gpd.GeoDataFrame(df_route)
+    # Initialize output column to contain Lines
+    lin_col = []
+    # Add None as first element corresponding to first route point of
+    # zero gradient.
+    lin_col.append(None)
+
+    # Loop through row indicies of 'linestring_route_df' input to
+    # generate Shapely Lines.
+    for idx in range(num_pt_connections):
+        df_line = _make_lines(
+            linestring_route_df,
+            idx
+            # elevation_gradient[idx],
+            )
+        lin_col.append(df_line)
+
+
+
+    route_df = linestring_route_df.assign(
+        gradient=elevation_gradient,
+        geometry=lin_col
+        )
+
+    gdf_route = gpd.GeoDataFrame(route_df)
     return gdf_route
+
+    # # Initialize output DataFrame
+    # df_route = pd.DataFrame(columns = ['gradient', 'geometry'])
+
+    # # Loop through row indicies of 'linestring_route_df' input.
+    # for idx in range(len(linestring_route_df) - 1):
+    #     df_linestring = make_lines(linestring_route_df, elevation_gradient[idx], idx)
+    #     df_route = pd.concat([df_route, df_linestring])
+    # gdf_route = gpd.GeoDataFrame(df_route)
+    # return gdf_route
 
 
 def route_map(gdf_route):
@@ -247,9 +278,12 @@ def route_map(gdf_route):
     # assign colormap of grade
     linear_map = cm.linear.Paired_06.scale(min_grade, max_grade )
 
-    route_layer = folium.GeoJson(route_json, style_function = lambda feature: {
-        'color': linear_map(feature['properties']['gradient']),
-        'weight': 8})
+    route_layer = folium.GeoJson(
+        route_json, style_function = lambda feature: {
+            'color': linear_map(feature['properties']['gradient']),
+            'weight': 8
+            }
+        )
     route_layer.add_child
     route_map.add_child(linear_map)
     route_map.add_child(route_layer)
