@@ -36,14 +36,13 @@ class RouteTrajectory(PlottingTools):
     """ Takes 2d route coordinates extracted from shapefile and
         combines the information with elevation to create a route
         trajectory dataframe.
-
         """
 
     def __init__(self,
         route_num,
         shp_filename,
         elv_raster_filename,
-        bus_speed_model='constant_15mph',
+        bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         ):
         """ Build DataFrame with bus trajectory and shapely connections
@@ -70,23 +69,21 @@ class RouteTrajectory(PlottingTools):
 
             """
 
-        # Assign attributes from __init__ args
-        self.route_num = route_num
-        self.route_shp_filename = route_shp_filename
-        self.elv_filename = elv_filename
+        # Store algorithm name for future reference.
         self.bus_speed_model = bus_speed_model
-        self.stop_coords = stop_coords
 
         # Build Route DataFrame, starting with columns:
         #     - 'elevation'
         #     - 'cum_distance'
         #     - 'is_bus_stop
         self.route_df = self.build_route_coordinate_df(
-            route_num = self.route_num,
-            route_shp_filename = self.route_shp_filename,
-            elv_filename = self.elv_filename,
-            stop_coords = self.stop_coords,
+            route_num = route_num,
+            shp_filename = shp_filename,
+            elv_raster_filename = elv_raster_filename,
             )
+
+        # Try to determine bus stops from list of coordinates
+        route_df = self._mark_stops(stop_coords, route_df)
 
         # Add 'velocity' column to route_df
         # This will also involve calulating the velocity.
@@ -113,9 +110,8 @@ class RouteTrajectory(PlottingTools):
 
     def build_route_coordinate_df(self,
         route_num,
-        route_shp_filename,
-        elv_filename,
-        stop_coords,
+        shp_filename,
+        elv_raster_filename,
         ):
         """ Builds GeoDataFrame with rows cooresponding to points on
             route with columns corresponding to elevation, elevation
@@ -133,7 +129,7 @@ class RouteTrajectory(PlottingTools):
             """
 
         # Build the df of 2D route coordinates and
-        route_shp = rbs.read_shape(route_shp_filename, route_num)
+        route_shp = rbs.read_shape(shp_filename, route_num)
 
         route_2Dcoord_df = rbs.extract_point_df(route_shp)
 
@@ -142,7 +138,7 @@ class RouteTrajectory(PlottingTools):
             elevation_gradient,
             route_cum_distance,
             distance
-            ) = rbs.gradient(route_shp, elv_filename)
+            ) = rbs.gradient(route_shp, elv_raster_filename)
 
         route_df = rbs.make_multi_lines(
             route_2Dcoord_df,
@@ -152,9 +148,6 @@ class RouteTrajectory(PlottingTools):
         route_df = self._add_elevation_to_df(elevation, route_df)
 
         route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
-
-        # Try to determine bus stops from list of coordinates
-        route_df = self._mark_stops(stop_coords, route_df)
 
         return route_df
 
@@ -166,36 +159,25 @@ class RouteTrajectory(PlottingTools):
 
         # By default, 'stop_coords' is set to 'None', if this is true,
         # then 10 bus stops will be assigned randomly
-        if stop_coords is None:
+        if stop_coords is 'random':
             # Randomly select certain route coordinates to be marked as
             # a stop with 5% probability.
             # Fix seed for reproducability
             np.random.seed(5615423)
             # Return binary array with value 'True' 5% of time
-            is_stop_binary_array = (
+            is_stop__truth_array = (
                 np.random.random(len(route_df.index)) < .05
                 )
 
             rdf = route_df.assign(
-                is_bus_stop = is_stop_binary_array
+                is_bus_stop = is_stop__truth_array
                 )
 
-        else: # UNDER CONSTRUCTION
-            # Add new column to 'route_df' filled with 0 (or anything that
-            # evaluates to binary 'False').
+       if stop_coords is None:
+            # Mark no stops
             rdf = route_df.assign(
                 is_bus_stop = ([False] * len(route_df.index))
                 )
-            # Look through coordinate column in 'route_df' and if matches
-            # element in 'stop_coordinates' change value in 'stops' column
-            # to 'True'.
-
-            # Raise 'AssersionError' if bus stop coordinate not found in
-            # 'route_df'.
-
-            # return modified 'route_df'
-            raise IllegalArgumentError("'_mark_stops' method is not ready to "
-                    "accept any 'stop_coords' arg other than 'None'")
 
         return rdf
 
@@ -231,7 +213,7 @@ class RouteTrajectory(PlottingTools):
                 lazy_choise_for_speed * np.ones(len(route_df.index))
                 )
 
-        elif bus_speed_model == 'test_stops':
+        elif bus_speed_model == 'stopped_at_stops__15mph_between':
             # Really I want something here to use the stop array to calcularte bus speed.
             # Step !: Calculate distance to next stop, which should determine the strajectory (speed at point)
                 # can use difference of 'cum_dist's
@@ -243,6 +225,12 @@ class RouteTrajectory(PlottingTools):
             zero_if_stop__one_if_not = (
                 np.logical_not(route_df.is_bus_stop.values)*1
                 )
+
+            # Mark endpoints of route as well
+            zero_if_stop_start_end__one_if_not = zero_if_stop__one_if_not
+            zero_if_stop_start_end__one_if_not[0] = 0
+            zero_if_stop_start_end__one_if_not[-1] = 0
+
             # if not stop, set velocity to 15 mph
             bus_speed_array = zero_if_stop__one_if_not * lazy_choise_for_speed
 
@@ -257,6 +245,8 @@ class RouteTrajectory(PlottingTools):
     def _add_accelerations_to_df(self, route_df, alg='finite_diff'):
         """ For now just adds a acceleration velocity as a placeholder.
             """
+
+        # Calculate acceleration
         if alg=='finite_diff':
             # Use finite difference of velocities to calculate accelerations
             velocity_array = route_df.velocity.values
@@ -286,11 +276,28 @@ class RouteTrajectory(PlottingTools):
 
     def _add_passenger_mass_to_df(self, route_df):
         """ Compute number of passengers along the route.
+
+            Eventually this will use Ryan's ridership module, which
+            determines the ridership at each bus stop.
             """
+
+        passenger_mass_per_stop = self.calculate_passenger_mass(
+            route_number,
+            in_or_out,
+            segment,
+            )
+
         # Placeholder for now.
         route_df = route_df.assign(
             passenger_mass = np.zeros(len(route_df.index))
             )
+
+        return route_df
+
+
+    def calculate_passenger_mass(self, route_number, in_or_out, segment):
+        """ Load Ryan's module """
+        return None
 
 
     def _add_forces_to_df(self, route_df):
