@@ -97,7 +97,7 @@ class RouteTrajectory(PlottingTools):
         ):
 
         # Try to determine bus stops from list of coordinates
-        route_df = self._mark_stops(stop_coords, route_df)
+        route_df = self._add_stops_to_df(stop_coords, route_df)
 
         # Add 'velocity' column to route_df
         # This will also involve calulating the velocity.
@@ -105,6 +105,8 @@ class RouteTrajectory(PlottingTools):
             route_df,
             bus_speed_model=bus_speed_model,
             )
+
+        route_df = self._add_delta_times_to_df(route_df)
 
         # Add 'acceleration' column to route_df
         route_df = self._add_accelerations_to_df(route_df)
@@ -171,7 +173,7 @@ class RouteTrajectory(PlottingTools):
         return route_df
 
 
-    def _mark_stops(self, stop_coords, route_df):
+    def _add_stops_to_df(self, stop_coords, route_df):
         """ Find rows in route_df matching the stop_coordinates and
             mark as bus stop under new column.
             """
@@ -261,10 +263,54 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
+    def _add_delta_times_to_df(self, route_df):
+        """ Add delta_times for finite_difference calculation of acceleration """
+
+        delta_times = self._calculate_delta_times_on_linestring_distance(route_df)
+
+        rdf = route_df.assign(
+            delta_time=delta_times
+            )
+
+        return rdf
+
+
+    def _calculate_delta_times_on_linestring_distance(self, route_df):
+
+        back_diff_delta_x = self.distance_array_from_linestrings(route_df)
+
+        try:
+            velocities = route_df.velocity.values
+        except AttributeError:
+            print("Does 'route_df' have 'velocity' column? ")
+
+        # Calcule average velocities along segment but backward difference
+        segment_avg_velocities = (
+            velocities
+            +
+            np.append(0,velocities[:-1])
+            )/2
+
+        delta_times = back_diff_delta_x * segment_avg_velocities
+
+        return delta_times
+
+
     def _add_accelerations_to_df(self, route_df, alg='finite_diff'):
         """ For now just adds a acceleration velocity as a placeholder.
             """
 
+        accelerations = self._calculate_acceleration(route_df, alg)
+
+        #Assign acceleration values to new row in route DataFrame.
+        rdf = route_df.assign(
+            acceleration=accelerations
+            )
+
+        return rdf
+
+
+    def _calculate_acceleration(self, route_df, alg='finite_diff'):
         # Calculate acceleration
         if alg=='finite_diff':
             # Use finite difference of velocities to calculate accelerations
@@ -280,24 +326,31 @@ class RouteTrajectory(PlottingTools):
             #         )
             #     )
 
+            # Calculate acceleraetion by central difference
+
             zero_in_a_list = np.array([0])
 
-            diff_velocity_array = np.append(
+            back_diff_velocity_array = np.append(
                 zero_in_a_list,
                 np.diff(velocity_array)
                 )
 
-            # assert (np.shape(diff_velocity_array)==np.shape(delta_distance_array)), (
-            #     "np.shape(diff_velocity_array) = {}\n"
-            #     "np.shape(delta_distance_array) = {}\n"
-            #     "np.shape(np.diff(velocity_array)) = {}".format(
-            #         np.shape(diff_velocity_array),
-            #         np.shape(delta_distance_array),
-            #         np.shape(np.diff(velocity_array))
-            #         )
-            #     )
+            forward_diff_velocity_array = np.append(
+                np.diff(velocity_array),
+                zero_in_a_list
+                )
 
-            accelerations = diff_velocity_array / delta_distance_array
+            central_diff_velocity_array = (
+                back_diff_velocity_array
+                +
+                forward_diff_velocity_array
+                )/2.
+
+            # But average acceleration cooresponding to the linestring
+            # distance will be the backward difference in velovity...
+            # divided by time and not distance...
+
+            accelerations = central_diff_velocity_array / delta_distance_array
 
 
         else:
@@ -310,12 +363,7 @@ class RouteTrajectory(PlottingTools):
                 " option."
                 ))
 
-        #Assign acceleration values to new row in route DataFrame.
-        rdf = route_df.assign(
-            acceleration=accelerations
-            )
-
-        return rdf
+        return accelerations
 
 
     def _add_passenger_mass_to_df(self,
@@ -469,6 +517,9 @@ class RouteTrajectory(PlottingTools):
     def _calculate_energy_demand(self, power, delta_x, veloc):
 
         delta_t = delta_x / veloc
+        delta_t = delta_t[1:]
+
+        power = power[1:]
 
         energy = np.sum(power * delta_t)
 

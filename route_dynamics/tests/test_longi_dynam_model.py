@@ -169,6 +169,21 @@ class TestRouteTrajectory(object):
 
         # assert False, "{}".format(test_rdf)
 
+
+    def test_energy_calc(self):
+        """Test that energy calculation performs a number"""
+
+        test_instance = TestRouteTrajectory.test_instance__0_grade
+
+        energy = test_instance.energy_from_route()
+
+        assert type(energy) is float, (
+            "Energy is not a float.\n"
+            "Likely due to first column of dataframe, head looks like...\n"
+            "{}".format(test_instance.route_df.head())
+            )
+
+
     def test_that_hills_are_hard(self):
 
         flat_energy = (
