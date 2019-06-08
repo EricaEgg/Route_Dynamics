@@ -4,6 +4,7 @@ from ..route_elevation import base as rbs
 from ..route_energy import longi_dynam_model as ldm
 
 import numpy as np
+import pandas as pd
 
 # Load files for tests.
 shapefile_name = '../data/six_routes.shp'
@@ -26,13 +27,19 @@ route_list = [48, 50, 75, 7, 45, 40]
 # # Build dataframe of 2D coordinates making up bus route
 # test_route_coord_df = rbs.extract_point_df(route_shp)
 
+
+class IllegalArgumentErrorInTest(ValueError):
+    """ """
+    pass
+
+
 class SimpleRouteTrajectory(ldm.RouteTrajectory):
     """ Build a simple test route with only a few route coordinates
         one unit apart and at constanstant route grate.
         """
 
     def __init__(self,
-        shp_coords,
+        shp_coords='default',
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         elevation_gradient_const=0,
@@ -58,38 +65,16 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
             )
 
         # TEST: Mark no stops for
-        route_df = self._mark_stops(None, route_df)
-
-        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        # Everything else in should be the same as package implementation
-        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        # Add 'velocity' column to route_df
-        # This will also involve calulating the velocity.
-        self.route_df = self._add_velocities_to_df(self.route_df)
-
-        # Add 'acceleration' column to route_df
-        self.route_df = self._add_accelerations_to_df(self.route_df)
-
-        # Add passenger mass column to route_df
-        self.route_df = self._add_passenger_mass_to_df(self.route_df)
-
-        # Add force columns to route_df:
-        #     - 'grav_force' : gravitation force determined by road grade
-        #     - 'roll_fric' : rolling friction
-        #     - 'aero_drag' : areodynamic drag
-        #     - 'inertia' : inertial force, F = ma. Changes with passenger load
-        #                   on bus.
-        self.route_df = self._add_forces_to_df(self.route_df)
-
-        # Add column to route_df containing instantaneous power experted by
-        # bus at each point along route.
-        self.route_df = self._add_power_to_df(self.route_df)
+        self.route_df = self._add_dynamics_to_df(
+            route_df=self.route_df,
+            stop_coords=None,
+            bus_speed_model=self.bus_speed_model,
+            )
 
     def _simple_build_route_coordinate_df(self,
-        shp_coords=None,
-        stop_coords,
-        elevation_gradient_const,
+        shp_coords='default',
+        stop_coords=None,
+        elevation_gradient_const=0,
         ):
         """ Builds GeoDataFrame with rows cooresponding to points on
             route with columns corresponding to elevation, elevation
@@ -106,8 +91,8 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
 
             """
 
-        if shp_coords is None:
-            # Use default coordinates
+        if shp_coords is 'default':
+
             coordinates = [
                 (0,0),
                 (0,1),
@@ -119,11 +104,17 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
             # Might faul if list is not 2D coordinate tuples...
             coordinates = shp_coords
 
+        else:
+            raise IllegalArgumentErrorInTest(
+                "Bad input for 'shp_coords' arg of '_simple_build_route_coordi"
+                "nate_df' method of class 'SimpleRouteTrajectory' in file 'tes"
+                "t_longi_dynam_model'")
+
         # Build preliminary coordinate DataFrame
-        route_2Dcoord_df = pandas.DataFrame(
-            data=coordinates,
+        route_2Dcoord_df = pd.DataFrame(
+            data=pd.Series(coordinates),
             index=None,
-            columns='coordinates',
+            columns=['coordinates'],
             )
 
         elevation_gradient = elevation_gradient_const * np.ones(len(coordinates))
@@ -133,9 +124,9 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
             elevation_gradient, # Simple array
             )
 
-        route_df = self._add_elevation_to_df(elevation, route_df)
+        # route_df = self._add_elevation_to_df(elevation, route_df)
 
-        route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
+        # route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
         return route_df
 
@@ -151,39 +142,68 @@ class TestRouteTrajectory(object):
         returns:
             GeoDataFrame object with columns
         """
+
+    test_instance__0_grade = SimpleRouteTrajectory(
+        shp_coords='default',
+        bus_speed_model='stopped_at_stops__15mph_between',
+        stop_coords=None,
+        elevation_gradient_const=0,
+        )
+
+    test_instance__1_grade = SimpleRouteTrajectory(
+        shp_coords='default',
+        bus_speed_model='stopped_at_stops__15mph_between',
+        stop_coords=None,
+        elevation_gradient_const=1,
+        )
+
     def test_simple_route__no_grade(self):
         """
             """
-        test_instance = SimpleRouteTrajectory(
-            shp_coords=None,
 
-            bus_speed_model='stopped_at_stops__15mph_between',
-            stop_coords=None,
-            elevation_gradient_const=0,
+        test_instance = TestRouteTrajectory.test_instance__0_grade
+
+        test_rdf = test_instance.route_df
+
+        assert np.all(np.logical_not(test_rdf.gradient)), "gradient not all 0"
+
+        # assert False, "{}".format(test_rdf)
+
+    def test_that_hills_are_hard(self):
+
+        flat_energy = (
+            TestRouteTrajectory.test_instance__0_grade.energy_from_route()
             )
 
-
-
-    def test_constant_velocity(self):
-        """ Test that RouteTrajectory instance by defaults returns
-            constant velocity
-            """
-
-        test_instance = ldm.RouteTrajectory(
-            route_num=test_route_num,
-            shp_filename=shapefile_name,
-            elv_raster_filename=rasterfile_name,
-            bus_speed_model='constant_15mph',
-            stop_coords=None,
+        hill_energy = (
+            TestRouteTrajectory.test_instance__0_grade.energy_from_route()
             )
 
-        inst_velocities = test_instance.route_df.velocity.values
+        assert flat_energy < hill_energy, (
+            "The flat was harder than the hill...\n"
+            "Energy output on flat route: {}\n"
+            "Energy output on hill route: {}".format(flat_energy,hill_energy)
+            )
+    # def test_constant_velocity(self):
+    #     """ Test that RouteTrajectory instance by defaults returns
+    #         constant velocity
+    #         """
 
-        assert inst_velocities == np.ones(len(inst_velocities))*6.7056
+    #     test_instance = ldm.RouteTrajectory(
+    #         route_num=test_route_num,
+    #         shp_filename=shapefile_name,
+    #         elv_raster_filename=rasterfile_name,
+    #         bus_speed_model='constant_15mph',
+    #         stop_coords=None,
+    #         )
+
+    #     inst_velocities = test_instance.route_df.velocity.values
+
+    #     assert inst_velocities == np.ones(len(inst_velocities))*6.7056
 
 
-    def test_one(self):
-        """ Test that RouteTrajectory instance returns object with
-            DataFrame attribute
-            """
+    # def test_one(self):
+    #     """ Test that RouteTrajectory instance returns object with
+    #         DataFrame attribute
+    #         """
 

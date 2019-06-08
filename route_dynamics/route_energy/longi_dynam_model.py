@@ -9,8 +9,8 @@
 
     """
 
-from ..route_elevation import single_route as rsr
-from ..route_elevation import base as rbs
+# from ..route_elevation import single_route as rsr
+from ..route_elevation import base as re_base
 
 import numpy as np
 import geopandas as gpd
@@ -28,6 +28,7 @@ class PlottingTools(object):
 
     def __init__(self):
         pass
+
 
 
 # Thinking this is not the best implementation since I don't actually
@@ -82,18 +83,34 @@ class RouteTrajectory(PlottingTools):
             elv_raster_filename = elv_raster_filename,
             )
 
+        self.route_df = self._add_dynamics_to_df(
+            route_df=route_df,
+            stop_coords=stop_coords,
+            bus_speed_model=self.bus_speed_model,
+            )
+
+
+    def _add_dynamics_to_df(self,
+        route_df,
+        stop_coords,
+        bus_speed_model,
+        ):
+
         # Try to determine bus stops from list of coordinates
         route_df = self._mark_stops(stop_coords, route_df)
 
         # Add 'velocity' column to route_df
         # This will also involve calulating the velocity.
-        self.route_df = self._add_velocities_to_df(self.route_df)
+        route_df = self._add_velocities_to_df(
+            route_df,
+            bus_speed_model=bus_speed_model,
+            )
 
         # Add 'acceleration' column to route_df
-        self.route_df = self._add_accelerations_to_df(self.route_df)
+        route_df = self._add_accelerations_to_df(route_df)
 
         # Add passenger mass column to route_df
-        self.route_df = self._add_passenger_mass_to_df(self.route_df)
+        route_df = self._add_passenger_mass_to_df(route_df)
 
         # Add force columns to route_df:
         #     - 'grav_force' : gravitation force determined by road grade
@@ -101,11 +118,13 @@ class RouteTrajectory(PlottingTools):
         #     - 'aero_drag' : areodynamic drag
         #     - 'inertia' : inertial force, F = ma. Changes with passenger load
         #                   on bus.
-        self.route_df = self._add_forces_to_df(self.route_df)
+        route_df = self._add_forces_to_df(route_df)
 
         # Add column to route_df containing instantaneous power experted by
         # bus at each point along route.
-        self.route_df = self._add_power_to_df(self.route_df)
+        route_df = self._add_power_to_df(route_df)
+
+        return route_df
 
 
     def build_route_coordinate_df(self,
@@ -129,18 +148,18 @@ class RouteTrajectory(PlottingTools):
             """
 
         # Build the df of 2D route coordinates and
-        route_shp = rbs.read_shape(shp_filename, route_num)
+        route_shp = re_base.read_shape(shp_filename, route_num)
 
-        route_2Dcoord_df = rbs.extract_point_df(route_shp)
+        route_2Dcoord_df = re_base.extract_point_df(route_shp)
 
         (
             elevation,
             elevation_gradient,
             route_cum_distance,
             distance
-            ) = rbs.gradient(route_shp, elv_raster_filename)
+            ) = re_base.gradient(route_shp, elv_raster_filename)
 
-        route_df = rbs.make_multi_lines(
+        route_df = re_base.make_multi_lines(
             route_2Dcoord_df,
             elevation_gradient
             )
@@ -173,7 +192,7 @@ class RouteTrajectory(PlottingTools):
                 is_bus_stop = is_stop__truth_array
                 )
 
-       if stop_coords is None:
+        elif stop_coords is None:
             # Mark no stops
             rdf = route_df.assign(
                 is_bus_stop = ([False] * len(route_df.index))
@@ -253,7 +272,32 @@ class RouteTrajectory(PlottingTools):
 
             delta_distance_array = self.distance_array_from_linestrings(route_df)
 
-            accelerations = np.diff(velocity_array) / delta_distance_array
+            # assert (np.shape(np.diff(velocity_array))==np.shape(delta_distance_array)), (
+            #     "np.shape(np.diff(velocity_array) = {}\n"
+            #     "np.shape(delta_distance_array) = {}\n".format(
+            #         np.shape(np.diff(velocity_array)),
+            #         np.shape(delta_distance_array)
+            #         )
+            #     )
+
+            zero_in_a_list = np.array([0])
+
+            diff_velocity_array = np.append(
+                zero_in_a_list,
+                np.diff(velocity_array)
+                )
+
+            # assert (np.shape(diff_velocity_array)==np.shape(delta_distance_array)), (
+            #     "np.shape(diff_velocity_array) = {}\n"
+            #     "np.shape(delta_distance_array) = {}\n"
+            #     "np.shape(np.diff(velocity_array)) = {}".format(
+            #         np.shape(diff_velocity_array),
+            #         np.shape(delta_distance_array),
+            #         np.shape(np.diff(velocity_array))
+            #         )
+            #     )
+
+            accelerations = diff_velocity_array / delta_distance_array
 
 
         else:
@@ -274,7 +318,12 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _add_passenger_mass_to_df(self, route_df):
+    def _add_passenger_mass_to_df(self,
+        route_df,
+        route_number=None,
+        in_or_out=None,
+        segment=None,
+        ):
         """ Compute number of passengers along the route.
 
             Eventually this will use Ryan's ridership module, which
@@ -349,6 +398,7 @@ class RouteTrajectory(PlottingTools):
 
         # Total bus mass along route is equal to the bus mass plus
         # passenger load
+        loaded_bus_mass = passenger_mass + bus_mass
 
         # Calculate the gravitational force
         grav_force = loaded_bus_mass * gravi_accel * np.sin(grad_angle)
@@ -404,15 +454,6 @@ class RouteTrajectory(PlottingTools):
         return new_df
 
 
-    def _calculate_energy_demand(self, power, delta_x, veloc):
-
-        delta_t = delta_x / veloc
-
-        energy = np.sum(power * delta_t)
-
-        return energy
-
-
     def energy_from_route(self):
 
         rdf = self.route_df
@@ -420,10 +461,18 @@ class RouteTrajectory(PlottingTools):
         power = rdf.battery_power_exerted.values
 
         # Calculate lengths of route segments
-        delta_x = distance_array_from_linestrings(rdf)
+        delta_x = self.distance_array_from_linestrings(rdf)
 
-        return self._calculate_energy_demand(power, delta_x, velocity)
+        return self._calculate_energy_demand(power, delta_x, rdf.velocity.values)
 
+
+    def _calculate_energy_demand(self, power, delta_x, veloc):
+
+        delta_t = delta_x / veloc
+
+        energy = np.sum(power * delta_t)
+
+        return energy
 
     def distance_array_from_linestrings(self, rdf):
         # Calculate lengths of route segments
