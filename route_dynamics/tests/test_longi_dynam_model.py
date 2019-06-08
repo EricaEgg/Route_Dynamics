@@ -98,6 +98,9 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
                 (0,1),
                 (0,2),
                 (0,3),
+                (0,4),
+                (0,5),
+                (0,6),
                 ]
 
         elif type(shp_coords) is list:
@@ -157,6 +160,14 @@ class TestRouteTrajectory(object):
         elevation_gradient_const=1,
         )
 
+    constant_speed_instance__0_grade = SimpleRouteTrajectory(
+        shp_coords='default',
+        bus_speed_model='constant_15mph',
+        stop_coords=None,
+        elevation_gradient_const=0,
+        )
+
+
     def test_simple_route__no_grade(self):
         """
             """
@@ -170,28 +181,39 @@ class TestRouteTrajectory(object):
         # assert False, "{}".format(test_rdf)
 
 
-    def test_energy_calc(self):
+    def test_energy_calc_yields_number(self):
         """Test that energy calculation performs a number"""
 
         test_instance = TestRouteTrajectory.test_instance__0_grade
 
         energy = test_instance.energy_from_route()
 
-        assert type(energy) is float, (
+        assert (
+            (type(energy) is float)
+            or
+            (type(energy) is np.float64)
+            ),(
             "Energy is not a float.\n"
             "Likely due to first column of dataframe, head looks like...\n"
             "{}".format(test_instance.route_df.head())
             )
 
 
-    def test_that_hills_are_hard(self):
+    def test_power_positive_for_flat_driving_constant_speed(self):
+
+        inst = TestRouteTrajectory.constant_speed_instance__0_grade
+        power_output_values = inst.route_df.power_output.values[1:]
+
+        assert np.all(power_output_values>=0.0)
+
+    def test_that_hills_are_harder_than_flat(self):
 
         flat_energy = (
             TestRouteTrajectory.test_instance__0_grade.energy_from_route()
             )
 
         hill_energy = (
-            TestRouteTrajectory.test_instance__0_grade.energy_from_route()
+            TestRouteTrajectory.test_instance__1_grade.energy_from_route()
             )
 
         assert flat_energy < hill_energy, (
@@ -199,26 +221,31 @@ class TestRouteTrajectory(object):
             "Energy output on flat route: {}\n"
             "Energy output on hill route: {}".format(flat_energy,hill_energy)
             )
-    # def test_constant_velocity(self):
-    #     """ Test that RouteTrajectory instance by defaults returns
-    #         constant velocity
-    #         """
 
-    #     test_instance = ldm.RouteTrajectory(
-    #         route_num=test_route_num,
-    #         shp_filename=shapefile_name,
-    #         elv_raster_filename=rasterfile_name,
-    #         bus_speed_model='constant_15mph',
-    #         stop_coords=None,
-    #         )
+    def test_that_downhills_are_easier_than_flat(self):
 
-    #     inst_velocities = test_instance.route_df.velocity.values
+        flat_energy = (
+            TestRouteTrajectory.test_instance__0_grade.energy_from_route()
+            )
 
-    #     assert inst_velocities == np.ones(len(inst_velocities))*6.7056
+        downhill_instance = SimpleRouteTrajectory(
+            shp_coords='default',
+            bus_speed_model='stopped_at_stops__15mph_between',
+            stop_coords=None,
+            elevation_gradient_const=-1,
+            )
 
+        downhill_energy = (
+            downhill_instance.energy_from_route()
+            )
 
-    # def test_one(self):
-    #     """ Test that RouteTrajectory instance returns object with
-    #         DataFrame attribute
-    #         """
+        assert flat_energy > downhill_energy, (
+            "The flat was harder than the hill...\n"
+            "Energy output on flat route: {}\n"
+            "Energy output on hill route: {}".format(flat_energy,downhill_energy)
+            )
+
+    # Other test ideas,
+    # - heavy bus vs light bus
+    #
 

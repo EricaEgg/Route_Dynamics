@@ -335,22 +335,27 @@ class RouteTrajectory(PlottingTools):
                 np.diff(velocity_array)
                 )
 
-            forward_diff_velocity_array = np.append(
-                np.diff(velocity_array),
-                zero_in_a_list
-                )
+            # Assign backward diff velocities as instance attribute
+            self.delta_v = back_diff_velocity_array
 
-            central_diff_velocity_array = (
-                back_diff_velocity_array
-                +
-                forward_diff_velocity_array
-                )/2.
+            # forward_diff_velocity_array = np.append(
+            #     np.diff(velocity_array),
+            #     zero_in_a_list
+            #     )
+
+            # central_diff_velocity_array = (
+            #     back_diff_velocity_array
+            #     +
+            #     forward_diff_velocity_array
+            #     )/2.
 
             # But average acceleration cooresponding to the linestring
             # distance will be the backward difference in velovity...
             # divided by time and not distance...
 
-            accelerations = central_diff_velocity_array / delta_distance_array
+            dt = route_df.delta_time.values
+
+            accelerations = back_diff_velocity_array / dt
 
 
         else:
@@ -449,15 +454,17 @@ class RouteTrajectory(PlottingTools):
         loaded_bus_mass = passenger_mass + bus_mass
 
         # Calculate the gravitational force
-        grav_force = loaded_bus_mass * gravi_accel * np.sin(grad_angle)
+        grav_force = -(
+            loaded_bus_mass * gravi_accel * np.sin(grad_angle)
+            )
 
         # Calculate the rolling friction
-        roll_fric = (
+        roll_fric = -(
             fric_coeff * loaded_bus_mass * gravi_accel * np.cos(grad_angle)
             )
 
         # Calculate the aerodynamic drag
-        aero_drag = (
+        aero_drag = -(
             drag_coeff
             *
             bus_front_area
@@ -484,6 +491,7 @@ class RouteTrajectory(PlottingTools):
             )
 
         f_traction = rdf.inertia.values - f_resist
+
         velocity = rdf.velocity.values
 
         batt_power_exert = f_traction * velocity
@@ -496,7 +504,7 @@ class RouteTrajectory(PlottingTools):
         batt_power_exert = self._calculate_batt_power_exert(rdf)
 
         new_df = rdf.assign(
-            battery_power_exerted = batt_power_exert
+            power_output = batt_power_exert
             )
 
         return new_df
@@ -506,24 +514,14 @@ class RouteTrajectory(PlottingTools):
 
         rdf = self.route_df
 
-        power = rdf.battery_power_exerted.values
+        delta_t = rdf.delta_time.values[1:]
 
-        # Calculate lengths of route segments
-        delta_x = self.distance_array_from_linestrings(rdf)
-
-        return self._calculate_energy_demand(power, delta_x, rdf.velocity.values)
-
-
-    def _calculate_energy_demand(self, power, delta_x, veloc):
-
-        delta_t = delta_x / veloc
-        delta_t = delta_t[1:]
-
-        power = power[1:]
+        power = rdf.power_output.values[1:]
 
         energy = np.sum(power * delta_t)
 
         return energy
+
 
     def distance_array_from_linestrings(self, rdf):
         # Calculate lengths of route segments
