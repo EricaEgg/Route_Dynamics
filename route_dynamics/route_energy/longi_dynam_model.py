@@ -11,6 +11,7 @@
 
 # from ..route_elevation import single_route as rsr
 from ..route_elevation import base as re_base
+from . import knn
 
 import numpy as np
 import geopandas as gpd
@@ -84,7 +85,7 @@ class RouteTrajectory(PlottingTools):
             )
 
         self.route_df = self._add_dynamics_to_df(
-            route_df=route_df,
+            route_df=self.route_df,
             stop_coords=stop_coords,
             bus_speed_model=self.bus_speed_model,
             )
@@ -152,7 +153,11 @@ class RouteTrajectory(PlottingTools):
         # Build the df of 2D route coordinates and
         route_shp = re_base.read_shape(shp_filename, route_num)
 
+        # print(f'route_shp: {route_shp}\n')
+
         route_2Dcoord_df = re_base.extract_point_df(route_shp)
+
+        # print(f'elv_raster_filename: {elv_raster_filename}\n')
 
         (
             elevation,
@@ -190,24 +195,50 @@ class RouteTrajectory(PlottingTools):
                 np.random.random(len(route_df.index)) < .05
                 )
 
-            rdf = route_df.assign(
+            route_df = route_df.assign(
                 is_bus_stop = is_stop__truth_array
                 )
 
         elif stop_coords is None:
             # Mark no stops
-            rdf = route_df.assign(
+            route_df = route_df.assign(
                 is_bus_stop = ([False] * len(route_df.index))
                 )
 
-        return rdf
+        elif (type(stop_coords) is list) or (type(stop_coords) is np.ndarray):
+
+            nearest_neighbor_indicies, nn = knn.find_knn(
+                1,
+                route_df.coordinates.values,
+                stop_coords
+                )
+
+            route_df = route_df.assign(
+                is_bus_stop = ([False] * len(route_df.index))
+                )
+
+            for i in nearest_neighbor_indicies.ravel():
+                route_df.at[i, 'is_bus_stop'] = True
+
+        else:
+            raise IllegalArgumentError(
+                "'stop_coords' must be 'random', None, "
+                "or type(list)/type(ndarray)"
+                )
+
+        return route_df
 
 
     def _add_elevation_to_df(self, elevation, route_df):
 
+        # print(len(elevation), len(route_df.index))
+        # print('elevation', elevation)
+
         rdf = route_df.assign(
-            elevation=elevation
+            elevation=elevation.ravel()
             )
+
+
 
         return rdf
 
@@ -299,7 +330,7 @@ class RouteTrajectory(PlottingTools):
     def _add_accelerations_to_df(self, route_df, alg='finite_diff'):
         """ For now just adds a acceleration velocity as a placeholder.
             """
-
+        # print(route_df.head())
         accelerations = self._calculate_acceleration(route_df, alg)
 
         #Assign acceleration values to new row in route DataFrame.
@@ -355,7 +386,12 @@ class RouteTrajectory(PlottingTools):
 
             dt = route_df.delta_time.values
 
-            accelerations = back_diff_velocity_array / dt
+            accelerations = np.append(
+                np.nan,
+                self.delta_v[1:] / dt[1:]
+                )
+
+
 
 
         else:

@@ -39,7 +39,7 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
         """
 
     def __init__(self,
-        shp_coords='default',
+        route_coords='default',
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         elevation_gradient_const=0,
@@ -59,21 +59,20 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
 
         # Simplify the route dataframe.
         self.route_df = self._simple_build_route_coordinate_df(
-            shp_coords = shp_coords,
-            stop_coords = stop_coords,
+            route_coords = route_coords,
+            # stop_coords = stop_coords,
             elevation_gradient_const = elevation_gradient_const,
             )
 
         # TEST: Mark no stops for
         self.route_df = self._add_dynamics_to_df(
             route_df=self.route_df,
-            stop_coords=None,
+            stop_coords=stop_coords,
             bus_speed_model=self.bus_speed_model,
             )
 
     def _simple_build_route_coordinate_df(self,
-        shp_coords='default',
-        stop_coords=None,
+        route_coords='default',
         elevation_gradient_const=0,
         ):
         """ Builds GeoDataFrame with rows cooresponding to points on
@@ -91,7 +90,7 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
 
             """
 
-        if shp_coords is 'default':
+        if route_coords is 'default':
 
             coordinates = [
                 (0,0),
@@ -101,15 +100,18 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
                 (0,4),
                 (0,5),
                 (0,6),
+                (0,7),
+                (0,8),
+                (0,9)
                 ]
 
-        elif type(shp_coords) is list:
+        elif type(route_coords) is list:
             # Might faul if list is not 2D coordinate tuples...
-            coordinates = shp_coords
+            coordinates = route_coords
 
         else:
             raise IllegalArgumentErrorInTest(
-                "Bad input for 'shp_coords' arg of '_simple_build_route_coordi"
+                "Bad input for 'route_coords' arg of '_simple_build_route_coordi"
                 "nate_df' method of class 'SimpleRouteTrajectory' in file 'tes"
                 "t_longi_dynam_model'")
 
@@ -147,21 +149,21 @@ class TestRouteTrajectory(object):
         """
 
     test_instance__0_grade = SimpleRouteTrajectory(
-        shp_coords='default',
+        route_coords='default',
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         elevation_gradient_const=0,
         )
 
     test_instance__1_grade = SimpleRouteTrajectory(
-        shp_coords='default',
+        route_coords='default',
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         elevation_gradient_const=1,
         )
 
     constant_speed_instance__0_grade = SimpleRouteTrajectory(
-        shp_coords='default',
+        route_coords='default',
         bus_speed_model='constant_15mph',
         stop_coords=None,
         elevation_gradient_const=0,
@@ -229,7 +231,7 @@ class TestRouteTrajectory(object):
             )
 
         downhill_instance = SimpleRouteTrajectory(
-            shp_coords='default',
+            route_coords='default',
             bus_speed_model='stopped_at_stops__15mph_between',
             stop_coords=None,
             elevation_gradient_const=-1,
@@ -244,6 +246,58 @@ class TestRouteTrajectory(object):
             "Energy output on flat route: {}\n"
             "Energy output on hill route: {}".format(flat_energy,downhill_energy)
             )
+
+    def test_single_stop_manual(self):
+
+        stop_coord = [(0.542, 6.05),]
+
+        instance = SimpleRouteTrajectory(
+            route_coords='default',
+            bus_speed_model='stopped_at_stops__15mph_between',
+            stop_coords=stop_coord,
+            elevation_gradient_const=0,
+            )
+
+        assert instance.route_df.iloc[6].is_bus_stop, (
+            "{} not marked by stop coord {}".format(
+                instance.route_df.iloc[6].coordinates,
+                stop_coord
+                )
+            )
+
+
+    def test_single_stop_manual(self):
+
+        stop_coord = [
+            (0.542, 6.05), # Should mark (0,6)
+            (3.542, 1.98), # Should mark (0,2)
+            ]
+
+        instance = SimpleRouteTrajectory(
+            route_coords='default',
+            bus_speed_model='stopped_at_stops__15mph_between',
+            stop_coords=stop_coord,
+            elevation_gradient_const=0,
+            )
+
+        assert (
+            instance.route_df.iloc[6].is_bus_stop
+            and
+            instance.route_df.iloc[2].is_bus_stop
+            ), (
+            "{} not marked by stop coord {}"
+            "\n"
+            "{} not marked by stop coord {}".format(
+                instance.route_df.iloc[6].coordinates,
+                stop_coord[0],
+                instance.route_df.iloc[2].coordinates,
+                stop_coord[1]
+                )
+            )
+
+
+
+
 
     # Other test ideas,
     # - heavy bus vs light bus
