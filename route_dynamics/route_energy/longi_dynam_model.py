@@ -100,20 +100,49 @@ class RouteTrajectory(PlottingTools):
         # Try to determine bus stops from list of coordinates
         route_df = self._add_stops_to_df(stop_coords, route_df)
 
-        # Add 'velocity' column to route_df
-        # This will also involve calulating the velocity.
-        route_df = self._add_velocities_to_df(
-            route_df,
-            bus_speed_model=bus_speed_model,
-            )
+        # Depending on the method of bus speed estimation, the next
+        # block of code will exicute in different orders
+        if bus_speed_model in bus_speed_model == [
+            'constant_15mph',
+            'stopped_at_stops__15mph_between'
+            ]:
+            # Add 'velocity' column to route_df first
+            # This will also involve calulating the velocity.
+            route_df = self._add_velocities_to_df(
+                route_df,
+                bus_speed_model=bus_speed_model,
+                )
 
-        route_df = self._add_delta_times_to_df(route_df)
+            route_df = self._add_delta_times_to_df(route_df)
 
-        # Add 'acceleration' column to route_df
-        route_df = self._add_accelerations_to_df(route_df)
+            # Add 'acceleration' column to route_df, calculated as
+            # finite difference from velocities
+            route_df = self._add_accelerations_to_df(
+                route_df,
+                alg='finite_diff',
+                )
 
-        # Add passenger mass column to route_df
-        route_df = self._add_passenger_mass_to_df(route_df)
+            # Add passenger mass column to route_df
+            route_df = self._add_passenger_mass_to_df(route_df)
+
+        elif bus_speed_model in bus_speed_model == [
+            'const_accel_between_stops_and_speed_lim'
+            ]:
+
+            # Add 'acceleration' column to route_df
+            route_df = self._add_accelerations_to_df(
+                route_df,
+                alg='const_accel_between_stops_and_speed_lim',
+                )
+
+            route_df = self._add_velocities_to_df(
+                route_df,
+                bus_speed_model='const_accel_between_stops_and_speed_lim',
+                )
+
+            route_df = self._add_delta_times_to_df(route_df)
+
+
 
         # Add force columns to route_df:
         #     - 'grav_force' : gravitation force determined by road grade
@@ -171,12 +200,24 @@ class RouteTrajectory(PlottingTools):
             elevation_gradient
             )
 
+
+        route_df = self._add_distance_to_df(distance, route_df)
+
         route_df = self._add_elevation_to_df(elevation, route_df)
 
         route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
         return route_df
 
+
+    def _add_distance_to_df(self, distance, route_df):
+
+        distance = np.append(0,distance)
+
+        rdf = route_df.assign(
+            distance_from_last_point=distance
+            )
+        return rdf
 
     def _add_stops_to_df(self, stop_coords, route_df):
         """ Find rows in route_df matching the stop_coordinates and
@@ -308,7 +349,7 @@ class RouteTrajectory(PlottingTools):
 
     def _calculate_delta_times_on_linestring_distance(self, route_df):
 
-        back_diff_delta_x = self.distance_array_from_linestrings(route_df)
+        back_diff_delta_x = route_df.distance_from_last_point.values
 
         try:
             velocities = route_df.velocity.values
@@ -342,12 +383,13 @@ class RouteTrajectory(PlottingTools):
 
 
     def _calculate_acceleration(self, route_df, alg='finite_diff'):
+
         # Calculate acceleration
         if alg=='finite_diff':
             # Use finite difference of velocities to calculate accelerations
             velocity_array = route_df.velocity.values
 
-            delta_distance_array = self.distance_array_from_linestrings(route_df)
+            delta_distance_array = route_df.distance_from_last_point.values
 
             # assert (np.shape(np.diff(velocity_array))==np.shape(delta_distance_array)), (
             #     "np.shape(np.diff(velocity_array) = {}\n"
@@ -390,6 +432,45 @@ class RouteTrajectory(PlottingTools):
                 np.nan,
                 self.delta_v[1:] / dt[1:]
                 )
+
+        elif alg=='const_accel_between_stops_and_speed_lim':
+            # This section is the second (and more realistic) attempt
+            # at modeling the bus speed along the route, by setting the
+            # instantaneous bus acceleration and velocity to;
+            #     a = v = 0 : at bus stops
+            # accelerating away from bus stops at the constant rate
+            #     a = a_m : away from bus stos
+            # until the bus reaches the speed limit
+            #     v = v_lim : constant speed limit of bus between stops
+            # The bus decelerates at the same rate
+            #     a = -a_m : decelleration approaching stops.
+            #
+            # Given the coordinate dataframe, we can assign velocity
+            # and acceleration based on the distance of each point to
+            # the next bus stop
+            #     x = x_ns : array of distances from each route point
+            #                to the next bus stop.
+            # and the distance since the last bus stop
+            #     x = x_ls : array of distances from each route point
+            #                to the last bus stop.
+            #
+            # To assign the velocity and acceleration of each route
+            # point, the distances 'x_ns' and 'x_ls' can be compared to
+            # the distance required for the bus to accelerate to the
+            # speed limit (as well as decelerate to v=0), 'x_a'. This
+            # can be derived by considering the dynamical equations
+            #     a = a_m
+            #.    v = a_m t + v_0
+            #.    x = 1/2 a_m t^2 + v_0 t + x_0
+            # Considering acceleration away from a stop at 'x_0 = 0',
+            #     x = 1/2 a_m t^2
+            # and if 'x = x_a'  is the distance required to reach
+            # 'v = v_lim', then the time required is given by
+            #     v_lim = a_m t_lim
+            #     -> t_lim = v_lim/a_m
+            # and
+            #     x_a = 1/2 a_m (v_lim/a_m)^2
+            #         = v_lim^2 / (2 a_m)
 
 
 
@@ -557,17 +638,3 @@ class RouteTrajectory(PlottingTools):
         energy = np.sum(power * delta_t)
 
         return energy
-
-
-    def distance_array_from_linestrings(self, rdf):
-        # Calculate lengths of route segments
-        delta_x = []
-        for line in rdf.geometry.values:
-            if hasattr(line, 'length'):
-                delta_x.append(line.length)
-            else:
-                delta_x.append(0)
-
-        return delta_x
-
-
