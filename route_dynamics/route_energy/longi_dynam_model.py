@@ -212,7 +212,7 @@ class RouteTrajectory(PlottingTools):
 
     def _add_distance_to_df(self, distance, route_df):
 
-        distance = np.append(0,distance)
+        distance = np.append(np.nan,distance)
 
         rdf = route_df.assign(
             distance_from_last_point=distance
@@ -382,7 +382,12 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _calculate_acceleration(self, route_df, alg='finite_diff'):
+    def _calculate_acceleration(self,
+        route_df,
+        alg='finite_diff',
+        a_m=1.0,
+        v_lim=6.0,
+        ):
 
         # Calculate acceleration
         if alg=='finite_diff':
@@ -434,46 +439,12 @@ class RouteTrajectory(PlottingTools):
                 )
 
         elif alg=='const_accel_between_stops_and_speed_lim':
-            # This section is the second (and more realistic) attempt
-            # at modeling the bus speed along the route, by setting the
-            # instantaneous bus acceleration and velocity to;
-            #     a = v = 0 : at bus stops
-            # accelerating away from bus stops at the constant rate
-            #     a = a_m : away from bus stos
-            # until the bus reaches the speed limit
-            #     v = v_lim : constant speed limit of bus between stops
-            # The bus decelerates at the same rate
-            #     a = -a_m : decelleration approaching stops.
-            #
-            # Given the coordinate dataframe, we can assign velocity
-            # and acceleration based on the distance of each point to
-            # the next bus stop
-            #     x = x_ns : array of distances from each route point
-            #                to the next bus stop.
-            # and the distance since the last bus stop
-            #     x = x_ls : array of distances from each route point
-            #                to the last bus stop.
-            #
-            # To assign the velocity and acceleration of each route
-            # point, the distances 'x_ns' and 'x_ls' can be compared to
-            # the distance required for the bus to accelerate to the
-            # speed limit (as well as decelerate to v=0), 'x_a'. This
-            # can be derived by considering the dynamical equations
-            #     a = a_m
-            #.    v = a_m t + v_0
-            #.    x = 1/2 a_m t^2 + v_0 t + x_0
-            # Considering acceleration away from a stop at 'x_0 = 0',
-            #     x = 1/2 a_m t^2
-            # and if 'x = x_a'  is the distance required to reach
-            # 'v = v_lim', then the time required is given by
-            #     v_lim = a_m t_lim
-            #     -> t_lim = v_lim/a_m
-            # and
-            #     x_a = 1/2 a_m (v_lim/a_m)^2
-            #         = v_lim^2 / (2 a_m)
 
-
-
+            accelerations, velocities, x_ls, x_ns = ca.const_a_dynamics(
+                route_df,
+                a_m,
+                v_lim,
+                )
 
         else:
             raise IllegalArgumentError((
