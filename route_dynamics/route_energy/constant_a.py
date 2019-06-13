@@ -1,6 +1,6 @@
 import numpy as np
 
-def const_a_dynamics(route_df, a_m, v_lim)
+def const_a_dynamics(route_df, a_m, v_lim):
     # This section is the second (and more realistic) attempt
     # at modeling the bus speed along the route, by setting the
     # instantaneous bus acceleration and velocity to;
@@ -92,7 +92,7 @@ def const_a_dynamics(route_df, a_m, v_lim)
     for i in range(len(x_ns)):
         # If close to last bus stop but far from next
         if (
-            x_ls[i] < x_a
+            x_ls[i] <= x_a
             and
             x_ns[i] > x_a
             and
@@ -105,7 +105,7 @@ def const_a_dynamics(route_df, a_m, v_lim)
         elif (
             x_ls[i] > x_a
             and
-            x_ns[i] < x_a
+            x_ns[i] <= x_a
             and
             not route_df.at[j, 'is_bus_stop']
             ):
@@ -125,9 +125,9 @@ def const_a_dynamics(route_df, a_m, v_lim)
 
         # But if too close to both last and next bus stops,
         elif (
-            x_ls[i] < x_a
+            x_ls[i] <= x_a
             and
-            x_ns[i] < x_a
+            x_ns[i] <= x_a
             and
             not route_df.at[j, 'is_bus_stop']
             ):

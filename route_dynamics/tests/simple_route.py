@@ -1,9 +1,16 @@
 """ Simper route used for tests """
 from ..route_elevation import base as rbs
 from ..route_energy import longi_dynam_model as ldm
+from ..route_energy import knn
 
 import numpy as np
 import pandas as pd
+
+
+class IllegalArgumentErrorInTest(ValueError):
+    """ """
+    pass
+
 
 class SimpleRouteTrajectory(ldm.RouteTrajectory):
     """ Build a simple test route with only a few route coordinates
@@ -100,6 +107,15 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
             route_2Dcoord_df, # Dataframe with list of tuples in 'coordinate' column
             elevation_gradient, # Simple array
             )
+
+        back_diff_distance = np.ones(len(coordinates)-1)
+        for i in range(len(coordinates)-1):
+            back_diff_distance[i] = knn.euclidean_distance(
+                coordinates[i+1],
+                coordinates[i]
+                )
+
+        route_df = self._add_distance_to_df(back_diff_distance, route_df)
 
         # route_df = self._add_elevation_to_df(elevation, route_df)
 

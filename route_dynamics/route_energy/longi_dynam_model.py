@@ -12,6 +12,7 @@
 # from ..route_elevation import single_route as rsr
 from ..route_elevation import base as re_base
 from . import knn
+from . import constant_a as ca
 
 import numpy as np
 import geopandas as gpd
@@ -57,13 +58,10 @@ class RouteTrajectory(PlottingTools):
 
                 route_num: needs to be one that Erica made work.
 
-                bus_speed_model:
-                    Right now the argument 'bus_speed_model' is
-                    set to 'test' by default, which causes the speed to
-                    be set at a constant velocity of 6.7056 [m/s],
-                    which is equal to 15 mph. Later this will accept
-                    arguments like 'parabolic_between_stops' or maybe
-                    even something smarter that includes trtaffic.
+                bus_speed_model: has options;
+                    - 'stopped_at_stops__15mph_between'
+                    - 'constant_15mph'
+                    - 'const_accel_between_stops_and_speed_lim'
 
             Methods:
 
@@ -102,7 +100,7 @@ class RouteTrajectory(PlottingTools):
 
         # Depending on the method of bus speed estimation, the next
         # block of code will exicute in different orders
-        if bus_speed_model in bus_speed_model == [
+        if bus_speed_model in [
             'constant_15mph',
             'stopped_at_stops__15mph_between'
             ]:
@@ -122,10 +120,8 @@ class RouteTrajectory(PlottingTools):
                 alg='finite_diff',
                 )
 
-            # Add passenger mass column to route_df
-            route_df = self._add_passenger_mass_to_df(route_df)
 
-        elif bus_speed_model in bus_speed_model == [
+        elif bus_speed_model in [
             'const_accel_between_stops_and_speed_lim'
             ]:
 
@@ -142,7 +138,8 @@ class RouteTrajectory(PlottingTools):
 
             route_df = self._add_delta_times_to_df(route_df)
 
-
+        # Add passenger mass column to route_df
+        route_df = self._add_passenger_mass_to_df(route_df)
 
         # Add force columns to route_df:
         #     - 'grav_force' : gravitation force determined by road grade
@@ -192,7 +189,7 @@ class RouteTrajectory(PlottingTools):
             elevation,
             elevation_gradient,
             route_cum_distance,
-            distance
+            back_diff_distance
             ) = re_base.gradient(route_shp, elv_raster_filename)
 
         route_df = re_base.make_multi_lines(
@@ -201,7 +198,7 @@ class RouteTrajectory(PlottingTools):
             )
 
 
-        route_df = self._add_distance_to_df(distance, route_df)
+        route_df = self._add_distance_to_df(back_diff_distance, route_df)
 
         route_df = self._add_elevation_to_df(elevation, route_df)
 
@@ -210,12 +207,12 @@ class RouteTrajectory(PlottingTools):
         return route_df
 
 
-    def _add_distance_to_df(self, distance, route_df):
+    def _add_distance_to_df(self, back_diff_distance, route_df):
 
-        distance = np.append(np.nan,distance)
+        distance_array = np.append(np.nan,back_diff_distance)
 
         rdf = route_df.assign(
-            distance_from_last_point=distance
+            distance_from_last_point=distance_array
             )
         return rdf
 
@@ -266,6 +263,9 @@ class RouteTrajectory(PlottingTools):
                 "'stop_coords' must be 'random', None, "
                 "or type(list)/type(ndarray)"
                 )
+
+        # route_df.at[0, 'is_bus_stop'] = True
+        # route_df.at[-1, 'is_bus_stop'] = True
 
         return route_df
 
@@ -327,6 +327,9 @@ class RouteTrajectory(PlottingTools):
             # if not stop, set velocity to 15 mph
             bus_speed_array = zero_if_stop__one_if_not * lazy_choise_for_speed
 
+
+        elif bus_speed_model is 'const_accel_between_stops_and_speed_lim':
+            bus_speed_array = self.const_a_velocities
 
         rdf = route_df.assign(
             velocity=bus_speed_array
@@ -440,7 +443,12 @@ class RouteTrajectory(PlottingTools):
 
         elif alg=='const_accel_between_stops_and_speed_lim':
 
-            accelerations, velocities, x_ls, x_ns = ca.const_a_dynamics(
+            (
+                accelerations,
+                self.const_a_velocities,
+                self.x_ls,
+                self.x_ns
+                ) = ca.const_a_dynamics(
                 route_df,
                 a_m,
                 v_lim,

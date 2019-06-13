@@ -2,7 +2,7 @@
 	"""
 from ..route_elevation import base as rbs
 from ..route_energy import longi_dynam_model as ldm
-import simple_route as sro
+from ..tests import simple_route as sro
 
 import numpy as np
 import pandas as pd
@@ -28,10 +28,6 @@ route_list = [48, 50, 75, 7, 45, 40]
 # # Build dataframe of 2D coordinates making up bus route
 # test_route_coord_df = rbs.extract_point_df(route_shp)
 
-
-class IllegalArgumentErrorInTest(ValueError):
-    """ """
-    pass
 
 
 class TestRouteTrajectory(object):
