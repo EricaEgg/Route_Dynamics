@@ -79,9 +79,10 @@ def const_a_dynamics(route_df, a_m, v_lim):
                 # Inclusive start to range because distances are
                 # backward difference. Dont need to include 'j=0'
                 # because the first point has no backward difference.
-                x_ls[i] += route_df.at[j, 'distance_from_last_point']
                 if route_df.at[j, 'is_bus_stop']:
                     break # done calulating x_ls at this point
+                x_ls[i] += route_df.at[j, 'distance_from_last_point']
+
 
     # Define cutoff distance for acceleration and deceleration
     x_a = v_lim**2. / (2*a_m)
@@ -96,7 +97,7 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             x_ns[i] > x_a
             and
-            not route_df.at[j, 'is_bus_stop']
+            not route_df.at[i, 'is_bus_stop']
             ):
             a[i] = a_m
             v[i] = np.sqrt(2*x_ls[i]*a_m)
@@ -107,7 +108,7 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             x_ns[i] <= x_a
             and
-            not route_df.at[j, 'is_bus_stop']
+            not route_df.at[i, 'is_bus_stop']
             ):
             a[i] = -a_m
             v[i] = np.sqrt(2*x_ns[i]*a_m)
@@ -118,7 +119,7 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             x_ns[i] > x_a
             and
-            not route_df.at[j, 'is_bus_stop']
+            not route_df.at[i, 'is_bus_stop']
             ):
             a[i] = 0
             v[i] = v_lim
@@ -129,7 +130,7 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             x_ns[i] <= x_a
             and
-            not route_df.at[j, 'is_bus_stop']
+            not route_df.at[i, 'is_bus_stop']
             ):
             if x_ls[i] < x_ns[i]:
                 a[i] = a_m

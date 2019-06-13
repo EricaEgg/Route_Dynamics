@@ -119,6 +119,14 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
 
         # route_df = self._add_elevation_to_df(elevation, route_df)
 
-        # route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
+        cum_distance = np.zeros(len(coordinates)-1)
+        cum_distance[0] += back_diff_distance[0]
+        for i in range(1, len(coordinates)-1):
+            cum_distance[i] += back_diff_distance[i]
+            cum_distance[i] += cum_distance[i-1]
+
+        route_cum_distance = np.append(0, cum_distance)
+
+        route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
         return route_df
