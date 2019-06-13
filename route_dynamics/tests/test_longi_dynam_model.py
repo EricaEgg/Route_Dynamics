@@ -7,12 +7,12 @@ from ..tests import simple_route as sro
 import numpy as np
 import pandas as pd
 
-# Load files for tests.
-shapefile_name = '../data/six_routes.shp'
-rasterfile_name = '../data/seattle_dtm.tif'
+# # Load files for tests.
+# shapefile_name = '../data/six_routes.shp'
+# rasterfile_name = '../data/seattle_dtm.tif'
 
-test_route_num = 45
-route_list = [48, 50, 75, 7, 45, 40]
+# test_route_num = 45
+# route_list = [48, 50, 75, 7, 45, 40]
 
 # route_shp = rbs.read_shape(shapefile_name, test_route_num)
 
