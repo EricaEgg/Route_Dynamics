@@ -136,7 +136,7 @@ class RouteTrajectory(PlottingTools):
                 bus_speed_model='const_accel_between_stops_and_speed_lim',
                 )
 
-            route_df = self._add_delta_times_to_df(route_df)
+            route_df = self._add_delta_times_to_df(route_df, 'model')
 
         # Add passenger mass column to route_df
         route_df = self._add_passenger_mass_to_df(route_df)
@@ -338,10 +338,17 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _add_delta_times_to_df(self, route_df):
+    def _add_delta_times_to_df(self, route_df, alg='finite_diff'):
         """ Add delta_times for finite_difference calculation of acceleration """
 
-        delta_times = self._calculate_delta_times_on_linestring_distance(route_df)
+        if alg is 'finite_diff':
+            delta_times = self._calculate_delta_times_on_linestring_distance(
+                route_df)
+        elif alg is 'model':
+            delta_times = np.append(
+                0,
+                np.diff(self.route_time)
+                )
 
         rdf = route_df.assign(
             delta_time=delta_times
@@ -350,7 +357,10 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _calculate_delta_times_on_linestring_distance(self, route_df):
+    def _calculate_delta_times_on_linestring_distance(self,
+        route_df,
+        alg='finite_diff',
+        ):
 
         back_diff_delta_x = route_df.distance_from_last_point.values
 
@@ -359,16 +369,27 @@ class RouteTrajectory(PlottingTools):
         except AttributeError:
             print("Does 'route_df' have 'velocity' column? ")
 
-        # Calcule average velocities along segment but backward difference
-        segment_avg_velocities = (
-            velocities
-            +
-            np.append(0,velocities[:-1])
-            )/2
+        if alg is 'finite_diff':
+            # Calcule average velocities along segment but backward difference
+            segment_avg_velocities = (
+                velocities
+                +
+                np.append(0,velocities[:-1])
+                )/2
 
-        delta_times = back_diff_delta_x * segment_avg_velocities
+            self.delta_times = back_diff_delta_x * segment_avg_velocities
 
-        return delta_times
+        else:
+            raise IllegalArgumentError("time calculation only equiped to "
+                "implement finite difference.")
+
+
+        self.time_on_route = np.append(
+            0,
+            np.cumsum(self.delta_times[1:])
+            )
+
+        return self.delta_times
 
 
     def _add_accelerations_to_df(self, route_df, alg='finite_diff'):
@@ -447,7 +468,8 @@ class RouteTrajectory(PlottingTools):
                 accelerations,
                 self.const_a_velocities,
                 self.x_ls,
-                self.x_ns
+                self.x_ns,
+                self.route_time
                 ) = ca.const_a_dynamics(
                 route_df,
                 a_m,

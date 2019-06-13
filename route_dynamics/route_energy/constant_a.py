@@ -57,8 +57,8 @@ def const_a_dynamics(route_df, a_m, v_lim):
     for i in range(len(x_ns)):
         # set values to Nan if bus stop
         if route_df.at[i, 'is_bus_stop']:
-            x_ns[i] = np.nan
-            x_ls[i] = np.nan
+            x_ns[i] = 0.
+            x_ls[i] = 0.
             # move to next point
             continue
         else:
@@ -87,8 +87,11 @@ def const_a_dynamics(route_df, a_m, v_lim):
     # Define cutoff distance for acceleration and deceleration
     x_a = v_lim**2. / (2*a_m)
 
+    x = route_df.cum_distance.values
     v = np.zeros(len(route_df.index))
     a = np.zeros(len(route_df.index))
+
+    t = np.zeros(len(route_df.index))
 
     for i in range(len(x_ns)):
         # If close to last bus stop but far from next
@@ -99,8 +102,19 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             not route_df.at[i, 'is_bus_stop']
             ):
+
             a[i] = a_m
             v[i] = np.sqrt(2*x_ls[i]*a_m)
+
+            if i > 0:
+                # add time to clock
+                t[i] += t[i-1]
+
+                delta_t = np.sqrt(2/a_m)*(
+                    np.sqrt(x_ls[i]) - np.sqrt(x_ls[i-1])
+                    )
+                t[i] += delta_t
+
 
         # or if close to next stop and far from last
         elif (
@@ -110,10 +124,19 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             not route_df.at[i, 'is_bus_stop']
             ):
+
             a[i] = -a_m
             v[i] = np.sqrt(2*x_ns[i]*a_m)
 
-        # or far from last and next stop
+            # add time to clock
+            t[i] += t[i-1]
+
+            delta_t = np.sqrt(2/a_m)*(
+                - np.sqrt(x_ns[i]) + np.sqrt(x_ns[i-1])
+                )
+            t[i] += delta_t
+
+        # or far from both last and next stop, go speed limit
         elif (
             x_ls[i] > x_a
             and
@@ -124,6 +147,12 @@ def const_a_dynamics(route_df, a_m, v_lim):
             a[i] = 0
             v[i] = v_lim
 
+            # add time to clock
+            t[i] += t[i-1]
+
+            delta_t = (x_ls[i] - x_ls[i-1])/v_lim
+            t[i] += delta_t
+
         # But if too close to both last and next bus stops,
         elif (
             x_ls[i] <= x_a
@@ -132,15 +161,41 @@ def const_a_dynamics(route_df, a_m, v_lim):
             and
             not route_df.at[i, 'is_bus_stop']
             ):
+
+            # add time to clock
+            t[i] += t[i-1]
+
             if x_ls[i] < x_ns[i]:
+
                 a[i] = a_m
                 v[i] = np.sqrt(2*x_ls[i]*a_m)
+
+                delta_t = np.sqrt(2/a_m)*(
+                    np.sqrt(x_ls[i]) - np.sqrt(x_ls[i-1])
+                    )
+
             elif x_ls[i] >= x_ns[i]:
+
                 a[i] = -a_m
                 v[i] = np.sqrt(2*x_ns[i]*a_m)
 
-    return a, v, x_ls, x_ns
+                delta_t = np.sqrt(2/a_m)*(
+                    - np.sqrt(x_ns[i]) + np.sqrt(x_ns[i-1])
+                    )
 
+            # tick tock
+            t[i] += delta_t
+
+        elif route_df.at[i, 'is_bus_stop']:
+            # still want to progress time as if decellerating
+            t[i] += t[i-1]
+
+            delta_t = np.sqrt(2/a_m)*(
+                - np.sqrt(x_ns[i]) + np.sqrt(x_ns[i-1])
+                )
+            t[i] += delta_t
+
+    return a, v, x_ls, x_ns, t
 
 
 
