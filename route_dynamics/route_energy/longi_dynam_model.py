@@ -32,7 +32,6 @@ class PlottingTools(object):
         pass
 
 
-
 # Thinking this is not the best implementation since I don't actually
 # know how to make objects print like pandas DataFrames.
 class RouteTrajectory(PlottingTools):
@@ -47,8 +46,10 @@ class RouteTrajectory(PlottingTools):
         elv_raster_filename,
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
-        charging_power_max=0. # should be kW
+        charging_power_max=0., # should be kW
         # charging_power_max=50000 # should be kW
+        a_m=1.0,
+        v_lim=15.0,
         ):
         """ Build DataFrame with bus trajectory and shapely connections
             for plotting. This object is mostly a wrapper object to
@@ -73,6 +74,10 @@ class RouteTrajectory(PlottingTools):
 
         # Store algorithm name for future reference.
         self.bus_speed_model = bus_speed_model
+
+        # default speed limit and acceleration constant
+        self.a_m = a_m
+        self.v_lim = v_lim
 
         # Store chargeing ability as instance attribute
         self.charging_power_max = charging_power_max
@@ -414,8 +419,8 @@ class RouteTrajectory(PlottingTools):
     def _calculate_acceleration(self,
         route_df,
         alg='finite_diff',
-        a_m=1.0,
-        v_lim=15.0,
+        a_m=None,
+        v_lim=None,
         ):
 
         # Calculate acceleration
@@ -468,6 +473,9 @@ class RouteTrajectory(PlottingTools):
                 )
 
         elif alg=='const_accel_between_stops_and_speed_lim':
+
+            if v_lim is None: v_lim=self.v_lim
+            if a_m is None: a_m=self.a_m
 
             (
                 accelerations,
