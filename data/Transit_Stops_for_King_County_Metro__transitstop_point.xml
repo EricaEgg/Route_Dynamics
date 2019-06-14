@@ -1,0 +1,2551 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<origin/>
+<pubdate>20171016</pubdate>
+<title>Transit Stops for King County Metro / transitstop_point</title>
+<edition>One</edition>
+<geoform>vector digital data</geoform>
+<pubinfo>
+<pubplace/>
+<publish>King County</publish>
+</pubinfo>
+<othercit>None</othercit>
+<onlink>https://kingcounty.maps.arcgis.com/home/item.html?id=7c0f51d833264f77acd2389da3c94ce4</onlink>
+<onlink>https://kingcounty.maps.arcgis.com/home/item.html?id=898d607fe143466f92381e8739fa2b7a</onlink>
+<onlink>https://www5.kingcounty.gov/sdc/Metadata.aspx?Layer=transitstop</onlink>
+<onlink>https://www5.kingcounty.gov/sdc/addl_doc/KCGISCenterTermsAndConditions.pdf</onlink>
+<onlink>https://www5.kingcounty.gov/sdc/addl_doc/KCGISCenterHelpUsingKCOpenData.pdf</onlink>
+</citeinfo>
+</citation>
+<descript>
+<abstract>Metro Transit Bus Stops</abstract>
+</descript>
+<spdom>
+<bounding>
+<westbc>-122.530273</westbc>
+<eastbc>-121.773824</eastbc>
+<northbc>47.938097</northbc>
+<southbc>47.178434</southbc>
+</bounding>
+</spdom>
+<keywords>
+<theme>
+<themekt>Not applicable</themekt>
+<themekey>transportation</themekey>
+<themekey>bus</themekey>
+<themekey>stops</themekey>
+<themekey>transit</themekey>
+<themekey>transportation_OpenData</themekey>
+<themekey>kingcounty_opendata</themekey>
+<themekey>transitstop_point</themekey>
+</theme>
+<theme>
+<themekt>ISO 19115 Topic Categories</themekt>
+<themekey>transportation</themekey>
+</theme>
+<place>
+<placekt>Not applicable</placekt>
+<placekey>Pacific NW</placekey>
+<placekey>WA</placekey>
+<placekey>King County</placekey>
+<placekey>Washington state</placekey>
+</place>
+</keywords>
+<accconst>Access Constraint: Data is available on GIS Data Portal: http://www5.kingcounty.gov/gisdataportal/Default.aspx</accconst>
+<useconst>Use Constraint: King County data are made available with the understanding that they shall be used exclusively by the obtainer or his/her authorized agents. Digital products may not be reproduced or redistributed in any form or by any means without the express written authorization of King County.</useconst>
+<ptcontac>
+<cntinfo>
+<cntorgp>
+<cntorg>King County Dept of Transportation - Metro Transit Division</cntorg>
+<cntper>Trang Bui</cntper>
+</cntorgp>
+<cntpos>GIS Specialist Sr</cntpos>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>201 S Jackson St, Suite 331</address>
+<city>Seattle</city>
+<state>WA</state>
+<postal>98104</postal>
+<country>US</country>
+</cntaddr>
+<cntvoice>206-477-5750</cntvoice>
+</cntinfo>
+</ptcontac>
+<browse>
+<browsen>http://www5.kingcounty.gov/sdc/DataImages/transitstop.jpg</browsen>
+<browsed>JPG File of layer overlain on base of WA counties or local cities</browsed>
+<browset>JPG</browset>
+</browse>
+<native>Version 6.2 (Build 9200) ; Esri ArcGIS 10.3.1.4959</native>
+</idinfo>
+<spdoinfo>
+<direct>Vector</direct>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>Entity point</sdtstype>
+<ptvctcnt>8131</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>maint.TRANSIT.TransitStop_point</enttypl>
+<enttypd>point data table</enttypd>
+<enttypds>King County</enttypds>
+</enttyp>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CHANGE_NUM</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>MINOR_CHANGE_NUM</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>0</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>ACCESSIBILITY_DECAL</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>LTD</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>YES</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>ACCESSORY_SIGN</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>County skip</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Litter RCW</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Off engine</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Other Agency</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Trailblazer</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>STOP_ID</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>20.0</rdommin>
+						<rdommax>99998.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>TRANS_LINK_ID</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>15.0</rdommin>
+						<rdommax>367547.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>STOP_STATUS</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>ACT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CLO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>INA</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>PLN</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>STOP_TYPE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>PT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>REG</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>RL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SCH</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>TUN</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>AUTH_CODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>ALG</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>AUB</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BAV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BEL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BLD</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BOE</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BOT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BUR</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CAR</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CH</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>COV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>DES</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>DOT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>DUV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>ENU</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>EVT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>FDY</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>FED</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>HCC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>HCH</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>ISS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KEN</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KIR</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KNT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>LFP</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>LYN</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MED</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MET</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MI</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MTL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NEW</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NOB</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NP</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>PAC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>POS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>PT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>PVT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>RED</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>RNT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SAM</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SCC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SEA</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SHL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SNO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SNQ</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SSC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>ST</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>STC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>TAC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>TUK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UW</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>WDV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>WSD</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>AUTH_NAME</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>Algona</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Auburn</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Beaux Arts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Bellevue</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Black Diamond</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Boeing Aircraft Corporation</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Bothell</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Burien</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Carnation</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Clyde Hill</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Covington</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Des Moines</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Duvall</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Enumclaw</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Everett</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Federal Government</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Federal Way</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Highline Community College</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Highline Community Hospital</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Issaquah</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Kenmore</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Kent</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>King County</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Kirkland</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Lake Forest Park</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Lynnwood</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Maple Valley</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Medina</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Mercer Island</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Metro King County</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Mountlake Terrace</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Newcastle</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Normandy Park</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>North Bend</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Pacific</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Pierce Transit</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Port of Seattle</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Private Owner</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Redmond</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Renton</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Sammamish</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SeaTac</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Seattle</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Shoreline</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Shoreline Community College</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Snohomish County</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Snoqualmie</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Sound Transit</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>South Seattle Community College</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>State Dept. of Transportation</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Tacoma</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Tukwila</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>University of Washington</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Woodinville</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>WSD</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>TRF_DISTRICT_CODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>CB</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CE</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>E</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NE</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NW</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>S</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>AWNING</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>NO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>YES</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>BAY_CODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>10</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>11</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>12</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>2</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>3</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>4</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>5</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>6</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>7</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>8</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>9</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>A</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>C</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>D</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>E</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>I</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>BEARING_CODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>E</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>N</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>S</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>W</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>BIKE_RACK</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>NO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>YES</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CURB</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>YES</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CURB_HEIGHT_FRONTDOOR</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<udom>UNREPRESENTED DOMAIN</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CURBPAINT</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Red-Firelan</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>White-Layovr</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>YelRed-Stop</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CURBPAINTLENGTH</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>0.0</rdommin>
+						<rdommax>350.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CURRENT_NEXT_CODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>CURRENT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SEPT17</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CF_CROSS_STREETNAME</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>CF_DIST_FROM_INTERSECTION</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>0.1</rdommin>
+						<rdommax>5622.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>CF_INTERSECTION_LOCCODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>AT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>FM</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>FS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NM</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>OP</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>DATE_CREATED</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>DATE_LAST_MODIFIED</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>DB_MOD_DATE</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>DISPLACEMENT</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>0.1</rdommin>
+						<rdommax>7545.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>DIST_FROM_INTERSECTION</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>0.1</rdommin>
+						<rdommax>3249.2</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>EFFECTIVE_BEGINDATE</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>FARE_ZONE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>3</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>4</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>5</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>6</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>8</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>9</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>12</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>14</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>17</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>18</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>19</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>20</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>21</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>22</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>24</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>26</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>36</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>39</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>40</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>71</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>72</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>73</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>74</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>75</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>76</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>77</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>78</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>79</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>80</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>81</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>82</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>FRDOORLANDING</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>FRDOORSIDEWALKWIDTH</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<udom>UNREPRESENTED DOMAIN</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>HASTUS_CROSS_STREET_NAME</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>IMT_CONNECTORLIST</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>IN_SERVICE_FLAG</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>N</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Y</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>INFOSIGN_ANCHOR</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>Concrete pad</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Concrete wlk</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Moveable pad</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>INFOSIGN</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>D1 Info</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Default</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Default+D1</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Default+H</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>H Panel</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Wall</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>INTERSECTION_LOC</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>At cross st</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Far middle</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Far side</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Near middle</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Near side</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Opposite to</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>JURISDICTION</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>ALG</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>AUB</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BA</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BEL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BLD</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BOT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>BUR</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CAR</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>CH</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>COV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>DES</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>DUV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>EDM</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>ENU</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>EVT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>FDY</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>ISS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KEN</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KIR</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KNT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>LFP</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MED</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MI</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MTL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>MV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NEW</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NOB</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>NP</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>PAC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>RED</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>RNT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SAM</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SEA</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SHL</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SNO</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>SNQ</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>STC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>TAC</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>TUK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>WDV</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>YP</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>KCM_MANAGED_EQUIPMENT</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>XCOORD</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>1225439.6</rdommin>
+						<rdommax>1404982.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>XCOORD_OFFSET</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>1225458.0</rdommin>
+						<rdommax>1404967.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>YCOORD</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>71213.5</rdommin>
+						<rdommax>343435.3</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>YCOORD_OFFSET</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>71211.01</rdommin>
+						<rdommax>343410.4</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>ZIPCODE</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<rdom>
+						<rdommin>98001.0</rdommin>
+						<rdommax>98422.0</rdommax>
+					</rdom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>ROUTE_LIST</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>ON_STREET_NAME</attrlabl>
+<attrdefs>King County</attrdefs>
+</attr>
+<attr>
+<attrlabl>ROUTESIGN</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>A1 &lt;= 2 rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>A2 &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>A2H &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>B1 &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>B1H &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>C1 &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>C1H &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>C2 &lt;= rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Non-Metro</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Single</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Tunnel Rts</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>ROUTESIGN_OWNER</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>CT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>EOS</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>KCM</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>PT</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>ST</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SIGN_MOUNTING_DIR</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Away</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Flush</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Toward</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SIGNPOST</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>2in metal</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>4in wood</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Art Pole</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Light</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Not Metro</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Pillar</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Strain</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Utility</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SIGNPOST_ANCHOR</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Band</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Base plate</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Bolt</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Cncrt-asphlt</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Cncrt-earth</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Concrete</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Earth</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Foundation</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Moveable Pad</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SCHEDULE_HOLDER</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>Double</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Midsize</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>None</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Rapid Ride</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Single</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>UNK</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>Unknown</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>NUM_SHELTERS</attrlabl>
+<attrdefs>King County</attrdefs>
+<attrdomv>
+					<edom>
+						<edomv>-1</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>0</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>2</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>3</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>4</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+<attrdomv>
+					<edom>
+						<edomv>5</edomv>
+						<edomvds>King County</edomvds>
+					</edom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SHAPE</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>Esri</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+</detailed>
+<overview>
+<eadetcit>King County</eadetcit>
+</overview>
+</eainfo>
+<distinfo>
+<distrib>
+<cntinfo>
+<cntorgp>
+<cntorg>KCGIS Center</cntorg>
+<cntper>giscenter@kingcounty.gov</cntper>
+</cntorgp>
+<cntpos>Data Distribution</cntpos>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>201 S Jackson St</address>
+<city>Seattle</city>
+<state>WA</state>
+<postal>98104</postal>
+<country>US</country>
+</cntaddr>
+<cntvoice>206-477-4403</cntvoice>
+</cntinfo>
+</distrib>
+<resdesc>/plibrary2/transportation/shapes/point/transitstop.shp</resdesc>
+<distliab>Distribution Liability: King County disclaims any warranty of use of any digital product or data beyond that for which it was designed.</distliab>
+<stdorder>
+<digform>
+<digtinfo>
+<formname>featureclass and shapefile</formname>
+</digtinfo>
+</digform>
+<fees>Contact KCGIS Client Services for the cost of reproduction - http://www.kingcounty.gov/operations/GIS/GISData/GISDataDistribution.aspx</fees>
+</stdorder>
+</distinfo>
+<metainfo>
+<metd>20171106</metd>
+<metc>
+<cntinfo>
+<cntorgp>
+<cntorg>King County Dept of Transportation - Metro Transit Division</cntorg>
+<cntper>Trang Bui</cntper>
+</cntorgp>
+<cntpos>GIS Specialist Sr</cntpos>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>201 S Jackson St, Suite 331</address>
+<city>Seattle</city>
+<state>WA</state>
+<postal>98104</postal>
+<country>US</country>
+</cntaddr>
+<cntvoice>206-477-5750</cntvoice>
+<cntemail>firstname.lastname@kingcounty.gov</cntemail>
+</cntinfo>
+</metc>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>
