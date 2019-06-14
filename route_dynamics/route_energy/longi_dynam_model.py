@@ -47,6 +47,8 @@ class RouteTrajectory(PlottingTools):
         elv_raster_filename,
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
+        charging_power_max=0. # should be kW
+        # charging_power_max=50000 # should be kW
         ):
         """ Build DataFrame with bus trajectory and shapely connections
             for plotting. This object is mostly a wrapper object to
@@ -71,6 +73,9 @@ class RouteTrajectory(PlottingTools):
 
         # Store algorithm name for future reference.
         self.bus_speed_model = bus_speed_model
+
+        # Store chargeing ability as instance attribute
+        self.charging_power_max = charging_power_max
 
         # Build Route DataFrame, starting with columns:
         #     - 'elevation'
@@ -230,7 +235,7 @@ class RouteTrajectory(PlottingTools):
             np.random.seed(5615423)
             # Return binary array with value 'True' 5% of time
             is_stop__truth_array = (
-                np.random.random(len(route_df.index)) < .05
+                np.random.random(len(route_df.index)) < .15
                 )
 
             route_df = route_df.assign(
@@ -410,7 +415,7 @@ class RouteTrajectory(PlottingTools):
         route_df,
         alg='finite_diff',
         a_m=1.0,
-        v_lim=6.0,
+        v_lim=15.0,
         ):
 
         # Calculate acceleration
@@ -612,7 +617,13 @@ class RouteTrajectory(PlottingTools):
 
         velocity = rdf.velocity.values
 
+        # calculate raw power before capping charging ability of bus
         batt_power_exert = f_traction * velocity
+        self.raw_batt_power_exert = np.copy(batt_power_exert)
+
+        for i in range(len(batt_power_exert)):
+            if batt_power_exert[i] < -self.charging_power_max:
+                batt_power_exert[i] = -self.charging_power_max
 
         return batt_power_exert
 
