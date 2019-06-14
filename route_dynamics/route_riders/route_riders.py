@@ -41,6 +41,25 @@ trip_dict = dict(zip(trip_mass.KeyTrip, trip_mass.BusType))
 
 
 def route_ridership(period, direction, route):
+    """
+    Calculates ridership mass from King County Metro ridership statistics. An
+    average ridership is used and is specific to a specific route, direction,
+    and segment during the day. Not date specific.
+
+    Inputs:
+    period - A block of time, options are 'AM', 'MID', 'PM', 'XEV', 'XNT'
+    direction - Inbound 'I' or Outbound 'O'
+    route - King County Metro Route Number
+
+    Outputs:
+    final_df - A pandas DataFrame with all raw ridership data
+    riders_kept - A DataFrame with the average ridership in kilograms as it
+        changes between stops with the most common bus type for the specified
+        parameters
+    mode_mass - Mass of the most frequently used bus type for the given
+        parameters with no riders
+
+    """
     df = trip183unsum
     df = df.drop(df[(df.Period != period)].index)
     df = df.drop(df[(df.InOut != direction)].index)
@@ -63,4 +82,4 @@ def route_ridership(period, direction, route):
     riders_kept = pd.DataFrame((riders_interm.mean(axis=1)), columns=['Mean'])
     riders_kept.Mean*=80
 
-    return final_df, riders_kept, mode
+    return final_df, riders_kept, mode_mass
