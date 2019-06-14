@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-dat1 = pd.read_csv('Trip183.csv')
-dat2 = pd.read_csv('Zon183Unsum.csv')
+dat1 = pd.read_csv(route_dynamics/data/'Trip183.csv')
+dat2 = pd.read_csv(route_dynamics/data/'Zon183Unsum.csv')
 trip183 = dat1[['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats',
                 'Period', 'AnnRides']]
 trip183unsum = dat2[['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'Period',
