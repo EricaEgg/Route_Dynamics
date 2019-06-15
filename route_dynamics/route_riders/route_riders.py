@@ -6,8 +6,8 @@ dat1 = pd.read_csv("../data/Trip183.csv")
 dat2 = pd.read_csv("../data/Zon183Unsum.csv")
 trip183 = dat1[['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats',
                 'Period', 'AnnRides']]
-trip183unsum = dat2[['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'Period',
-                     'AveOn', 'AveOff', 'AveLd', 'Obs']]
+trip183unsum = dat2[['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'STOP_ID',
+                     'Period', 'AveOn', 'AveOff', 'AveLd', 'Obs']]
 
 bus_mass = {
     11: 11000,
