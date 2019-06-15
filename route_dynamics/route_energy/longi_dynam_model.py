@@ -82,6 +82,8 @@ class RouteTrajectory(PlottingTools):
         self.v_lim = v_lim
 
 
+        self.stop_coords = stop_coords
+
         # Mass stuff
         self.mass_array = mass_array
         self.unloaded_bus_mass = unloaded_bus_mass
@@ -92,10 +94,6 @@ class RouteTrajectory(PlottingTools):
             or
             type(self.mass_array) is np.ndarray
             )
-        self.lengths_equiv = len(self.mass_array)==len(stop_coords)
-        # Does mass array check out for calculation?
-        self.mass_array_correct_length = (
-            self.lengths_equiv and self.mass_arg_is_list)
         ####
 
         # Store chargeing ability as instance attribute
@@ -532,11 +530,18 @@ class RouteTrajectory(PlottingTools):
             Eventually this will use Ryan's ridership module, which
             determines the ridership at each bus stop.
             """
+        if self.mass_arg_is_list:
 
-        if self.mass_array_correct_length:
+            lengths_equiv = len(self.mass_array)==len(
+                self.stop_coords)
+            # Does mass array check out for calculation?
+            mass_array_correct_length = (
+                lengths_equiv and self.mass_arg_is_list
+                )
 
-            full_mass_column = calculate_mass(self,
+            full_mass_column = self.calculate_mass(
                 alg='list_per_stop',
+                len_check=mass_array_correct_length
                 )
 
         else: # Add default mass to every row
@@ -553,6 +558,7 @@ class RouteTrajectory(PlottingTools):
 
     def calculate_mass(self,
         alg='list_per_stop',
+        len_check=None,
         ):
         """ Take mass array that is length of bus stop array and store
             as df column with interpolated values in between stops
@@ -561,7 +567,7 @@ class RouteTrajectory(PlottingTools):
             """
 
 
-        if self.mass_array_correct_length and alg=='list_per_stop':
+        if alg=='list_per_stop' and len_check:
 
             if not hasattr(self, 'stop_nn_indicies'):
                 raise AttributeError('Cant calculate from list')
@@ -575,7 +581,9 @@ class RouteTrajectory(PlottingTools):
             # (already determined equal length to 'stop_coords').
             for i in range(len(self.mass_array)):
                 # Set values of mass at bus_stops
-                full_mass_column[self.stop_coords_indicies[i]] = mass_array[i]
+                full_mass_column[
+                    self.stop_nn_indicies[i]
+                    ] = self.mass_array[i]
 
             # Set initial and value to unloaded bus mass.
             full_mass_column[0] = self.unloaded_bus_mass
@@ -588,16 +596,16 @@ class RouteTrajectory(PlottingTools):
                 try:
                     while np.isnan(full_mass_column[i+j]):
                         full_mass_column[i+j] = full_mass_column[i]
-                        print(full_mass_column[i+j] )
+                        # print(full_mass_column[i+j] )
                         j+=1
                 except: IndexError
 
-            if np.any(full_mass_column > self.unloaded_bus_mass):
+            if np.any(full_mass_column < self.unloaded_bus_mass):
                 raise IllegalArgumentError("Class arg 'unloaded_bus_mass' "
                     "is heavier than values in arg 'mass_array'")
 
         elif alg=='list_per_stop' and (
-            self.mass_arg_is_list and not self.lengths_equiv
+            self.mass_arg_is_list and not len_check
             ):
             raise IllegalArgumentError(
                 "'stop_coords' and 'mass_array' must be same length"
@@ -655,7 +663,7 @@ class RouteTrajectory(PlottingTools):
         if self.mass_array is None:
             loaded_bus_mass = self.unloaded_bus_mass # Mass of bus in kg
         else:
-            loaded_bus_mass = rdf.loaded_mass.values
+            loaded_bus_mass = rdf.mass.values
 
         width = 2.6 # in m
         height = 3.3 # in m
