@@ -46,6 +46,8 @@ class RouteTrajectory(PlottingTools):
         elv_raster_filename,
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
+        mass_array=None,
+        unloaded_bus_mass=12927,
         charging_power_max=0., # should be kW
         # charging_power_max=50000 # should be kW
         a_m=1.0,
@@ -78,6 +80,23 @@ class RouteTrajectory(PlottingTools):
         # default speed limit and acceleration constant
         self.a_m = a_m
         self.v_lim = v_lim
+
+
+        # Mass stuff
+        self.mass_array = mass_array
+        self.unloaded_bus_mass = unloaded_bus_mass
+
+        # Boolean check for instance argument 'mass_array'
+        self.mass_arg_is_list = (
+            type(self.mass_array) is list
+            or
+            type(self.mass_array) is np.ndarray
+            )
+        self.lengths_equiv = len(self.mass_array)==len(stop_coords)
+        # Does mass array check out for calculation?
+        self.mass_array_correct_length = (
+            self.lengths_equiv and self.mass_arg_is_list)
+        ####
 
         # Store chargeing ability as instance attribute
         self.charging_power_max = charging_power_max
@@ -149,7 +168,7 @@ class RouteTrajectory(PlottingTools):
             route_df = self._add_delta_times_to_df(route_df, 'model')
 
         # Add passenger mass column to route_df
-        route_df = self._add_passenger_mass_to_df(route_df)
+        route_df = self._add_mass_to_df(route_df)
 
         # Add force columns to route_df:
         #     - 'grav_force' : gravitation force determined by road grade
@@ -255,18 +274,21 @@ class RouteTrajectory(PlottingTools):
 
         elif (type(stop_coords) is list) or (type(stop_coords) is np.ndarray):
 
-            nearest_neighbor_indicies, nn = knn.find_knn(
+            # Calculate indicies of 'stop_coords' that match bus_stops
+            self.stop_nn_indicies, self.stop_coord_nn = knn.find_knn(
                 1,
                 route_df.coordinates.values,
                 stop_coords
                 )
+            # the 'jth' element of stop_nn_indicies also selects the
 
             route_df = route_df.assign(
                 is_bus_stop = ([False] * len(route_df.index))
                 )
 
-            for i in nearest_neighbor_indicies.ravel():
+            for i in self.stop_nn_indicies.ravel():
                 route_df.at[i, 'is_bus_stop'] = True
+
 
         else:
             raise IllegalArgumentError(
@@ -502,11 +524,8 @@ class RouteTrajectory(PlottingTools):
         return accelerations
 
 
-    def _add_passenger_mass_to_df(self,
+    def _add_mass_to_df(self,
         route_df,
-        route_number=None,
-        in_or_out=None,
-        segment=None,
         ):
         """ Compute number of passengers along the route.
 
@@ -514,23 +533,83 @@ class RouteTrajectory(PlottingTools):
             determines the ridership at each bus stop.
             """
 
-        passenger_mass_per_stop = self.calculate_passenger_mass(
-            route_number,
-            in_or_out,
-            segment,
-            )
+        if self.mass_array_correct_length:
 
-        # Placeholder for now.
+            full_mass_column = calculate_mass(self,
+                alg='list_per_stop',
+                )
+
+        else: # Add default mass to every row
+            full_mass_column = self.unloaded_bus_mass*np.ones(
+                len(route_df.index))
+
+
         route_df = route_df.assign(
-            passenger_mass = np.zeros(len(route_df.index))
+            mass = full_mass_column
             )
 
         return route_df
 
 
-    def calculate_passenger_mass(self, route_number, in_or_out, segment):
-        """ Load Ryan's module """
-        return None
+    def calculate_mass(self,
+        alg='list_per_stop',
+        ):
+        """ Take mass array that is length of bus stop array and store
+            as df column with interpolated values in between stops
+            (value from last stop). If no mass array was input as class
+            arg, then default bus mass is stored in every df row.
+            """
+
+
+        if self.mass_array_correct_length and alg=='list_per_stop':
+
+            if not hasattr(self, 'stop_nn_indicies'):
+                raise AttributeError('Cant calculate from list')
+
+
+            # Initialize array of Nan's for mass column of rdf
+            full_mass_column = np.zeros(len(self.route_df.index))
+            full_mass_column[:] = np.nan
+
+            # Iterate through the length of the given mass_array
+            # (already determined equal length to 'stop_coords').
+            for i in range(len(self.mass_array)):
+                # Set values of mass at bus_stops
+                full_mass_column[self.stop_coords_indicies[i]] = mass_array[i]
+
+            # Set initial and value to unloaded bus mass.
+            full_mass_column[0] = self.unloaded_bus_mass
+            full_mass_column[-1] = self.unloaded_bus_mass
+
+            # Iterate through the half constructed rdf mass column
+            # ('full_mass_column') and fill in sapce between stops with previous value
+            for i in range(len(full_mass_column)-1):
+                j = 1
+                try:
+                    while np.isnan(full_mass_column[i+j]):
+                        full_mass_column[i+j] = full_mass_column[i]
+                        print(full_mass_column[i+j] )
+                        j+=1
+                except: IndexError
+
+            if np.any(full_mass_column > self.unloaded_bus_mass):
+                raise IllegalArgumentError("Class arg 'unloaded_bus_mass' "
+                    "is heavier than values in arg 'mass_array'")
+
+        elif alg=='list_per_stop' and (
+            self.mass_arg_is_list and not self.lengths_equiv
+            ):
+            raise IllegalArgumentError(
+                "'stop_coords' and 'mass_array' must be same length"
+                )
+
+        else:
+            raise IllegalArgumentError(
+                "Algorithm for mass calculation must be 'list_per_stop'"
+                )
+
+
+        return full_mass_column
 
 
     def _add_forces_to_df(self, route_df):
@@ -562,7 +641,7 @@ class RouteTrajectory(PlottingTools):
         acce = rdf.acceleration.values
         grad = rdf.gradient.values
         grad_angle = np.arctan(grad)
-        passenger_mass = rdf.passenger_mass.values
+
 
         # Physical parameters
         gravi_accel = 9.81
@@ -573,16 +652,17 @@ class RouteTrajectory(PlottingTools):
         fric_coeff = 0.01
 
         # List of Bus Parameters for 40 foot bus
-        bus_mass = 12927 # Mass of bus in kg
+        if self.mass_array is None:
+            loaded_bus_mass = self.unloaded_bus_mass # Mass of bus in kg
+        else:
+            loaded_bus_mass = rdf.loaded_mass.values
+
         width = 2.6 # in m
         height = 3.3 # in m
         bus_front_area = width * height
         drag_coeff = 0.34 # drag coefficient estimate from paper (???)
         rw = 0.28575 # radius of wheel in m
 
-        # Total bus mass along route is equal to the bus mass plus
-        # passenger load
-        loaded_bus_mass = passenger_mass + bus_mass
 
         # Calculate the gravitational force
         grav_force = -(
