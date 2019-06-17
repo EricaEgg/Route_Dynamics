@@ -65,7 +65,11 @@ def route_ridership(period, direction, route):
     df = df.drop(df[(df.InOut != direction)].index)
     df = df.drop(df[(df.Route != route)].index)
 
-    final_df = df.sort_values(by=['Trip_ID', 'STOP_SEQ'])
+    final_df = df.sort_values(by=['Trip_ID', 'STOP_SEQ', 'STOP_ID'])
+    seq_id = final_df[['STOP_SEQ', 'STOP_ID']]
+    seq_id2 = seq_id.drop_duplicates(subset=['STOP_SEQ'], keep='first')
+    seq_id3 = seq_id2.sort_values(by='STOP_SEQ')
+    stopid_dic = dict(zip(seq_id3.STOP_SEQ, seq_id3.STOP_ID))
     riders = final_df.pivot(index='STOP_SEQ', columns='Trip_ID', values='AveLd')
 
     keyfind = list(riders.columns)
@@ -81,5 +85,9 @@ def route_ridership(period, direction, route):
     riders_interm = riders[kept_columns]
     riders_kept = pd.DataFrame((riders_interm.mean(axis=1)), columns=['Mean'])
     riders_kept.Mean*=80
+    riders_kept.reset_index(inplace=True)
+    riders_kept.replace({"STOP_SEQ": stopid_dic}, inplace=True)
+
+
 
     return final_df, riders_kept, mode_mass
