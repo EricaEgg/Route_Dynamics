@@ -4,9 +4,7 @@
 
 [logo]: https://github.com/EricaEgg/Route_Dynamics/blob/master/Documentation/logo.JPG
 
-This tool was created to visualize the elevation changes for King County Metro bus routes. More broadly, it can be 
-used to analyze any path along any terrain. The required inputs are a shapefile (.shp) for the route of interest and a 
-raster file (.tif) for the elevation data. 
+`route_dynamics` was created to estimate the energy requirements for King County Metro bus routes. 
 
 ### Use Cases
 
@@ -24,7 +22,11 @@ along the given route, there is also a z value.
 
 ![alt text][flowchart]
 
-[flowchart]: https://github.com/EricaEgg/Route_Dynamics/blob/master/Documentation/FlowChart.PNG
+[flowchart]: 
+
+**New flow chart coming soon**
+
+
 
 ### Folders in the Repository
 
