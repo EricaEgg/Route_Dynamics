@@ -36,7 +36,6 @@ bus_mass = {
 
 trip183 = trip183.replace({'BusType': bus_mass})
 trip_mass = trip183[['BusType', 'KeyTrip']]
-trip_mass.head()
 trip_dict = dict(zip(trip_mass.KeyTrip, trip_mass.BusType))
 
 
