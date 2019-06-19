@@ -26,7 +26,7 @@ def profile_x(y, route_cum_distance, route_num):
         y=0.95,
         )
 
-    return fig
+    return 
 
 
 def profile_t(y, time, route_num):
@@ -54,7 +54,68 @@ def profile_t(y, time, route_num):
         y=0.95,
         )
 
-    return plt
+    return 
+
+
+def diag_plot(inst, style='plot', title=None):
+    
+    widths=[1,1]
+    heights=[2.5,0.75,0.75,0.75]
+    
+    fig, axes = plt.subplots(
+        4,2,dpi=100, 
+        figsize = (8,6),
+        constrained_layout=True,
+        gridspec_kw = dict(width_ratios=widths, height_ratios=heights),
+        )
+    
+    if title is not None:
+        fig.suptitle(title, fontsize=12)
+        
+    x = inst.route_df.cum_distance.values
+    v = inst.route_df.velocity.values
+    a = inst.route_df.acceleration.values
+    t = inst.route_time
+    p = inst.route_df.power_output.values
+    p_raw = inst.raw_batt_power_exert
+
+    
+    axes[0,0].plot(t,p, label='battery power')
+    axes[0,0].plot(t,p_raw, label='raw power')
+    axes[0,0].legend()
+    axes[0,0].set_xlabel('time')
+    axes[0,0].set_ylabel('distance')
+    
+    axes[1,0].plot(t,a)
+    axes[1,0].set_xlabel('time')
+    axes[1,0].set_ylabel('acceleration')
+
+    axes[2,0].plot(t,v)
+    axes[2,0].set_xlabel('time')
+    axes[2,0].set_ylabel('speed')
+
+    axes[3,0].plot(t,x)
+    axes[3,0].set_xlabel('time')
+    axes[3,0].set_ylabel('distance')
+    
+
+    axes[0,1].plot(x,p, label='battery power')
+    axes[0,1].plot(x,p_raw, label='raw power')
+    axes[0,1].legend()
+    axes[0,1].set_xlabel('time')
+    axes[0,1].set_ylabel('distance')
+
+    axes[1,1].plot(x,a)
+    axes[1,1].set_xlabel('distance')
+    axes[1,1].set_ylabel('acceleration')
+
+    axes[2,1].plot(x,v)
+    axes[2,1].set_xlabel('distance')
+    axes[2,1].set_ylabel('speed')
+
+    axes[3,1].plot(x,t)
+    axes[3,1].set_ylabel('time')
+    axes[3,1].set_xlabel('distance')
 
 
 def route_map(gdf_route):
