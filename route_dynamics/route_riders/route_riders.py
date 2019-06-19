@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import route_dynamics.route_elevation.base as base
+import geopandas as gpd
+
+from shapely.geometry import mapping
 
 dat1 = pd.read_csv("../data/Trip183.csv")
 dat2 = pd.read_csv("../data/Zon183Unsum.csv")
@@ -38,6 +42,9 @@ trip183 = trip183.replace({'BusType': bus_mass})
 trip_mass = trip183[['BusType', 'KeyTrip']]
 trip_dict = dict(zip(trip_mass.KeyTrip, trip_mass.BusType))
 
+routes_shp = '../data/six_routes.shp'
+stops_shp = '../data/Transit_Stops_for_King_County_Metro__transitstop_point.shp'
+
 
 def route_ridership(period, direction, route):
     """
@@ -59,6 +66,7 @@ def route_ridership(period, direction, route):
         parameters with no riders
 
     """
+
     df = trip183unsum
     df = df.drop(df[(df.Period != period)].index)
     df = df.drop(df[(df.InOut != direction)].index)
@@ -86,7 +94,57 @@ def route_ridership(period, direction, route):
     riders_kept.Mean*=80
     riders_kept.reset_index(inplace=True)
     riders_kept.replace({"STOP_SEQ": stopid_dic}, inplace=True)
-
-
+    riders_kept.columns = ['STOP_ID', 'Mean']
 
     return final_df, riders_kept, mode_mass
+
+
+
+def stop_coord(num, riders_num):
+    """
+    ADD DOCSTRING
+
+    """
+    route_num = num
+
+    route = base.read_shape(routes_shp, route_num)
+    points = base.extract_point_df(route)
+    stops = gpd.read_file(stops_shp)
+    stops['ROUTE_LIST'].fillna(value=str(0), inplace=True)
+
+    stops_list = pd.DataFrame()
+    for i in range(0, len(stops)):
+
+        if str(route_num) in (stops['ROUTE_LIST'][i]):
+            for x in stops['ROUTE_LIST'][i].split(' '):
+                if str(route_num) == x:
+                    stops_list = stops_list.append(stops.iloc[i])
+                else:
+                    pass
+        else:
+            pass
+
+    stop_ids = stops_list['STOP_ID'].values
+
+    geometry = stops_list.geometry.values
+
+    xy = []
+    for i in range(len(geometry)):
+        dic = mapping(geometry[i])
+        coords = dic['coordinates']
+        xy.append(coords)
+        xy_df = pd.DataFrame(columns = ['STOP_ID','coordinates'])
+        xy_df['coordinates'] = xy
+
+    xy_df['STOP_ID'] = stops_list['STOP_ID'].values
+
+    df = riders_num
+    df_ind = df.reset_index()
+    df_ind.columns = ['STOP_SEQ', 'STOP_ID', 'Mean']
+
+    df_comb = xy_df.merge(df_ind, how='right', on="STOP_ID")
+    df_comb = df_comb.drop_duplicates(subset=['STOP_ID'], keep='first')
+    df_comb = df_comb[['STOP_SEQ', 'STOP_ID', 'coordinates', 'Mean']]
+    df_combine = df_comb.sort_values(by='STOP_SEQ')
+
+    return xy_df, df_combine
