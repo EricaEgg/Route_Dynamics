@@ -12,6 +12,7 @@
 # from ..route_elevation import single_route as rsr
 from ..route_elevation import base as re_base
 from . import knn
+from . import constant_a as ca
 
 import numpy as np
 import geopandas as gpd
@@ -31,7 +32,6 @@ class PlottingTools(object):
         pass
 
 
-
 # Thinking this is not the best implementation since I don't actually
 # know how to make objects print like pandas DataFrames.
 class RouteTrajectory(PlottingTools):
@@ -46,6 +46,12 @@ class RouteTrajectory(PlottingTools):
         elv_raster_filename,
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
+        mass_array=None,
+        unloaded_bus_mass=12927,
+        charging_power_max=0., # should be kW
+        # charging_power_max=50000 # should be kW
+        a_m=1.0,
+        v_lim=15.0,
         ):
         """ Build DataFrame with bus trajectory and shapely connections
             for plotting. This object is mostly a wrapper object to
@@ -57,13 +63,10 @@ class RouteTrajectory(PlottingTools):
 
                 route_num: needs to be one that Erica made work.
 
-                bus_speed_model:
-                    Right now the argument 'bus_speed_model' is
-                    set to 'test' by default, which causes the speed to
-                    be set at a constant velocity of 6.7056 [m/s],
-                    which is equal to 15 mph. Later this will accept
-                    arguments like 'parabolic_between_stops' or maybe
-                    even something smarter that includes trtaffic.
+                bus_speed_model: has options;
+                    - 'stopped_at_stops__15mph_between'
+                    - 'constant_15mph'
+                    - 'const_accel_between_stops_and_speed_lim'
 
             Methods:
 
@@ -73,6 +76,28 @@ class RouteTrajectory(PlottingTools):
 
         # Store algorithm name for future reference.
         self.bus_speed_model = bus_speed_model
+
+        # default speed limit and acceleration constant
+        self.a_m = a_m
+        self.v_lim = v_lim
+
+
+        self.stop_coords = stop_coords
+
+        # Mass stuff
+        self.mass_array = mass_array
+        self.unloaded_bus_mass = unloaded_bus_mass
+
+        # Boolean check for instance argument 'mass_array'
+        self.mass_arg_is_list = (
+            type(self.mass_array) is list
+            or
+            type(self.mass_array) is np.ndarray
+            )
+        ####
+
+        # Store chargeing ability as instance attribute
+        self.charging_power_max = charging_power_max
 
         # Build Route DataFrame, starting with columns:
         #     - 'elevation'
@@ -100,20 +125,48 @@ class RouteTrajectory(PlottingTools):
         # Try to determine bus stops from list of coordinates
         route_df = self._add_stops_to_df(stop_coords, route_df)
 
-        # Add 'velocity' column to route_df
-        # This will also involve calulating the velocity.
-        route_df = self._add_velocities_to_df(
-            route_df,
-            bus_speed_model=bus_speed_model,
-            )
+        # Depending on the method of bus speed estimation, the next
+        # block of code will exicute in different orders
+        if bus_speed_model in [
+            'constant_15mph',
+            'stopped_at_stops__15mph_between'
+            ]:
+            # Add 'velocity' column to route_df first
+            # This will also involve calulating the velocity.
+            route_df = self._add_velocities_to_df(
+                route_df,
+                bus_speed_model=bus_speed_model,
+                )
 
-        route_df = self._add_delta_times_to_df(route_df)
+            route_df = self._add_delta_times_to_df(route_df)
 
-        # Add 'acceleration' column to route_df
-        route_df = self._add_accelerations_to_df(route_df)
+            # Add 'acceleration' column to route_df, calculated as
+            # finite difference from velocities
+            route_df = self._add_accelerations_to_df(
+                route_df,
+                alg='finite_diff',
+                )
+
+
+        elif bus_speed_model in [
+            'const_accel_between_stops_and_speed_lim'
+            ]:
+
+            # Add 'acceleration' column to route_df
+            route_df = self._add_accelerations_to_df(
+                route_df,
+                alg='const_accel_between_stops_and_speed_lim',
+                )
+
+            route_df = self._add_velocities_to_df(
+                route_df,
+                bus_speed_model='const_accel_between_stops_and_speed_lim',
+                )
+
+            route_df = self._add_delta_times_to_df(route_df, 'model')
 
         # Add passenger mass column to route_df
-        route_df = self._add_passenger_mass_to_df(route_df)
+        route_df = self._add_mass_to_df(route_df)
 
         # Add force columns to route_df:
         #     - 'grav_force' : gravitation force determined by road grade
@@ -163,7 +216,7 @@ class RouteTrajectory(PlottingTools):
             elevation,
             elevation_gradient,
             route_cum_distance,
-            distance
+            back_diff_distance
             ) = re_base.gradient(route_shp, elv_raster_filename)
 
         route_df = re_base.make_multi_lines(
@@ -171,12 +224,24 @@ class RouteTrajectory(PlottingTools):
             elevation_gradient
             )
 
+
+        route_df = self._add_distance_to_df(back_diff_distance, route_df)
+
         route_df = self._add_elevation_to_df(elevation, route_df)
 
         route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
         return route_df
 
+
+    def _add_distance_to_df(self, back_diff_distance, route_df):
+
+        distance_array = np.append(np.nan,back_diff_distance)
+
+        rdf = route_df.assign(
+            distance_from_last_point=distance_array
+            )
+        return rdf
 
     def _add_stops_to_df(self, stop_coords, route_df):
         """ Find rows in route_df matching the stop_coordinates and
@@ -192,7 +257,7 @@ class RouteTrajectory(PlottingTools):
             np.random.seed(5615423)
             # Return binary array with value 'True' 5% of time
             is_stop__truth_array = (
-                np.random.random(len(route_df.index)) < .05
+                np.random.random(len(route_df.index)) < .15
                 )
 
             route_df = route_df.assign(
@@ -207,24 +272,30 @@ class RouteTrajectory(PlottingTools):
 
         elif (type(stop_coords) is list) or (type(stop_coords) is np.ndarray):
 
-            nearest_neighbor_indicies, nn = knn.find_knn(
+            # Calculate indicies of 'stop_coords' that match bus_stops
+            self.stop_nn_indicies, self.stop_coord_nn = knn.find_knn(
                 1,
                 route_df.coordinates.values,
                 stop_coords
                 )
+            # the 'jth' element of stop_nn_indicies also selects the
 
             route_df = route_df.assign(
                 is_bus_stop = ([False] * len(route_df.index))
                 )
 
-            for i in nearest_neighbor_indicies.ravel():
+            for i in self.stop_nn_indicies.ravel():
                 route_df.at[i, 'is_bus_stop'] = True
+
 
         else:
             raise IllegalArgumentError(
                 "'stop_coords' must be 'random', None, "
                 "or type(list)/type(ndarray)"
                 )
+
+        # route_df.at[0, 'is_bus_stop'] = True
+        # route_df.at[-1, 'is_bus_stop'] = True
 
         return route_df
 
@@ -287,6 +358,9 @@ class RouteTrajectory(PlottingTools):
             bus_speed_array = zero_if_stop__one_if_not * lazy_choise_for_speed
 
 
+        elif bus_speed_model is 'const_accel_between_stops_and_speed_lim':
+            bus_speed_array = self.const_a_velocities
+
         rdf = route_df.assign(
             velocity=bus_speed_array
             )
@@ -294,10 +368,17 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _add_delta_times_to_df(self, route_df):
+    def _add_delta_times_to_df(self, route_df, alg='finite_diff'):
         """ Add delta_times for finite_difference calculation of acceleration """
 
-        delta_times = self._calculate_delta_times_on_linestring_distance(route_df)
+        if alg is 'finite_diff':
+            delta_times = self._calculate_delta_times_on_linestring_distance(
+                route_df)
+        elif alg is 'model':
+            delta_times = np.append(
+                0,
+                np.diff(self.route_time)
+                )
 
         rdf = route_df.assign(
             delta_time=delta_times
@@ -306,25 +387,39 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _calculate_delta_times_on_linestring_distance(self, route_df):
+    def _calculate_delta_times_on_linestring_distance(self,
+        route_df,
+        alg='finite_diff',
+        ):
 
-        back_diff_delta_x = self.distance_array_from_linestrings(route_df)
+        back_diff_delta_x = route_df.distance_from_last_point.values
 
         try:
             velocities = route_df.velocity.values
         except AttributeError:
             print("Does 'route_df' have 'velocity' column? ")
 
-        # Calcule average velocities along segment but backward difference
-        segment_avg_velocities = (
-            velocities
-            +
-            np.append(0,velocities[:-1])
-            )/2
+        if alg is 'finite_diff':
+            # Calcule average velocities along segment but backward difference
+            segment_avg_velocities = (
+                velocities
+                +
+                np.append(0,velocities[:-1])
+                )/2
 
-        delta_times = back_diff_delta_x * segment_avg_velocities
+            self.delta_times = back_diff_delta_x * segment_avg_velocities
 
-        return delta_times
+        else:
+            raise IllegalArgumentError("time calculation only equiped to "
+                "implement finite difference.")
+
+
+        self.time_on_route = np.append(
+            0,
+            np.cumsum(self.delta_times[1:])
+            )
+
+        return self.delta_times
 
 
     def _add_accelerations_to_df(self, route_df, alg='finite_diff'):
@@ -341,13 +436,19 @@ class RouteTrajectory(PlottingTools):
         return rdf
 
 
-    def _calculate_acceleration(self, route_df, alg='finite_diff'):
+    def _calculate_acceleration(self,
+        route_df,
+        alg='finite_diff',
+        a_m=None,
+        v_lim=None,
+        ):
+
         # Calculate acceleration
         if alg=='finite_diff':
             # Use finite difference of velocities to calculate accelerations
             velocity_array = route_df.velocity.values
 
-            delta_distance_array = self.distance_array_from_linestrings(route_df)
+            delta_distance_array = route_df.distance_from_last_point.values
 
             # assert (np.shape(np.diff(velocity_array))==np.shape(delta_distance_array)), (
             #     "np.shape(np.diff(velocity_array) = {}\n"
@@ -391,8 +492,22 @@ class RouteTrajectory(PlottingTools):
                 self.delta_v[1:] / dt[1:]
                 )
 
+        elif alg=='const_accel_between_stops_and_speed_lim':
 
+            if v_lim is None: v_lim=self.v_lim
+            if a_m is None: a_m=self.a_m
 
+            (
+                accelerations,
+                self.const_a_velocities,
+                self.x_ls,
+                self.x_ns,
+                self.route_time
+                ) = ca.const_a_dynamics(
+                route_df,
+                a_m,
+                v_lim,
+                )
 
         else:
             raise IllegalArgumentError((
@@ -407,35 +522,102 @@ class RouteTrajectory(PlottingTools):
         return accelerations
 
 
-    def _add_passenger_mass_to_df(self,
+    def _add_mass_to_df(self,
         route_df,
-        route_number=None,
-        in_or_out=None,
-        segment=None,
         ):
         """ Compute number of passengers along the route.
 
             Eventually this will use Ryan's ridership module, which
             determines the ridership at each bus stop.
             """
+        if self.mass_arg_is_list:
 
-        passenger_mass_per_stop = self.calculate_passenger_mass(
-            route_number,
-            in_or_out,
-            segment,
-            )
+            lengths_equiv = len(self.mass_array)==len(
+                self.stop_coords)
+            # Does mass array check out for calculation?
+            mass_array_correct_length = (
+                lengths_equiv and self.mass_arg_is_list
+                )
 
-        # Placeholder for now.
+            full_mass_column = self.calculate_mass(
+                alg='list_per_stop',
+                len_check=mass_array_correct_length
+                )
+
+        else: # Add default mass to every row
+            full_mass_column = self.unloaded_bus_mass*np.ones(
+                len(route_df.index))
+
+
         route_df = route_df.assign(
-            passenger_mass = np.zeros(len(route_df.index))
+            mass = full_mass_column
             )
 
         return route_df
 
 
-    def calculate_passenger_mass(self, route_number, in_or_out, segment):
-        """ Load Ryan's module """
-        return None
+    def calculate_mass(self,
+        alg='list_per_stop',
+        len_check=None,
+        ):
+        """ Take mass array that is length of bus stop array and store
+            as df column with interpolated values in between stops
+            (value from last stop). If no mass array was input as class
+            arg, then default bus mass is stored in every df row.
+            """
+
+
+        if alg=='list_per_stop' and len_check:
+
+            if not hasattr(self, 'stop_nn_indicies'):
+                raise AttributeError('Cant calculate from list')
+
+
+            # Initialize array of Nan's for mass column of rdf
+            full_mass_column = np.zeros(len(self.route_df.index))
+            full_mass_column[:] = np.nan
+
+            # Iterate through the length of the given mass_array
+            # (already determined equal length to 'stop_coords').
+            for i in range(len(self.mass_array)):
+                # Set values of mass at bus_stops
+                full_mass_column[
+                    self.stop_nn_indicies[i]
+                    ] = self.mass_array[i]
+
+            # Set initial and value to unloaded bus mass.
+            full_mass_column[0] = self.unloaded_bus_mass
+            full_mass_column[-1] = self.unloaded_bus_mass
+
+            # Iterate through the half constructed rdf mass column
+            # ('full_mass_column') and fill in sapce between stops with previous value
+            for i in range(len(full_mass_column)-1):
+                j = 1
+                try:
+                    while np.isnan(full_mass_column[i+j]):
+                        full_mass_column[i+j] = full_mass_column[i]
+                        # print(full_mass_column[i+j] )
+                        j+=1
+                except: IndexError
+
+            if np.any(full_mass_column < self.unloaded_bus_mass):
+                raise IllegalArgumentError("Class arg 'unloaded_bus_mass' "
+                    "is heavier than values in arg 'mass_array'")
+
+        elif alg=='list_per_stop' and (
+            self.mass_arg_is_list and not len_check
+            ):
+            raise IllegalArgumentError(
+                "'stop_coords' and 'mass_array' must be same length"
+                )
+
+        else:
+            raise IllegalArgumentError(
+                "Algorithm for mass calculation must be 'list_per_stop'"
+                )
+
+
+        return full_mass_column
 
 
     def _add_forces_to_df(self, route_df):
@@ -467,7 +649,7 @@ class RouteTrajectory(PlottingTools):
         acce = rdf.acceleration.values
         grad = rdf.gradient.values
         grad_angle = np.arctan(grad)
-        passenger_mass = rdf.passenger_mass.values
+
 
         # Physical parameters
         gravi_accel = 9.81
@@ -478,16 +660,17 @@ class RouteTrajectory(PlottingTools):
         fric_coeff = 0.01
 
         # List of Bus Parameters for 40 foot bus
-        bus_mass = 12927 # Mass of bus in kg
+        if self.mass_array is None:
+            loaded_bus_mass = self.unloaded_bus_mass # Mass of bus in kg
+        else:
+            loaded_bus_mass = rdf.mass.values
+
         width = 2.6 # in m
         height = 3.3 # in m
         bus_front_area = width * height
         drag_coeff = 0.34 # drag coefficient estimate from paper (???)
         rw = 0.28575 # radius of wheel in m
 
-        # Total bus mass along route is equal to the bus mass plus
-        # passenger load
-        loaded_bus_mass = passenger_mass + bus_mass
 
         # Calculate the gravitational force
         grav_force = -(
@@ -530,7 +713,13 @@ class RouteTrajectory(PlottingTools):
 
         velocity = rdf.velocity.values
 
+        # calculate raw power before capping charging ability of bus
         batt_power_exert = f_traction * velocity
+        self.raw_batt_power_exert = np.copy(batt_power_exert)
+
+        for i in range(len(batt_power_exert)):
+            if batt_power_exert[i] < -self.charging_power_max:
+                batt_power_exert[i] = -self.charging_power_max
 
         return batt_power_exert
 
@@ -557,17 +746,3 @@ class RouteTrajectory(PlottingTools):
         energy = np.sum(power * delta_t)
 
         return energy
-
-
-    def distance_array_from_linestrings(self, rdf):
-        # Calculate lengths of route segments
-        delta_x = []
-        for line in rdf.geometry.values:
-            if hasattr(line, 'length'):
-                delta_x.append(line.length)
-            else:
-                delta_x.append(0)
-
-        return delta_x
-
-
