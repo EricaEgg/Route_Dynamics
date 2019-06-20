@@ -7,6 +7,8 @@
         Transportation Research Part D: Transport and Environment.
         2016 Jul 1;46:182-99.
 
+    This file contains one main class, which constructs the route DataFrame
+    consisting of rows corresponding to points along the route
     """
 
 # from ..route_elevation import single_route as rsr
