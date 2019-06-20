@@ -4,19 +4,26 @@
 
 [logo]: https://github.com/EricaEgg/Route_Dynamics/blob/master/Documentation/logo.JPG
 
-`route_dynamics` was created to estimate the energy requirements for King County Metro bus routes. 
+`route_dynamics` is a python package created to estimate the energy demand of King County Metro bus routes. 
+The package implements a simple dynamical model for the bus moving along realistic elevation profiles gathered from LIDAR data. The modular nature of the packege facilitates exoerimentation with different estimations of:
+
+* bus speed : Current implementation assumes constant acceleration away / towards bus stops, where the bus speed is 0. Between bus stops far enough apart, the bus reaches a specified speed limit. 
+
+* bus stop location : Location of bus stops prescribes the bus speed estimation.
+
+* passenger load : can tripple the bus mass, and therefore drastically effects energy demand.  
+
 
 ### Use Cases
 
 * **Read GIS files**: The software first imports geographic information system (GIS) data files and makes them readable by 
 Python.
 
-* **Combine shapefile and raster data**: Next, the two data types are merged together so that for every x and y coordinate 
-along the given route, there is also a z value. 
+* **Combine shapefile and elevation raster data**: Next, the two data types are merged together so that for every latitude and longitude coordinate along the given route, there is also a z value. 
 
 * **Visualize Network**: All routes are shown on a map with elevation color gradient. 
 
-* **Qualitatively compare routes**: Select multiple routes to see how the elevation profiles compare. 
+* **Estimation of bus speed**: Select multiple routes to see how the elevation profiles compare. 
 
 ### Work Flow
 
