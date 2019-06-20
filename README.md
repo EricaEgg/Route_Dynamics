@@ -14,6 +14,11 @@ The package implements a simple dynamical model for the bus moving along realist
 * passenger load : can tripple the bus mass, and therefore drastically effects energy demand.  
 
 
+### Quick Pitch 
+
+`route_dynamics` is developed in partnership with King County metro to resolve inefficiencies in their hybrid electric bus fleet. Although the now electrified bus fleet is 20% more efficient than the old diesel busses, this gain in air quality, sound pollution, and environmental impact is seriously diminished by the fact that replacing batteries is really expensive and as of now unpredictable. We are working to plug this efficient leak by building an open-source python package to predict battery degradation on hybrid electric busses using publicly available geographic data.
+This package can be implemented into Metro's maintenance scheduling and utilized in future route planning, allowing Metro to take advantage of all benefits from moving to an electrified fleet.
+
 ### Use Cases
 
 * **Read GIS files**: The software first imports geographic information system (GIS) data files and makes them readable by 
