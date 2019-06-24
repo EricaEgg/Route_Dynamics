@@ -47,12 +47,14 @@ The package is currently equiped with a "speed up, speed limt, slow down" model,
 
     3) the bus travels at the speed limit when between stops far enough apart to fascilitate acceleration and deceleration.
 
-* **Visualize Subpackage**: All routes are shown on a map with elevation color gradient... 
+* **Visualize Subpackage**: All routes are shown on a map with elevation color gradient... !!! UPDATE !!!
 
 Thanks to modular design, all of the above components can be specified manually to fascilitate optimization of route design and energy demand research. 
 
 
 ### Work Flow
+
+!!! UPDATE !!!
 
 The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. 
 
@@ -64,18 +66,22 @@ The storage capacity of any battery module decays with the battery's power outpu
 
 
 
-### Folders in the Repository
+### Repository structure
+
+!!! UPDATE !!!
 
 * **Documentation**: Contains project information, such as Use 
 Cases, work flow, and DIRECT poster
 
 * **data**: King County Metro route shapefiles
 
-* **examples**: Example notebook
+* **examples**: Contains example Jupyter notebooks detailing how the package is used.  
 
 * **route_dynamics**: module scripts and tests
 
 ### Software Dependencies and Packages
+
+!!! UPDATE !!!
 
 * Python 3.6
 * folium
@@ -91,6 +97,8 @@ A virtual environment is included in the repository called environment.yml.
 
 ### Getting Started
 
+!!! UPDATE !!!
+
 1. Use `git clone` to download the repository.
 2. Import the `environment.yml` virtual environment.
 3. Download an elevation raster dataset and place it into the repository on your local 
@@ -98,6 +106,8 @@ machine. The raster file used for the example (seattle_dtm.tif) can be found
 [here](https://drive.google.com/open?id=1V8-VIPGcNJ4l7Bd7OYDjIstFb1dsyhxH). 
 
 ### Example Outputs
+
+!!! UPDATE !!!
 
 #### Elevation and Road Grade Profiles:
 Route 45
@@ -121,25 +131,6 @@ Route 45
 Check out a short video that runs through the package functions in the example notebook and shows the corresponding results 
 [here](https://drive.google.com/open?id=1ZpiIEzNWV0T_pzcjw9jkn3GkSxMLdkwo).
 
-### Nosetest Results
-
-#### `test_base.py`
-----------------------------------------------------------------------
-Ran 9 tests in 8.113s
-
-OK
-
-#### `test_single_route.py`
-----------------------------------------------------------------------
-Ran 5 tests in 10.119s
-
-OK
-
-#### `test_multiple_route.py`
-----------------------------------------------------------------------
-Ran 1 test in 3.397s
-
-OK
 
 ### Acknowledements
 
