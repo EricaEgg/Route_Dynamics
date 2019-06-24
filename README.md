@@ -16,21 +16,32 @@ The package implements a simple dynamical model for the bus moving along realist
 
 ### Quick Pitch 
 
-`route_dynamics` is developed in partnership with King County metro to resolve inefficiencies in their hybrid electric bus fleet. Although the now electrified bus fleet is 20% more efficient than the old diesel busses, this gain in air quality, sound pollution, and environmental impact is seriously diminished by the fact that replacing batteries is really expensive and as of now unpredictable. We are working to plug this efficient leak by building an open-source python package to predict battery degradation on hybrid electric busses using publicly available geographic data.
-This package can be implemented into Metro's maintenance scheduling and utilized in future route planning, allowing Metro to take advantage of all benefits from moving to an electrified fleet.
+`route_dynamics` was (and continues to be) developed in partnership with King County metro to resolve inefficiencies in their hybrid electric bus fleet through predictive modeling. 
+Although the now electrified bus fleet is 20% more efficient than the old diesel busses, this gain in air quality, sound pollution, and environmental impact is seriously diminished by the fact that replacing batteries is expensive and currently unpredictable. 
+We are working to plug this efficient leak by building an open-source python package to predict battery degradation along specific King Country Metro hybrid bus routes using publicly available geographic data and ridership data from KCM. These data are fed into a simple dynamical model for the bus trajectory used to compute the time integrated power output of the bus and procide a tool for both cost efficient matinence schedualing and energy efficient route design and optimization.
 
 ### Use Cases
 
-* **Read GIS files**: The software first imports geographic information system (GIS) data files and makes them readable by 
-Python.
+* **Matinence Scheduling**: 
+With a predicitive model of module degredation that is route and ridership specific, module replacement can be coordinated with other time intensive matinence that takes busses out of service and into the shop. 
+   
+* **Route planning**:
+King Country comntains a wide variety of terrien features, and it is likely that certain routes required more energy then other possibilites that would serve the same riders. This package allows route designers to quicky predict energy demand on numerous route possibilities in different conditions to optimize the fleet distribution.  
 
-* **Combine shapefile and elevation raster data**: Next, the two data types are merged together so that for every latitude and longitude coordinate along the given route, there is also a z value. 
+### Tech. Specs.
+	
+* **Read GIS files**: The software first imports geographic information system (GIS) data files and loads them into GeoPandas DataFrames. 
 
-* **Visualize Network**: All routes are shown on a map with elevation color gradient. 
+* **Elevation LIDAR data** for King County is loaded for given latitude and longitude coordinate defining a specific route to define the route steepnes/grade.
 
-* **Estimation of bus speed**: Select multiple routes to see how the elevation profiles compare. 
+* **Modular integration of bus speed model** will allow for continued development of estimations of. 
+
+* **Visualize Subpackage**: All routes are shown on a map with elevation color gradient. 
+
 
 ### Work Flow
+
+The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. 
 
 ![alt text][flowchart]
 
