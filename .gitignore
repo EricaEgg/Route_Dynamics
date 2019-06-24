@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# seattle_dtm
+data/seattle_dtm.tif
