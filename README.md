@@ -29,14 +29,27 @@ With a predicitive model of module degredation that is route and ridership speci
 King Country comntains a wide variety of terrien features, and it is likely that certain routes required more energy then other possibilites that would serve the same riders. This package allows route designers to quicky predict energy demand on numerous route possibilities in different conditions to optimize the fleet distribution.  
 
 ### Tech. Specs.
+
+The foundation of `route_dynamics` is a `RouteTrajectory` object, that holds route data and wraps a simple Newtonian mechanics model of the bus under force balence between frictional, gravitational, and motive forces. The various components neccesary to compute the energy demand of a particular bus route are; 
 	
-* **Read GIS files**: The software first imports geographic information system (GIS) data files and loads them into GeoPandas DataFrames. 
+* **GIS files**: The software first imports geographic information system (GIS) data files containing route coordinates and loads them into GeoPandas DataFrames. 
 
-* **Elevation LIDAR data** for King County is loaded for given latitude and longitude coordinate defining a specific route to define the route steepnes/grade.
+* **Elevation LIDAR data** on King County is loaded for given latitude and longitude coordinate defining a specific route to calculate the route steepnes/grade.
 
-* **Modular integration of bus speed model** will allow for continued development of estimations of. 
+* **Bus stop dependent Ridership**: Bus stop coordinates and associated ridership for specific routes influence the bus speed, acceleration, and mass that can fluctuale up to 3x the unloaded bus mass when at passenger capacity.  
 
-* **Visualize Subpackage**: All routes are shown on a map with elevation color gradient. 
+* **Modular integration of bus speed model** will allow for continued development towards parameter free prediction. 
+The package is currently equiped with a "speed up, speed limt, slow down" model, which assumes,
+
+    1) the bus stops as all declared bus stops, 
+
+    2) the bus accelerates with constant acceleration away from bus stops and deccelerates at the same rate towards oncoming stops,
+
+    3) the bus travels at the speed limit when between stops far enough apart to fascilitate acceleration and deceleration.
+
+* **Visualize Subpackage**: All routes are shown on a map with elevation color gradient... 
+
+Thanks to modular design, all of the above components can be specified manually to fascilitate optimization of route design and energy demand research. 
 
 
 ### Work Flow
