@@ -11,41 +11,41 @@ sys.path.append(path.abspath('..'))
 
 from ..route_elevation import base
 
-
-shapefile = '../data/six_routes.shp'
-rasterfile = '../data/seattle_dtm.tif'
+sys.path.append(path.abspath(path.join('..','..')))
+shapefile = 'data/six_routes.shp'
+rasterfile = 'data/seattle_dtm.tif'
 route_num = 45
 routes_shp= gpd.read_file(shapefile)
 route_shp = routes_shp[routes_shp['ROUTE_NUM'] == route_num]
 
 
-# def test_read_shape():
-#     """
-#         Test if shapefile is for route number 45
+def test_read_shape():
+    """
+        Test if shapefile is for route number 45
 
-#         Parameters
-#         ----------
-#         shapefile: The path of a shapefile(.shp)
+        Parameters
+        ----------
+        shapefile: The path of a shapefile(.shp)
 
-#     """
-#     assert shapefile.endswith('.shp'), 'Input should be shapefile.'
-#     assert base.read_shape(shapefile,45)['ROUTE_NUM'].values[0] == 45, 'ROUTE_NUM is wrong!'
-#     return
-
-
-# def test_extract_point_df():
-#     """Test if the shape of dataframe is correct."""
-#     df45 = base.read_shape(shapefile, route_num)
-#     shape = base.extract_point_df(df45).shape
-#     assert shape == (208,1), " Shape of df(route 45) coordinates should be (208,1)"
-#     return
+    """
+    assert shapefile.endswith('.shp'), 'Input should be shapefile.'
+    assert base.read_shape(shapefile,45)['ROUTE_NUM'].values[0] == 45, 'ROUTE_NUM is wrong!'
+    return
 
 
-# def test_distance_measure():
-#     """Test if the number of points in distance is correct"""
-#     distance, cum_distance = base.distance_measure(route_shp)
-#     assert len(distance) == 207 and len(distance) == len(cum_distance) - 1, 'For route 45, there should be 207 linestring being calculated the distance, and distance = cum_distance -1'
-#     return
+def test_extract_point_df():
+    """Test if the shape of dataframe is correct."""
+    df45 = base.read_shape(shapefile, route_num)
+    shape = base.extract_point_df(df45).shape
+    assert shape == (208,1), " Shape of df(route 45) coordinates should be (208,1)"
+    return
+
+
+def test_distance_measure():
+    """Test if the number of points in distance is correct"""
+    distance, cum_distance = base.distance_measure(route_shp)
+    assert len(distance) == 207 and len(distance) == len(cum_distance) - 1, 'For route 45, there should be 207 linestring being calculated the distance, and distance = cum_distance -1'
+    return
 
 
 # def test_gradient():
