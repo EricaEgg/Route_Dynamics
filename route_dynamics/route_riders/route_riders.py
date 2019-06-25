@@ -6,13 +6,17 @@ import geopandas as gpd
 
 from shapely.geometry import mapping
 
-dat1 = pd.read_csv("../data/Trip183.csv")
-dat2 = pd.read_csv("../data/Zon183Unsum.csv")
+dat1 = pd.read_csv("../data/Trip183.csv") # KCM Data
+dat2 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
+
+# Removing all unneeded columns
 trip183 = dat1[['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats',
                 'Period', 'AnnRides']]
 trip183unsum = dat2[['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'STOP_ID',
                      'Period', 'AveOn', 'AveOff', 'AveLd', 'Obs']]
 
+# Dictionary created using data from King County Metro
+# Relates bus type to bus mass (many are approximations)
 bus_mass = {
     11: 11000,
     26: 19051,
@@ -38,6 +42,7 @@ bus_mass = {
     96: 19051
         }
 
+# Creating a new dictionary relating Trip_ID to buss mass
 trip183 = trip183.replace({'BusType': bus_mass})
 trip_mass = trip183[['BusType', 'KeyTrip']]
 trip_dict = dict(zip(trip_mass.KeyTrip, trip_mass.BusType))
