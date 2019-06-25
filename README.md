@@ -62,9 +62,9 @@ The flexibility of model for setting the passenger load per bus stop is demonstr
 
 Total package structure and function is illustrated in notebook `examples/spring_quarter_example.ipynb`.
 
-[alt text][flowchart]
+![alt text][flowchart]
 
-[flow]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/flowchart_spring.png
+[flowchart]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/flowchart_spring.png
 
 
 
