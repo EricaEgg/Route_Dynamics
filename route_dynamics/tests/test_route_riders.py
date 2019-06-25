@@ -8,7 +8,7 @@ import sys
 from os import path
 
 
-sys.path.append(path.abspath('..'))
+#sys.path.append(path.abspath('..'))
 
 import route_elevation.base as base
 from route_riders import route_riders as ride
