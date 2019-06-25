@@ -2,7 +2,7 @@
 
 ![alt text][logo]
 
-[logo]: https://github.com/EricaEgg/Route_Dynamics/blob/master/Documentation/logo.JPG
+[logo]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/logo.JPG
 
 `route_dynamics` is a python package created to estimate the energy demand of King County Metro bus routes. 
 The package implements a simple dynamical model for the bus moving along realistic elevation profiles gathered from LIDAR data. The modular nature of the packege facilitates exoerimentation with different estimations of:
@@ -47,7 +47,7 @@ The package is currently equiped with a "speed up, speed limt, slow down" model,
 
     3) the bus travels at the speed limit when between stops far enough apart to fascilitate acceleration and deceleration.
 
-* **Visualize Subpackage**: All routes are shown on a map with elevation color gradient... !!! UPDATE !!!
+* **Visualize Subpackage**: All routes can be displayed on interactive maps with elevation in color.
 
 Thanks to modular design, all of the above components can be specified manually to fascilitate optimization of route design and energy demand research. 
 
@@ -56,11 +56,11 @@ Thanks to modular design, all of the above components can be specified manually 
 
 !!! UPDATE !!!
 
-The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. 
+The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. This dynamical model is 
 
 ![alt text][flowchart]
 
-[flowchart]: 
+[flow]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/FlowChart.PNG
 
 **New flow chart coming soon**
 
@@ -113,23 +113,24 @@ machine. The raster file used for the example (seattle_dtm.tif) can be found
 Route 45
 ![elevation]
 
-[elevation]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/route45_profile.png
+[elevation]: https://github.com/metromojo/Route_Dynamics/blob/master/examples/README_results/route45_profile.png
 
 #### Interactive Map:
 Route 45
 ![map]
 
-[map]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/map45.PNG
+[map]: https://github.com/metromojo/Route_Dynamics/blob/master/examples/README_results/map45.PNG
 
 #### Route Ranking:
 
 ![rank]
 
-[rank]: https://github.com/EricaEgg/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
+[rank]: https://github.com/metromojo/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
 
 #### Example notebook video
 Check out a short video that runs through the package functions in the example notebook and shows the corresponding results 
 [here](https://drive.google.com/open?id=1ZpiIEzNWV0T_pzcjw9jkn3GkSxMLdkwo).
+
 
 
 ### Acknowledements
