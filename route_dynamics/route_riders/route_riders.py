@@ -102,7 +102,18 @@ def route_ridership(period, direction, route):
 
 def stop_coord(num, riders_num):
     """
-    ADD DOCSTRING
+    Uses riders_kept data frame from route ridership to incorporate the
+    link between stop coordinates and stop IDs.
+
+    Inputs:
+    num - Route Number
+    riders_num - Data Frame of riders organized by stop sequence and mass_bus
+        (use riders_kept output from route_riders)
+
+    Outputs:
+    xy_df - Data Frame of bus stop coordinates for route
+    df_combine - Final Data Frame with STOP_ID, stop coordinates, and
+        ridership mass, organized by STOP_SEQ
 
     """
     route_num = num
