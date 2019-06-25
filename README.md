@@ -51,18 +51,22 @@ The package is currently equiped with a "speed up, speed limt, slow down" model,
 
 Thanks to modular design, all of the above components can be specified manually to fascilitate optimization of route design and energy demand research. 
 
-<!-- 
+ 
 ### Work Flow
 
-!!! UPDATE !!!
+<!-- !!! UPDATE !!! -->
 
-The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. This dynamical model is 
+The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. This dynamical model is contained in the module `route_dynamics/route_elevation/long_dynam_model`, and use is demonstrated in the jupyter notebook `examples/use_example__longi_dynam_model.ipynb`.
 
-![alt text][flowchart]
+The flexibility of model for setting the passenger load per bus stop is demonstrated the jupyter notebook `examples/use_example__loaded_bus_mass_per_stop.ipynb`.
 
-[flow]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/FlowChart.PNG
+Total package structure and function is illustrated in notebook `examples/spring_quarter_example.ipynb`.
 
--->
+<!-- ![alt text][flowchart]
+
+[flow]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/FlowChart.PNG -->
+
+
 
 
 
