@@ -1,6 +1,7 @@
 """ Needs work to adapt to changes made for this package. Tests carreid over from seds hw4 """
 
-import knn
+from ..route_energy import knn
+
 
 import numpy as np
 import pandas as pd
