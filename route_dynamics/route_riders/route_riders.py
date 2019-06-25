@@ -1,12 +1,17 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import route_dynamics.route_elevation.base as base
 import geopandas as gpd
-
+import os
+from os import path
+import sys
 from shapely.geometry import mapping
 
-dat1 = pd.read_csv("../data/Trip183.csv") # KCM Data
+#sys.path.append(path.abspath('..'))
+#import route_dynamics.route_elevation.base as base
+#csv_path = os.path.join(__path__[0], 'data')
+#dat1 = pd.read_csv(os.path.join(csv_path, 'Trip183.csv')) # KCM Data
+dat1 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
 dat2 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
 
 # Removing all unneeded columns
