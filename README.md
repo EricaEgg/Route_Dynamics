@@ -51,7 +51,7 @@ The package is currently equiped with a "speed up, speed limt, slow down" model,
 
 Thanks to modular design, all of the above components can be specified manually to fascilitate optimization of route design and energy demand research. 
 
-
+<!-- 
 ### Work Flow
 
 !!! UPDATE !!!
@@ -62,13 +62,13 @@ The storage capacity of any battery module decays with the battery's power outpu
 
 [flow]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/FlowChart.PNG
 
-<!-- **New flow chart coming soon** -->
+-->
 
 
 
 ### Repository structure
 
-!!! UPDATE !!!
+* **route_dynamics**: The package, contains subpackages, modules and tests.
 
 * **Documentation**: Contains project information, such as Use 
 Cases, work flow, and DIRECT poster
@@ -77,7 +77,6 @@ Cases, work flow, and DIRECT poster
 
 * **examples**: Contains example Jupyter notebooks detailing how the package is used.  
 
-* **route_dynamics**: module scripts and tests
 
 ### Software Dependencies and Packages
 
