@@ -118,6 +118,22 @@ Route 45
 
 [map]: https://github.com/metromojo/Route_Dynamics/blob/master/examples/README_results/map45.PNG
 
+#### Example of Load Profile with different constant accelerations:
+
+
+![acceloutput]
+
+[acceloutput]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/Figures/Acceloutput.png
+
+#### Segment of above plot showing loading and unloading:
+
+
+Green bar indicates maximum loading and unloading power for battery modules
+![accelsegment]
+
+[accelsegment]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/Figures/Acceloutput_segment.png
+
+
 #### Route Ranking:
 
 ![rank]
