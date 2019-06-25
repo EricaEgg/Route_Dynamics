@@ -12,8 +12,10 @@ dependencies:
   - rasterio
   - branca
   - jupyter
+  # - scikit-learn
   - pip
   - pip:
     - rasterstats
     - geopy
+
 
