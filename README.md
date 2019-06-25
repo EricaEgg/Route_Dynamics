@@ -81,8 +81,6 @@ Cases, work flow, and DIRECT poster
 
 ### Software Dependencies and Packages
 
-!!! UPDATE !!!
-
 * Python 3.6
 * folium
 * geopandas
@@ -97,18 +95,14 @@ A virtual environment is included in the repository called environment.yml.
 
 ### Getting Started
 
-!!! UPDATE !!!
-
 1. Use `git clone` to download the repository.
-2. Import the `environment.yml` virtual environment.
+2. [Follow instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file) to set up a conda environment from file `environment.yml`.
 3. Download an elevation raster dataset and place it into the repository on your local 
 machine. The raster file used for the example (seattle_dtm.tif) can be found 
-[here](https://drive.google.com/open?id=1V8-VIPGcNJ4l7Bd7OYDjIstFb1dsyhxH). 
+[here](https://drive.google.com/open?id=1V8-VIPGcNJ4l7Bd7OYDjIstFb1dsyhxH) with a .uw email address. 
 
 ### Example Outputs
-
-!!! UPDATE !!!
-
+___
 #### Elevation and Road Grade Profiles:
 Route 45
 ![elevation]
