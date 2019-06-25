@@ -62,7 +62,7 @@ The storage capacity of any battery module decays with the battery's power outpu
 
 [flow]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/FlowChart.PNG
 
-**New flow chart coming soon**
+<!-- **New flow chart coming soon** -->
 
 
 
