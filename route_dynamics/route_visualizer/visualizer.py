@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 def profile_x(y, route_cum_distance, route_num):
     """
-        Creates elevation profile.
+        Creates load vs. distance profile.
         Parameters
         ----------
         y: Dependent variable of profile (i.e elevation, grade, load, etc)
@@ -11,17 +11,17 @@ def profile_x(y, route_cum_distance, route_num):
         route_num: route number (integer)
         Returns
         -------
-        plt: Elevation vs. distance 
+        Load vs. distance 
         """
 
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.plot(route_cum_distance, y, color='b', linewidth=4)
-    ax.set_ylabel('Elevation (meter)', color='b')
+    ax.set_ylabel('Load (kW)', color='b')
     ax.tick_params('y', colors='b')
     ax.grid()
 
     fig.suptitle(
-        'Elevation Profile for Route {}'.format(route_num),
+        'Load Profile for Route {}'.format(route_num),
         fontsize=20,
         y=0.95,
         )
@@ -31,7 +31,7 @@ def profile_x(y, route_cum_distance, route_num):
 
 def profile_t(y, time, route_num):
     """
-        Creates elevation profile.
+        Creates load vs. time profile.
         Parameters
         ----------
         y: Dependent variable of profile (i.e elevation, grade, load, etc)
@@ -39,17 +39,17 @@ def profile_t(y, time, route_num):
         route_num: route number (integer)
         Returns
         -------
-        plt: Elevation vs. distance 
+        Load vs. time 
         """
 
     fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(route_cum_distance, elevation.T, color='b', linewidth=4)
-    ax.set_ylabel('Elevation (meter)', color='b')
+    ax.plot(time, y, color='b', linewidth=4)
+    ax.set_ylabel('Load (kW)', color='b')
     ax.tick_params('y', colors='b')
     ax.grid()
 
     fig.suptitle(
-        'Elevation Profile for Route {}'.format(route_num),
+        'Load Profile for Route {}'.format(route_num),
         fontsize=20,
         y=0.95,
         )
@@ -58,6 +58,16 @@ def profile_t(y, time, route_num):
 
 
 def diag_plot(inst, style='plot', title=None):
+    """
+        Creates series of plots (Power vs time, acceleration vs time, veloctiy vs time, distance vs time, 
+        power vs distance, accleration vs distance, velocity vs distance, time vs distance).
+        Parameters
+        ----------
+        inst: output from longi_dynam_model
+        style: default = 'plot'
+        title: default = None
+        
+        """
     
     widths=[1,1]
     heights=[2.5,0.75,0.75,0.75]
