@@ -22,12 +22,25 @@ class SimpleRouteTrajectory(ldm.RouteTrajectory):
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         elevation_gradient_const=0,
+        mass_array=None,
+        unloaded_bus_mass=12927,
+        charging_power_max=0., # should be kW
+        # charging_power_max=50000 # should be kW
+        a_m=1.0,
+        v_lim=15.0,
         ):
         """
             """
 
-        # Store algorithm name for future reference.
-        self.bus_speed_model = bus_speed_model
+        self._initialize_instance_args(
+            bus_speed_model,
+            a_m,
+            v_lim,
+            stop_coords,
+            mass_array,
+            unloaded_bus_mass,
+            charging_power_max,
+            )
 
         # The package implemented 'RouteTrajectory' class runs the
         # following method 'build_route_coordinate_df' to initialize

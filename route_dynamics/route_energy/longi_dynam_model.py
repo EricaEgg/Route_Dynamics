@@ -76,6 +76,43 @@ class RouteTrajectory(PlottingTools):
 
             """
 
+        self._initialize_instance_args(
+            bus_speed_model,
+            a_m,
+            v_lim,
+            stop_coords,
+            mass_array,
+            unloaded_bus_mass,
+            charging_power_max,
+            )
+
+        # Build Route DataFrame, starting with columns:
+        #     - 'elevation'
+        #     - 'cum_distance'
+        #     - 'is_bus_stop
+        self.route_df = self.build_route_coordinate_df(
+            route_num = route_num,
+            shp_filename = shp_filename,
+            elv_raster_filename = elv_raster_filename,
+            )
+
+        self.route_df = self._add_dynamics_to_df(
+            route_df=self.route_df,
+            stop_coords=stop_coords,
+            bus_speed_model=self.bus_speed_model,
+            )
+
+
+    def _initialize_instance_args(self,
+        bus_speed_model,
+        a_m,
+        v_lim,
+        stop_coords,
+        mass_array,
+        unloaded_bus_mass,
+        charging_power_max,
+        ):
+
         # Store algorithm name for future reference.
         self.bus_speed_model = bus_speed_model
 
@@ -100,22 +137,6 @@ class RouteTrajectory(PlottingTools):
 
         # Store chargeing ability as instance attribute
         self.charging_power_max = charging_power_max
-
-        # Build Route DataFrame, starting with columns:
-        #     - 'elevation'
-        #     - 'cum_distance'
-        #     - 'is_bus_stop
-        self.route_df = self.build_route_coordinate_df(
-            route_num = route_num,
-            shp_filename = shp_filename,
-            elv_raster_filename = elv_raster_filename,
-            )
-
-        self.route_df = self._add_dynamics_to_df(
-            route_df=self.route_df,
-            stop_coords=stop_coords,
-            bus_speed_model=self.bus_speed_model,
-            )
 
 
     def _add_dynamics_to_df(self,
