@@ -64,7 +64,7 @@ def test_route_analysis_df():
     example = single_route.route_analysis_df(route_num, shapefile,
 rasterfile)
 
-    assert len(example) == 207, 'For route 45, there should be 207 linestring being calculated the distance'
+    assert len(example) == 208, 'For route 45, there should be 207 linestring being calculated the distance'
 
     return
 

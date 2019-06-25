@@ -84,7 +84,7 @@ Cases, work flow, and DIRECT poster
 
 ### Software Dependencies and Packages
 
-* Python 3.6
+* python 3.6
 * folium
 * geopandas
 * matplotlib
@@ -93,6 +93,7 @@ Cases, work flow, and DIRECT poster
 * rasterio
 * rasterstats
 * branca
+<!-- * scikit-learn -->
 
 A virtual environment is included in the repository called environment.yml.
 

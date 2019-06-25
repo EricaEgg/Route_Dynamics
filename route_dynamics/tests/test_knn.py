@@ -5,7 +5,7 @@ from ..route_energy import knn
 
 import numpy as np
 import pandas as pd
-from sklearn import model_selection
+# from sklearn import model_selection
 
 def test_find_knn():
     """ A wrapping function that is the primary way of interacting with your
@@ -17,31 +17,32 @@ def test_find_knn():
     # in y, classified as 'left' or 'right' depending on whether x is
     # positive or negative
 
-    # 100 data points spanninc two columns
+    # 100 data points spanninc two columns with values in {-1, 1}
     test1_coords = np.random.random((100, 2))*2 - 1
     df1 = pd.DataFrame(test1_coords, columns=['x','y'])
 
     class_list = []
     for i in df1['x'].values:
         if i>0.:
-            class_list.append('right')
+            class_list.append(1)
         elif i<0.:
-            class_list.append('left')
+            class_list.append(-1)
     df1.loc[:,'which half'] = class_list
 
-    train_data, test_data = model_selection.train_test_split(df1, test_size=10)
+    train_data = [-1, 1]
+    test_data = df1["x"].values
 
-    k = 5
-    classified_test = knn.find_knn(
-        k=k,
-        numberic_column_name_list=['x','y'],
-        class_column_name='which half',
-        tr_df=train_data,
-        test_df=test_data
+    # train_data, test_data = model_selection.train_test_split(df1, test_size=10)
+
+    nn_indicies, nn = knn.find_knn(
+        k=1,
+        candidate_pts=train_data,
+        test_pts=test_data,
+        weight=None
         )
 
-    assigned_test_class = classified_test['which half'].values
-    true_class = test_data['which half'].values
+    assigned_test_class = nn
+    true_class = df1['which half'].values
 
     for a_class, the_class in zip(assigned_test_class, true_class):
         assert a_class == the_class, (
