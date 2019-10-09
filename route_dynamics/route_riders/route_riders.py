@@ -11,12 +11,12 @@ from shapely.geometry import mapping
 #import route_dynamics.route_elevation.base as base
 #csv_path = os.path.join(__path__[0], 'data')
 #dat1 = pd.read_csv(os.path.join(csv_path, 'Trip183.csv')) # KCM Data
-dat1 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
+dat1 = pd.read_csv("../data/Trip183.csv") # KCM Data
 dat2 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
 
 # Removing all unneeded columns
-trip183 = dat1[['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats',
-                'Period', 'AnnRides']]
+trip183 = dat1[['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats', 
+					 'Period', 'AnnRides']]
 trip183unsum = dat2[['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'STOP_ID',
                      'Period', 'AveOn', 'AveOff', 'AveLd', 'Obs']]
 
