@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
+import folium
 
+import route_dynamics.route_elevation.base as base
 def profile_x(y, route_cum_distance, route_num):
     """
         Creates load vs. distance profile.
@@ -14,17 +16,20 @@ def profile_x(y, route_cum_distance, route_num):
         Load vs. distance 
         """
 
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(route_cum_distance, y, color='b', linewidth=4)
-    ax.set_ylabel('Load (kW)', color='b')
-    ax.tick_params('y', colors='b')
-    ax.grid()
+    fig, ax = plt.subplots(figsize=(12, 5), dpi=300)
+    ax.plot(route_cum_distance/1000, y/1000, linewidth=4)
+    ax.set_xlabel('Distance (km)', fontsize=20)
+    ax.set_ylabel('Load (kW)', fontsize=20)
+    ax.tick_params(labelsize=14)
+    ax.grid(axis='y')
 
     fig.suptitle(
         'Load Profile for Route {}'.format(route_num),
-        fontsize=20,
-        y=0.95,
+        fontsize=24,
+        y=1,
         )
+
+    plt.savefig('profile_x_{}.png'.format(route_num), dpi=300)
 
     return 
 
@@ -53,6 +58,45 @@ def profile_t(y, time, route_num):
         fontsize=20,
         y=0.95,
         )
+
+    return 
+
+
+def x_elev(y, route_cum_distance, elevation, route_num):
+
+    """
+        Creates load vs. distance profile and elevation vs. distance profile.
+
+        Parameters:
+        -----------
+        y: Dependent variable of profile (i.e elevation, grade, load, etc)
+        route_cum_distance: the total route distance at each point along
+            the route [m]
+        route_num: route number (integer)
+        Returns
+        -------
+        Load vs. distance with elevation overlay
+    """
+
+    fig, ax = plt.subplots(figsize=(12, 5), dpi=300)
+
+    ax.fill_between(route_cum_distance/1000, elevation, color='#BDBDBD')
+    ax1 = ax.twinx()
+
+    ax1.plot(route_cum_distance/1000, y/1000, linewidth=4)
+    ax.set_xlabel('Distance (km)', fontsize=20)
+    ax.set_ylabel('Elevation (m)', fontsize=20)
+    ax1.set_ylabel('Load (kW)', fontsize=20)
+    ax.tick_params(labelsize=14)
+    ax.grid(axis='y')
+
+    fig.suptitle(
+        'Load Profile for Route {}'.format(route_num),
+        fontsize=24,
+        y=1,
+        )
+
+    plt.savefig('x_elev_{}.png'.format(route_num), dpi=300)
 
     return 
 
@@ -127,39 +171,31 @@ def diag_plot(inst, style='plot', title=None):
     axes[3,1].set_ylabel('time')
     axes[3,1].set_xlabel('distance')
 
-
-def route_map(gdf_route):
+    
+def route_map(route_num, shapefile, rasterfile):
     """
-        Use package folium to create an interactive map for the desired route.
-        Parameters
-        ----------
-        gdf_route: GeoDataFrame output from make_multi_lines()
-        Returns
-        -------
-        route_map: interactive map that displays the desired route and road grade
-        """
+       input the number of route, then output an interactive map showing the route and road grade.
+    Also will save the route as shapefile named 'route_shp'.
 
-    UW_coords = [47.655548, -122.303200]
+    Parameters
+    ----------
+    route_num: desired route number (integer)
+    shapefile: route geospatial data (.shp file)
+    rasterfile: elevation data file (.tif)
 
-    # initialize figure of certain size at specific coordinates
-    sized_figure = folium.Figure(height = 400)
-    route_map = folium.Map(location = UW_coords, zoom_start = 12)
-    min_grade = min(gdf_route['gradient'])
-    max_grade = max(gdf_route['gradient'])
-    route_json = gdf_route.to_json()
+    Returns
+    -------
+    map_display: interactive map for desired route
+    """
+    route_shp = base.read_shape(shapefile, route_num)
 
-    # assign colormap of grade
-    linear_map = cm.linear.Paired_06.scale(min_grade, max_grade )
+    linestring_route_df = base.extract_point_df(route_shp)
 
-    route_layer = folium.GeoJson(
-        route_json, style_function = lambda feature: {
-            'color': linear_map(feature['properties']['gradient']),
-            'weight': 8
-            }
-        )
-    route_layer.add_child
-    route_map.add_child(linear_map)
-    route_map.add_child(route_layer)
-    route_map.add_to(sized_figure)
-    return route_map
+    elevation, elevation_gradient, route_cum_distance, distance = base.gradient(route_shp, rasterfile)
+
+    gdf_route = base.make_multi_lines( linestring_route_df, elevation_gradient)
+
+    map_display = base.route_map(gdf_route)
+
+    return map_display
 

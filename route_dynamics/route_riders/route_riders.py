@@ -8,7 +8,7 @@ import sys
 from shapely.geometry import mapping
 
 #sys.path.append(path.abspath('..'))
-#import route_dynamics.route_elevation.base as base
+import route_dynamics.route_elevation.base as base
 #csv_path = os.path.join(__path__[0], 'data')
 #dat1 = pd.read_csv(os.path.join(csv_path, 'Trip183.csv')) # KCM Data
 dat1 = pd.read_csv("../data/Trip183.csv") # KCM Data
