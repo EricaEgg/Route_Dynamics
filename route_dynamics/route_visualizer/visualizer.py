@@ -61,6 +61,31 @@ def profile_t(y, time, route_num):
 
     return 
 
+def elev(elevation, route_cum_distance, route_num):
+
+	"""
+		Created elevation vs. distance profile.
+
+		Parameters:
+		route_cum_distance: the total route distance at each point along
+            the route [m]
+        elevation: elevation values
+        route_num: route number (integer)
+
+    """
+	fig, ax = plt.subplots(figsize=(12, 5), dpi=300)
+
+	ax.plot(route_cum_distance/5280, elevation, linewidth=4)
+	ax.set_xlabel('Distance (miles)', fontsize=20)
+	ax.set_ylabel('Elevation (ft)', fontsize=20)
+	ax.tick_params(labelsize=14)
+
+	fig.suptitle(
+        'Elevation Profile for Route {}'.format(route_num),
+        fontsize=24,
+        y=1,
+        )
+
 
 def x_elev(y, route_cum_distance, elevation, route_num):
 
