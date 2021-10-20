@@ -8,9 +8,7 @@ import sys
 from shapely.geometry import mapping
 
 #sys.path.append(path.abspath('..'))
-import route_dynamics.route_elevation.base as base
-#csv_path = os.path.join(__path__[0], 'data')
-#dat1 = pd.read_csv(os.path.join(csv_path, 'Trip183.csv')) # KCM Data
+import route_dynamics.route_elevation.base_df as base
 dat1 = pd.read_csv("../data/Trip183.csv") # KCM Data
 dat2 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
 
@@ -52,11 +50,8 @@ trip183 = trip183.replace({'BusType': bus_mass})
 trip_mass = trip183[['BusType', 'KeyTrip']]
 trip_dict = dict(zip(trip_mass.KeyTrip, trip_mass.BusType))
 
-routes_shp = '../data/six_routes.shp'
-stops_shp = '../data/Transit_Stops_for_King_County_Metro__transitstop_point.shp'
 
-
-def route_ridership(period, direction, route):
+def route_ridership(period, route):
     """
     Calculates ridership mass from King County Metro ridership statistics. An
     average ridership is used and is specific to a specific route, direction,
@@ -79,7 +74,7 @@ def route_ridership(period, direction, route):
 
     df = trip183unsum
     df = df.drop(df[(df.Period != period)].index)
-    df = df.drop(df[(df.InOut != direction)].index)
+    #df = df.drop(df[(df.InOut != direction)].index)
     df = df.drop(df[(df.Route != route)].index)
 
     final_df = df.sort_values(by=['Trip_ID', 'STOP_SEQ', 'STOP_ID'])
@@ -126,10 +121,13 @@ def stop_coord(num, riders_num):
         ridership mass, organized by STOP_SEQ
 
     """
+    routes_shp = '../data/rt' + str(num) + '_pts.shp'
+    stops_shp = '../data/Transit_Stops_for_King_County_Metro__transitstop_point.shp'
+
     route_num = num
 
-    route = base.read_shape(routes_shp, route_num)
-    points = base.extract_point_df(route)
+    route = base.create_gdf(routes_shp)
+    #points = base.extract_point_df(route)
     stops = gpd.read_file(stops_shp)
     stops['ROUTE_LIST'].fillna(value=str(0), inplace=True)
 
