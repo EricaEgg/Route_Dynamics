@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-import folium
 
-import route_dynamics.route_elevation.base as base
+import route_dynamics.route_elevation.base_df as base
 def profile_x(y, route_cum_distance, route_num):
     """
         Creates load vs. distance profile.

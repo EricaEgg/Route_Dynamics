@@ -1,16 +1,9 @@
 import numpy as np
 import pandas as pd
 import geopandas as gpd
-import branca.colormap as cm
-import folium
-import rasterstats
 import matplotlib.pyplot as plt
 
-from folium.features import GeoJson
-from shapely.geometry import mapping
-from shapely.geometry import LineString
-from shapely.geometry import Polygon
-from geopy.distance import geodesic
+
 from scipy.signal import savgol_filter as sf
 
 
