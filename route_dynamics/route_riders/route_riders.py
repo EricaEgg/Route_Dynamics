@@ -9,14 +9,14 @@ from shapely.geometry import mapping
 
 #sys.path.append(path.abspath('..'))
 import route_dynamics.route_elevation.base_df as base
-dat1 = pd.read_csv("../data/Trip183.csv") # KCM Data
-dat2 = pd.read_csv("../data/Zon183Unsum.csv") # KCM Data
+dat1 = pd.read_csv("../data/Trip183.csv", usecols = ['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats', 
+                     'Period', 'AnnRides']) # KCM Data
+dat2 = pd.read_csv("../data/Zon183Unsum.csv", usecols = ['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'STOP_ID',
+                     'Period', 'AveOn', 'AveOff', 'AveLd', 'Obs']) # KCM Data
 
 # Removing all unneeded columns
-trip183 = dat1[['SignRt', 'InOut', 'KeyTrip', 'BusType', 'Seats', 
-					 'Period', 'AnnRides']]
-trip183unsum = dat2[['Route', 'Dir', 'Trip_ID', 'InOut', 'STOP_SEQ', 'STOP_ID',
-                     'Period', 'AveOn', 'AveOff', 'AveLd', 'Obs']]
+trip183 = dat1
+trip183unsum = dat2
 
 # Dictionary created using data from King County Metro
 # Relates bus type to bus mass (many are approximations)

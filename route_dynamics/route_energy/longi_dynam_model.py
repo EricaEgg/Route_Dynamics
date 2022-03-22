@@ -1,5 +1,5 @@
 """ Implementation of the Longitudinal Dynamics Model for work done by
-    the bus engine along route.
+    the bus motor along route.
 
     From:
         Asamer J, Graser A, Heilmann B, Ruthmair M. Sensitivity
@@ -12,7 +12,7 @@
     """
 
 # from ..route_elevation import single_route as rsr
-from ..route_elevation import base as re_base
+from ..route_elevation import base_df as re_base
 from . import knn
 from . import constant_a as ca
 
@@ -45,7 +45,6 @@ class RouteTrajectory(PlottingTools):
     def __init__(self,
         route_num,
         shp_filename,
-        elv_raster_filename,
         bus_speed_model='stopped_at_stops__15mph_between',
         stop_coords=None,
         mass_array=None,
@@ -87,13 +86,13 @@ class RouteTrajectory(PlottingTools):
             )
 
         # Build Route DataFrame, starting with columns:
-        #     - 'elevation'
-        #     - 'cum_distance'
-        #     - 'is_bus_stop
+        #     - 'Z' (elevation)
+        #     - 'geometry' (coordinates)
+        #     - 'length' (cumulative distance)
+        #     - 'grade' 
+        #     - 'is_bus_stop'
         self.route_df = self.build_route_coordinate_df(
-            route_num = route_num,
-            shp_filename = shp_filename,
-            elv_raster_filename = elv_raster_filename,
+            shp_filename = shp_filename
             )
 
         self.route_df = self._add_dynamics_to_df(
@@ -207,9 +206,7 @@ class RouteTrajectory(PlottingTools):
 
 
     def build_route_coordinate_df(self,
-        route_num,
-        shp_filename,
-        elv_raster_filename,
+        shp_filename
         ):
         """ Builds GeoDataFrame with rows cooresponding to points on
             route with columns corresponding to elevation, elevation
@@ -227,44 +224,44 @@ class RouteTrajectory(PlottingTools):
             """
 
         # Build the df of 2D route coordinates and
-        route_shp = re_base.read_shape(shp_filename, route_num)
+        route_df = re_base.create_gdf(shp_filename)
 
         # print(f'route_shp: {route_shp}\n')
 
-        route_2Dcoord_df = re_base.extract_point_df(route_shp)
+        #route_2Dcoord_df = re_base.extract_point_df(route_shp)
 
         # print(f'elv_raster_filename: {elv_raster_filename}\n')
 
-        (
-            elevation,
-            elevation_gradient,
-            route_cum_distance,
-            back_diff_distance
-            ) = re_base.gradient(route_shp, elv_raster_filename)
+        # (
+        #     elevation,
+        #     elevation_gradient,
+        #     route_cum_distance,
+        #     back_diff_distance
+        #     ) = re_base.gradient(route_shp, elv_raster_filename)
 
-        route_df = re_base.make_multi_lines(
-            route_2Dcoord_df,
-            elevation_gradient
-            )
+        # route_df = re_base.make_multi_lines(
+        #     route_2Dcoord_df,
+        #     elevation_gradient
+        #     )
 
 
-        route_df = self._add_distance_to_df(back_diff_distance, route_df)
+        # route_df = self._add_distance_to_df(back_diff_distance, route_df)
 
-        route_df = self._add_elevation_to_df(elevation, route_df)
+        # route_df = self._add_elevation_to_df(elevation, route_df)
 
-        route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
+        # route_df = self._add_cum_dist_to_df(route_cum_distance, route_df)
 
         return route_df
 
 
-    def _add_distance_to_df(self, back_diff_distance, route_df):
+    # def _add_distance_to_df(self, route_base_df):
 
-        distance_array = np.append(np.nan,back_diff_distance)
+    #     distance_array = route_base_df['length'].values
 
-        rdf = route_df.assign(
-            distance_from_last_point=distance_array
-            )
-        return rdf
+    #     rdf = route_df.assign(
+    #         distance_from_last_point=distance_array
+    #         )
+    #     return rdf
 
     def _add_stops_to_df(self, stop_coords, route_df):
         """ Find rows in route_df matching the stop_coordinates and
@@ -298,7 +295,7 @@ class RouteTrajectory(PlottingTools):
             # Calculate indicies of 'stop_coords' that match bus_stops
             self.stop_nn_indicies, self.stop_coord_nn = knn.find_knn(
                 1,
-                route_df.coordinates.values,
+                route_df.geometry.values,
                 stop_coords
                 )
             # the 'jth' element of stop_nn_indicies also selects the
@@ -323,27 +320,27 @@ class RouteTrajectory(PlottingTools):
         return route_df
 
 
-    def _add_elevation_to_df(self, elevation, route_df):
+    # def _add_elevation_to_df(self, elevation, route_df):
 
-        # print(len(elevation), len(route_df.index))
-        # print('elevation', elevation)
+    #     # print(len(elevation), len(route_df.index))
+    #     # print('elevation', elevation)
 
-        rdf = route_df.assign(
-            elevation=elevation.ravel()
-            )
-
-
-
-        return rdf
+    #     rdf = route_df.assign(
+    #         elevation=elevation.ravel()
+    #         )
 
 
-    def _add_cum_dist_to_df(self, cum_distance, route_df):
 
-        rdf = route_df.assign(
-            cum_distance=cum_distance
-            )
+        # return rdf
 
-        return rdf
+
+    # def _add_cum_dist_to_df(self, cum_distance, route_df):
+
+    #     rdf = route_df.assign(
+    #         cum_distance=cum_distance
+    #         )
+
+    #     return rdf
 
 
     def _add_velocities_to_df(self, route_df, bus_speed_model):
@@ -415,7 +412,7 @@ class RouteTrajectory(PlottingTools):
         alg='finite_diff',
         ):
 
-        back_diff_delta_x = route_df.distance_from_last_point.values
+        back_diff_delta_x = np.full(len(route_df), 1.8288)
 
         try:
             velocities = route_df.velocity.values
@@ -471,7 +468,7 @@ class RouteTrajectory(PlottingTools):
             # Use finite difference of velocities to calculate accelerations
             velocity_array = route_df.velocity.values
 
-            delta_distance_array = route_df.distance_from_last_point.values
+            delta_distance_array = np.full(len(route_df), 1.8288)
 
             # assert (np.shape(np.diff(velocity_array))==np.shape(delta_distance_array)), (
             #     "np.shape(np.diff(velocity_array) = {}\n"
@@ -668,9 +665,19 @@ class RouteTrajectory(PlottingTools):
     def calculate_forces(self, rdf):
         """ Requires GeoDataFrame input with mass column """
 
+        rt_list = [22]
+
+        #Import data file
+        shapefile_name = '../data/rt' + str(rt_list[0]) + '_pts.shp'
+
+        #Initialize route dataframe
+        rt_df = re_base.wrapper(shapefile_name)
+
+        
+
         vels = rdf.velocity.values
         acce = rdf.acceleration.values
-        grad = rdf.gradient.values
+        grad = rt_df.grade.values
         grad_angle = np.arctan(grad)
 
 

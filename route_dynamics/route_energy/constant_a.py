@@ -67,7 +67,7 @@ def const_a_dynamics(route_df, a_m, v_lim):
             # next stop.
             for j in range(i+1, len(x_ns)):
                 # add distance to next point to 'x_ns'
-                x_ns[i] += route_df.at[j, 'distance_from_last_point']
+                x_ns[i] += 1.8288
                 if route_df.at[j, 'is_bus_stop']:
                     break # done calulating 'x_ns' at this point
                 # elif not bus stop: move to nest point, add distance
@@ -81,13 +81,13 @@ def const_a_dynamics(route_df, a_m, v_lim):
                 # because the first point has no backward difference.
                 if route_df.at[j, 'is_bus_stop']:
                     break # done calulating x_ls at this point
-                x_ls[i] += route_df.at[j, 'distance_from_last_point']
+                x_ls[i] += 1.8288
 
 
     # Define cutoff distance for acceleration and deceleration
     x_a = v_lim**2. / (2*a_m)
 
-    x = route_df.cum_distance.values
+    x = (route_df.length.values)*0.3048 
     v = np.zeros(len(route_df.index))
     a = np.zeros(len(route_df.index))
 
