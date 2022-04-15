@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <pubdate>20180330</pubdate>
+                <title>Traffic Signals</title>
+                <onlink>https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Traffic_Signals/MapServer/0</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>Traffic signal locations within the City of Seattle.  A traffic signal controls the movement of vehicles, pedestrians
+and bicyclists, minimizes conflicts, and optimizes the flow of traffic
+throughout the street network.| Attribute Information: Traffic_Signals_OD.pdf | Data Confidence: Medium-High 
+| Data Confidence Source: 2015 SDOT Asset Management, Status and Condition Report | Update Cycle: Weekly | Contact Email: DOT_IT_GIS@seattle.gov</abstract>
+            <purpose>Traffic signal locations.</purpose>
+        </descript>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>Traffic signals</themekey>
+                <themekey>Traffic</themekey>
+                <themekey>Transportation</themekey>
+                <themekey>GIS</themekey>
+                <themekey>SDOT</themekey>
+                <themekey>Seattle</themekey>
+                <themekey>WA</themekey>
+                <themekey>Pedestrian</themekey>
+                <themekey>018</themekey>
+            </theme>
+        </keywords>
+        <accconst>None</accconst>
+        <useconst>This service is for Open Data purposes only. Users are intended to download this data. This service is not intended for direct use in applications. City of Seattle cannot guarantee the stability of this map service.</useconst>
+        <datacred>SDOT, City of Seattle</datacred>
+    </idinfo>
+    <metainfo>
+        <metd>20180402</metd>
+        <metc>
+            <cntinfo>
+                <!--no contact person or organization name available-->
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>

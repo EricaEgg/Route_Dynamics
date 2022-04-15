@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <origin/>
+                <pubdate>20180228</pubdate>
+                <title>SDOT maintained data about streets</title>
+                <geoform>vector digital data</geoform>
+                <onlink>https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Streets/MapServer/0</onlink>
+                <onlink>https://www.seattle.gov/Documents/Departments/SDOT/GIS/Seattle_Streets_OD.pdf</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>Streets data includes: Arterial Classification, Street Names, Block Number, Direction, One-way, Surface Width, Surface Type, Pavement Condition, Speed Limit, Percent Slope.   From the Hansen Asset Management System: The linework is from the SND(Street Network Database) which can be found at our open data site - https://data-seattlecitygis.opendata.arcgis.com/datasets/street-network-database-snd.  | Attribute Information: https://www.seattle.gov/Documents/Departments/SDOT/GIS/Seattle_Streets_OD.pdf | Update Cycle: Weekly | Contact Email: DOT_IT_GIS@seattle.gov  ---  Common SDOT queries and data downloads   | Arterial Classification: of Seattle Streets  ARTCLASS IN(1,2,3,4)  | Transit Classification: of Seattle Streets  TRANCLASS IN(1,2,3,4,5,6)</abstract>
+            <purpose>SDOT maintained data about streets in Seattle.</purpose>
+        </descript>
+        <status>
+            <progress>Complete</progress>
+            <update>Monthly</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-122.4754</westbc>
+                <eastbc>-122.2008</eastbc>
+                <northbc>47.7582</northbc>
+                <southbc>47.4814</southbc>
+            </bounding>
+        </spdom>
+        <keywords>
+            <theme>
+                <themekt>ISO 19115 Topic Categories</themekt>
+                <themekey>transportation</themekey>
+            </theme>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>Streets</themekey>
+                <themekey>SDOT</themekey>
+                <themekey>Open Data</themekey>
+                <themekey>Transportation</themekey>
+                <themekey>Seattle</themekey>
+                <themekey>WA</themekey>
+                <themekey>GIS</themekey>
+                <themekey>Arterial Classification</themekey>
+                <themekey>Street Names</themekey>
+                <themekey>Block Number</themekey>
+                <themekey>Direction</themekey>
+                <themekey>One-way</themekey>
+                <themekey>Surface Width</themekey>
+                <themekey>Surface Type</themekey>
+                <themekey>Pavement Condition</themekey>
+                <themekey>Speed Limit</themekey>
+                <themekey>Percent Slope</themekey>
+                <themekey>Transit Classification</themekey>
+                <themekey>Transit</themekey>
+                <themekey>Arterial</themekey>
+                <themekey>Street Type Designation</themekey>
+            </theme>
+        </keywords>
+        <accconst>None</accconst>
+        <useconst>This service is for Open Data purposes only. Users are intended to download this data. This service is not intended for direct use in applications. City of Seattle cannot guarantee the stability of this map service.</useconst>
+        <ptcontac>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>Seattle IT</cntorg>
+                    <cntper>SDOT</cntper>
+                </cntorgp>
+                <cntpos>Senior GIS Analyst</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <city>Seattle</city>
+                    <state>WA</state>
+                    <postal>98104</postal>
+                </cntaddr>
+                <cntemail>DOT_IT_GIS@seattle.gov</cntemail>
+            </cntinfo>
+        </ptcontac>
+        <datacred>SDOT, City of Seattle</datacred>
+    </idinfo>
+    <metainfo>
+        <metd>20180228</metd>
+        <metc>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>City of Seattle</cntorg>
+                    <cntper>SDOT</cntper>
+                </cntorgp>
+                <cntpos>Senior GIS Analyst</cntpos>
+                <cntaddr>
+                    <addrtype>mailing</addrtype>
+                    <city>Seattle</city>
+                    <state>Washington</state>
+                    <country>US</country>
+                </cntaddr>
+                <cntemail>DOT_IT_GIS@seattle.gov</cntemail>
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>
