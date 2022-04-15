@@ -71,7 +71,7 @@ def euclidean_distance(pt_1, pt_2):
         intput data to be classified.
         """
     # make sure input are np arrays
-    pt_1 = np.asarray(pt_1)
+    pt_1 = np.asarray(pt_1.coords)
     pt_2 = np.asarray(pt_2)
 
     eucl_dist = np.linalg.norm(pt_2 - pt_1)
