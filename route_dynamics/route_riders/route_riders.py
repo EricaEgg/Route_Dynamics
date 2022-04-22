@@ -54,7 +54,31 @@ def route_ridership(period, route, empty_bus):
     final_df['Pass_Mass'] = final_df['AveLd']*80
     final_df['Total_Mass'] = final_df['Pass_Mass'] + empty_bus
 
-    coord_list = stop_coord(route)
+    stop_ids = final_df['STOP_ID'].values
+    stops_riders = pd.DataFrame(stop_ids, columns = ['STOP_ID'])
+
+    routes_shp = '../data/rt' + str(route) + '_pts2.shp'
+    stops_shp = '../data/Transit_Stops_for_King_County_Metro__transitstop_point.shp'
+
+    route_num = route
+
+    stops = gpd.read_file(stops_shp)
+    stops['ROUTE_LIST'].fillna(value=str(0), inplace=True)
+
+    stops_list = pd.DataFrame(columns=stops.columns)
+
+    for i in range(0, len(stops)):
+
+        for j in range(len(stops_riders)):
+            if stops_riders['STOP_ID'][j]==stops['STOP_ID'][i]:
+                row = pd.DataFrame(stops.iloc[i])
+                stops_list = pd.concat([stops_list,row.transpose()])
+            else:
+                 pass
+
+    coord_list_full = stops_list.drop_duplicates('STOP_ID')
+    coord_list = coord_list_full[['STOP_ID', 'geometry']]
+    coord_list = coord_list.reset_index(drop=True)
 
     filler = np.zeros(len(final_df))
     final_df = final_df.assign(geometry = filler)
@@ -65,47 +89,3 @@ def route_ridership(period, route, empty_bus):
         final_df['geometry'].iloc[i] = copy
 
     return final_df
-
-
-def stop_coord(num):
-    """
-    Uses riders_kept data frame from route ridership to incorporate the
-    link between stop coordinates and stop IDs.
-
-    Inputs:
-    num - Route Number
-    riders_num - Data Frame of riders organized by stop sequence and mass_bus
-        (use riders_kept output from route_riders)
-
-    Outputs:
-    xy_df - Data Frame of bus stop coordinates for route
-    df_combine - Final Data Frame with STOP_ID, stop coordinates, and
-        ridership mass, organized by STOP_SEQ
-
-    """
-    routes_shp = '../data/rt' + str(num) + '_pts2.shp'
-    stops_shp = '../data/Transit_Stops_for_King_County_Metro__transitstop_point.shp'
-
-    route_num = num
-
-    stops = gpd.read_file(stops_shp)
-    stops['ROUTE_LIST'].fillna(value=str(0), inplace=True)
-
-    stops_list = pd.DataFrame(columns=stops.columns)
-    for i in range(0, len(stops)):
-
-        if str(route_num) in (stops['ROUTE_LIST'][i]):
-            for x in stops['ROUTE_LIST'][i].split(' '):
-                if str(route_num) == x:
-                    row = pd.DataFrame(stops.iloc[i])
-                    stops_list = pd.concat([stops_list,row.transpose()])
-                else:
-                    pass
-        else:
-            pass
-
-    coord_list_full = stops_list.drop_duplicates('STOP_ID')
-    coord_list = coord_list_full[['STOP_ID', 'geometry']]
-    coord_list = coord_list.reset_index(drop=True)
-
-    return coord_list

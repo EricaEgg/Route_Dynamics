@@ -58,21 +58,21 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
         row = params.index.values
 
 
-    #Interpolate
-    if params['dist. (m)'].values < z:
-        vel = ((data['vel. (m/s)'][row+1].values - data['vel. (m/s)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['vel. (m/s)'][row].values
-        accel = ((data['accel. (m/s^2)'][row+1].values - data['accel. (m/s^2)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['accel. (m/s^2)'][row].values
-        time = ((data['time (s)'][row+1].values - data['time (s)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['time (s)'][row].values
-    else:
-        vel = ((data['vel. (m/s)'][row].values - data['vel. (m/s)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['vel. (m/s)'][row-1].values
-        accel = ((data['accel. (m/s^2)'][row].values - data['accel. (m/s^2)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['accel. (m/s^2)'][row-1].values
-        time = ((data['time (s)'][row].values - data['time (s)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['time (s)'][row-1].values
+        #Interpolate
+        if params['dist. (m)'].values < z:
+            vel = ((data['vel. (m/s)'][row+1].values - data['vel. (m/s)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['vel. (m/s)'][row].values
+            accel = ((data['accel. (m/s^2)'][row+1].values - data['accel. (m/s^2)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['accel. (m/s^2)'][row].values
+            time = ((data['time (s)'][row+1].values - data['time (s)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['time (s)'][row].values
+        else:
+            vel = ((data['vel. (m/s)'][row].values - data['vel. (m/s)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['vel. (m/s)'][row-1].values
+            accel = ((data['accel. (m/s^2)'][row].values - data['accel. (m/s^2)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['accel. (m/s^2)'][row-1].values
+            time = ((data['time (s)'][row].values - data['time (s)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['time (s)'][row-1].values
         
     
-    data2['vel. (m/s)'].iloc[i] = vel
-    data2['vel. (mph)'].iloc[i] = vel*2.2
-    data2['accel. (m/s^2)'].iloc[i] = accel
-    data2['time (s)'].iloc[i] = time
+        data2['vel. (m/s)'].iloc[i] = vel
+        data2['vel. (mph)'].iloc[i] = vel*2.2
+        data2['accel. (m/s^2)'].iloc[i] = accel
+        data2['time (s)'].iloc[i] = time
 
     # Define cutoff distance for acceleration and deceleration
     a_avg = data2['accel. (m/s^2)'].mean()
@@ -124,7 +124,7 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
 
     count = 0
 
-    v_lim = route_df['speed_limit'].iloc[i]**2. / (2*a_neg)
+    v_lim = route_df['speed_limit'].iloc[i]
 
     for i in range(len(x_ns)):
 
@@ -188,7 +188,7 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
 
                 if v[i-1] < v_lim:
 
-                    a[i] = a_plt
+                    a[i] = a_pos
                     v[i] = np.sqrt(2*x_ns[i]*a[i])
                     count += 1
 
@@ -264,7 +264,10 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
     delta_times[delta_times > 1000000] = 0
 
     for i in range(len(route_df)):
-        if route_df.at[i, 'is_stop']:
+        if route_df.at[i, 'is_bus_stop']:
+            delta_times[i]+=30 #make variable later
+
+        if route_df.at[i, 'is_signal']:
             delta_times[i]+=30 #make variable later
         else:
             pass
@@ -274,4 +277,4 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
     t = time_on_route
 
 
-    return a, v, x_ls, x_ns, t
+    return a, v, x_ls, x_ns, t, delta_times
