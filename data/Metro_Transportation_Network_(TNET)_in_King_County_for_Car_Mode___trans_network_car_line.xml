@@ -1,0 +1,3344 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <title>Metro Transportation Network (TNET) in King County for Car Mode / trans_network_car_line</title>
+                <geoform>vector digital data</geoform>
+                <onlink>https://kingcounty.maps.arcgis.com/home/item.html?id=7c0f51d833264f77acd2389da3c94ce4</onlink>
+                <onlink>https://kingcounty.maps.arcgis.com/home/item.html?id=898d607fe143466f92381e8739fa2b7a</onlink>
+                <onlink>https://www5.kingcounty.gov/sdc/Metadata.aspx?Layer=trans_network_car</onlink>
+                <onlink>https://www5.kingcounty.gov/sdc/addl_doc/KCGISCenterTermsAndConditions.pdf</onlink>
+                <onlink>https://www5.kingcounty.gov/sdc/addl_doc/KCGISCenterHelpUsingKCOpenData.pdf</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>Transportation features including rail, trails and pedestrian walkways with address ranges &amp; names derived from digital orthophotography and GPS.</abstract>
+            <purpose>Developed to support transportation planning &amp; engineering; transit routing &amp; transit operations within the Department of Transportation. The data supports the ATIS application used by the Regional Automated Trip Planning group. This group assists Metro bus riders to find the best itinerary possible. Trans_Network is a derived data layer from the TNET (Transportation Network) Geodatabase. TNET is the authoritative transportation network layer for King County. On-going maintenance to TNET is provided by multiple agencies and jurisdictions in King County.</purpose>
+        </descript>
+        <spdom>
+            <bounding>
+                <westbc>-122.707964</westbc>
+                <eastbc>-121.081662</eastbc>
+                <northbc>48.30664</northbc>
+                <southbc>46.745906</southbc>
+            </bounding>
+        </spdom>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>TNET</themekey>
+                <themekey>transportation</themekey>
+                <themekey>roads</themekey>
+                <themekey>streets</themekey>
+                <themekey>transit</themekey>
+                <themekey>street</themekey>
+                <themekey>car</themekey>
+                <themekey>modal</themekey>
+                <themekey>network</themekey>
+                <themekey>transportation_OpenData</themekey>
+                <themekey>kingcounty_opendata</themekey>
+                <themekey>trans_network_car_line</themekey>
+            </theme>
+            <theme>
+                <themekt>ISO 19115 Topic Categories</themekt>
+                <themekey>transportation</themekey>
+            </theme>
+        </keywords>
+        <accconst>None</accconst>
+        <useconst>King County data are made available with the understanding that they shall be used exclusively by the obtainer or his/her authorized agents. Digital products may not be reproduced or redistributed in any form or by any means without the express written authorization of King County.</useconst>
+        <datacred>King County</datacred>
+        <native>Esri ArcGIS 10.1.1.3143</native>
+    </idinfo>
+    <spdoinfo>
+        <direct>Vector</direct>
+        <ptvctinf>
+            <sdtsterm>
+                <sdtstype>Complete chain</sdtstype>
+                <ptvctcnt>0</ptvctcnt>
+            </sdtsterm>
+        </ptvctinf>
+    </spdoinfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>PLIBRARY.TRANSPORTATION.xxxx446456</enttypl>
+                <enttypd>King County Transportation Network (TNET) Line Feature Table</enttypd>
+                <enttypds>ESRI</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>OBJECTID</attrlabl>
+                <attrdef>Internal feature number.</attrdef>
+                <attrdefs>ESRI</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Sequential unique whole numbers that are automatically generated.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape</attrlabl>
+                <attrdef>Feature geometry.</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Coordinates defining the features.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TLINK_ID</attrlabl>
+                <attrdef>Uniquely identifies a transportation link</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>1</rdommin>
+                        						
+                        <rdommax>173949</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>CREATEDATE</attrlabl>
+                <attrdef>Date on which the transportation link is created</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>18991230</rdommin>
+                        						
+                        <rdommax>20061024</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>EFFEC_DATE</attrlabl>
+                <attrdef>Date on which the transportation link is active</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>18991230</rdommin>
+                        						
+                        <rdommax>20061024</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>DB_MD_DATE</attrlabl>
+                <attrdef>Date on which the record was modified</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>18991230</rdommin>
+                        						
+                        <rdommax>20061031</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>END_DATE</attrlabl>
+                <attrdef>Date on which the record is no longer active</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>18991230</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>20030305</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>40000101</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>40010101</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>KC_FCC_ID</attrlabl>
+                <attrdef>King County road class codes</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>C</edomv>
+                        						
+                        <edomvd>Collector Arterial</edomvd>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>F</edomv>
+                        						
+                        <edomvd>Freeway</edomvd>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>L</edomv>
+                        						
+                        <edomvd>Local Arterial</edomvd>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>M</edomv>
+                        						
+                        <edomvd>Minor Arterial</edomvd>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>P</edomv>
+                        						
+                        <edomvd>Principal Arterial</edomvd>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>CFCC_ID</attrlabl>
+                <attrdef>Census feature class codes</attrdef>
+                <attrdefs>King County Metro</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A00</edomv>
+                        						
+                        <edomvd>Road, major and minor categories unknown</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A01</edomv>
+                        						
+                        <edomvd>Road, unseparated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A02</edomv>
+                        						
+                        <edomvd>Road, unseparated, in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A03</edomv>
+                        						
+                        <edomvd>Road, unseparated, underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A04</edomv>
+                        						
+                        <edomvd>Road, unseparated, with rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A05</edomv>
+                        						
+                        <edomvd>Road, separated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A06</edomv>
+                        						
+                        <edomvd>Road, separated, in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A07</edomv>
+                        						
+                        <edomvd>Road, separated, underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A08</edomv>
+                        						
+                        <edomvd>Road, separated, with rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A1</edomv>
+                        						
+                        <edomvd>Primary highways with limited access</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A10</edomv>
+                        						
+                        <edomvd>Primary highways with limited access, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A11</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, unseparated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A12</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, unseparated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A13</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, unseparated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A14</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, unseparated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A15</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, separated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A16</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, separated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A17</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, separated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A18</edomv>
+                        						
+                        <edomvd>Primary highways with limited access or interstate hwy, separated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A2</edomv>
+                        						
+                        <edomvd>Primary road without limited access</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A20</edomv>
+                        						
+                        <edomvd>Primary road without limited access, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A21</edomv>
+                        						
+                        <edomvd>Primary road without limited access, unseparated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A22</edomv>
+                        						
+                        <edomvd>Primary road without limited access, unseparated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A23</edomv>
+                        						
+                        <edomvd>Primary road without limited access, unseparated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A24</edomv>
+                        						
+                        <edomvd>Primary road without limited access, unseparated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A25</edomv>
+                        						
+                        <edomvd>Primary road without limited access, separated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A26</edomv>
+                        						
+                        <edomvd>Primary road without limited access, separated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A27</edomv>
+                        						
+                        <edomvd>Primary road without limited access, separated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A28</edomv>
+                        						
+                        <edomvd>Primary road without limited access, separated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A3</edomv>
+                        						
+                        <edomvd>Secondary and connecting road</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A30</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A31</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, unseparated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A32</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, unseparated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A33</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, unseparated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A34</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, unseparated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A35</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, separated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A36</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, separated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A37</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, separated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A38</edomv>
+                        						
+                        <edomvd>Secondary state and county roads, separated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A4</edomv>
+                        						
+                        <edomvd>Local, neighborhood and rural road</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A40</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A41</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, unseparated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A42</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, unseparated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A43</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, unseparated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A44</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, unseparated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A45</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, separated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A46</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, separated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A47</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, separated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A48</edomv>
+                        						
+                        <edomvd>Local, neighborhood, rural road, city street, separated rail line in center</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A5</edomv>
+                        						
+                        <edomvd>Vehicular trail</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A50</edomv>
+                        						
+                        <edomvd>Vehicular (4WD) trail, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A51</edomv>
+                        						
+                        <edomvd>Vehicular (4WD) trail, unseparated</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A52</edomv>
+                        						
+                        <edomvd>Vehicular (4WD) trail, unseparated in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A53</edomv>
+                        						
+                        <edomvd>Vehicular (4WD) trail, unseparated underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A6</edomv>
+                        						
+                        <edomvd>Roads with special characteristics</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A60</edomv>
+                        						
+                        <edomvd>At-grade ramp or connecting road not associated with a limited access hwy</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A61</edomv>
+                        						
+                        <edomvd>Cul-de-sac, the closed end of a road that forms a loop or turn around</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A62</edomv>
+                        						
+                        <edomvd>Traffic circle, the portion of a road or intersection of roads forming a roundabout</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A63</edomv>
+                        						
+                        <edomvd>Access ramp, the portion of a road that forms a cloverleaf or limited access interchange</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A64</edomv>
+                        						
+                        <edomvd>Service road, provides access to businesses and rest areas</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A65</edomv>
+                        						
+                        <edomvd>Ferry crossing, passenger, seasonal</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A66</edomv>
+                        						
+                        <edomvd>Ferry crossing, passenger, year-round</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A68</edomv>
+                        						
+                        <edomvd>Ferry crossing, passenger, vehicular, seasonal</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A69</edomv>
+                        						
+                        <edomvd>Ferry crossing, passenger, vehicular, year-round</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A7</edomv>
+                        						
+                        <edomvd>Road as other thoroughfare</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A70</edomv>
+                        						
+                        <edomvd>Other thoroughfare major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A71</edomv>
+                        						
+                        <edomvd>Walkway, for pedestrians, usually unnamed</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A72</edomv>
+                        						
+                        <edomvd>Stairway, stepped road for pedestrians, usually unnamed</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A73</edomv>
+                        						
+                        <edomvd>Alley, road for service vehicles, located at the rear of buildings</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A74</edomv>
+                        						
+                        <edomvd>Driveway, usually privately owned and unnamed</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>A75</edomv>
+                        						
+                        <edomvd>Road, parking area</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>B00</edomv>
+                        						
+                        <edomvd>Railroad, major and minor categories unknown</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>B01</edomv>
+                        						
+                        <edomvd>Railroad track, not in tunnel or underpassing</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>B02</edomv>
+                        						
+                        <edomvd>Railroad track, in tunnel</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>B20</edomv>
+                        						
+                        <edomvd>Railroad spur track, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>B30</edomv>
+                        						
+                        <edomvd>Railroad yard track, major category</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>B51</edomv>
+                        						
+                        <edomvd>Carline, a track for street cars, trolleys, and other mass transit rail systems</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>C31</edomv>
+                        						
+                        <edomvd>Aerial tramway, monorail, or ski lift</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>HSS</attrlabl>
+                <attrdef>A flag for Highways of State Wide Significance</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>0</edomv>
+                        						
+                        <edomvd>False</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1</edomv>
+                        						
+                        <edomvd>True</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>UFLAG</attrlabl>
+                <attrdef>A flag identifying a new feature or updated attributes</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>I</edomv>
+                        						
+                        <edomvd>Insert</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>U</edomv>
+                        						
+                        <edomvd>Update</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>SPEED_LIM</attrlabl>
+                <attrdef>Vehicular speed limit in MPH</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Speed Limits range from 0 to 60 MPH, ei 25 MPH, 60 MPH.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>GRADE</attrlabl>
+                <attrdef>The degree of inclination to determine accessibility</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>0</edomv>
+                        						
+                        <edomvd>False</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1</edomv>
+                        						
+                        <edomvd>True</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FR_TPOINT</attrlabl>
+                <attrdef>Identifies the from end point of a transportation link</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>4</rdommin>
+                        						
+                        <rdommax>286900</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TO_TPOINT</attrlabl>
+                <attrdef>Identifies the to end point of a transportation link</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>1</rdommin>
+                        						
+                        <rdommax>286900</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FR_ADD_L_A</attrlabl>
+                <attrdef>Actual addresses at the beginning of a feature, left side</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>231198</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TO_ADD_L_A</attrlabl>
+                <attrdef>Actual addresses at the end of a feature, left side</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>212448</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FR_ADD_R_A</attrlabl>
+                <attrdef>Actual addresses at the beginning of a feature, right side</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>212201</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TO_ADD_R_A</attrlabl>
+                <attrdef>Actual addresses at the end of a feature, right side</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>77619</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>ADD_CONF_A</attrlabl>
+                <attrdef>Actual Level of confidence in source data</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>H</edomv>
+                        						
+                        <edomvd>High</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>L</edomv>
+                        						
+                        <edomvd>Low</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>M</edomv>
+                        						
+                        <edomvd>Medium</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FR_ADD_L_T</attrlabl>
+                <attrdef>Theoretical addresses at the end of a feature left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>336909</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TO_ADD_L_T</attrlabl>
+                <attrdef>Theoretical addresses at the beginning of a feature left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>49298</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FR_ADD_R_T</attrlabl>
+                <attrdef>Theoretical addresses at the end of a feature right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>218001</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TO_ADD_R_T</attrlabl>
+                <attrdef>Theoretical addresses at the beginning of a feature right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>143008</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>ADD_CONF_T</attrlabl>
+                <attrdef>Actual Level of confidence in source data</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>(no value)</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>H</edomv>
+                        						
+                        <edomvd>High</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>L</edomv>
+                        						
+                        <edomvd>Low</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>M</edomv>
+                        						
+                        <edomvd>Medium</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>PREFIX_L</attrlabl>
+                <attrdef>Prefix direction code for a street name left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>E</edomv>
+                        						
+                        <edomvd>East</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>N</edomv>
+                        						
+                        <edomvd>North</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NE</edomv>
+                        						
+                        <edomvd>Northeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NW</edomv>
+                        						
+                        <edomvd>Northwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>S</edomv>
+                        						
+                        <edomvd>South</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SE</edomv>
+                        						
+                        <edomvd>Southeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SW</edomv>
+                        						
+                        <edomvd>Southwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>W</edomv>
+                        						
+                        <edomvd>West</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>NAME_L</attrlabl>
+                <attrdef>Transportation link name left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1st</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Z</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TYPE_L</attrlabl>
+                <attrdef>Transportation link name type code as identified by USPS left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>AcRd</edomv>
+                        						
+                        <edomvd>AccessRoad</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Aly</edomv>
+                        						
+                        <edomvd>Alley</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ave</edomv>
+                        						
+                        <edomvd>Avenue</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Blvd</edomv>
+                        						
+                        <edomvd>Boulevard</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Brg</edomv>
+                        						
+                        <edomvd>Bridge</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Cir</edomv>
+                        						
+                        <edomvd>Circle</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Cres</edomv>
+                        						
+                        <edomvd>Crest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ct</edomv>
+                        						
+                        <edomvd>Court</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Cto</edomv>
+                        						
+                        <edomvd>Cutoff</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Dr</edomv>
+                        						
+                        <edomvd>Drive</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Expy</edomv>
+                        						
+                        <edomvd>Express Way</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ext</edomv>
+                        						
+                        <edomvd>Extension</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Fwy</edomv>
+                        						
+                        <edomvd>Freeway</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Holw</edomv>
+                        						
+                        <edomvd>Hollow</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Hwy</edomv>
+                        						
+                        <edomvd>Highway</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ky</edomv>
+                        						
+                        <edomvd>Key</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ln</edomv>
+                        						
+                        <edomvd>Lane</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Loop</edomv>
+                        						
+                        <edomvd>Loop</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Mall</edomv>
+                        						
+                        <edomvd>Mall</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Opas</edomv>
+                        						
+                        <edomvd>Over Pass</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Park</edomv>
+                        						
+                        <edomvd>Park</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Pkwy</edomv>
+                        						
+                        <edomvd>Parkway</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Pl</edomv>
+                        						
+                        <edomvd>Place</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ramp</edomv>
+                        						
+                        <edomvd>Ramp</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Rd</edomv>
+                        						
+                        <edomvd>Road</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Rise</edomv>
+                        						
+                        <edomvd>Rise</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>St</edomv>
+                        						
+                        <edomvd>Street</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Stair</edomv>
+                        						
+                        <edomvd>Stair</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ter</edomv>
+                        						
+                        <edomvd>Terrace</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Trl</edomv>
+                        						
+                        <edomvd>Trail</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Tunl</edomv>
+                        						
+                        <edomvd>Tunnel</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Vis</edomv>
+                        						
+                        <edomvd>Vista</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Walk</edomv>
+                        						
+                        <edomvd>Walk</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Way</edomv>
+                        						
+                        <edomvd>Way</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Rail</edomv>
+                        						
+                        <edomvd>Rail</edomvd>
+                        						
+                        <edomvds>King County Metro</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>SUFFIX_L</attrlabl>
+                <attrdef>Suffix direction code for a street name left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>E</edomv>
+                        						
+                        <edomvd>East</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>N</edomv>
+                        						
+                        <edomvd>North</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NE</edomv>
+                        						
+                        <edomvd>Northeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NW</edomv>
+                        						
+                        <edomvd>Northwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>S</edomv>
+                        						
+                        <edomvd>South</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SE</edomv>
+                        						
+                        <edomvd>Southeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SW</edomv>
+                        						
+                        <edomvd>Southwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>W</edomv>
+                        						
+                        <edomvd>West</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>PREFIX_R</attrlabl>
+                <attrdef>Prefix direction code for a street name right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>E</edomv>
+                        						
+                        <edomvd>East</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>N</edomv>
+                        						
+                        <edomvd>North</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NE</edomv>
+                        						
+                        <edomvd>Northeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NW</edomv>
+                        						
+                        <edomvd>Northwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>S</edomv>
+                        						
+                        <edomvd>South</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SE</edomv>
+                        						
+                        <edomvd>Southeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SW</edomv>
+                        						
+                        <edomvd>Southwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>W</edomv>
+                        						
+                        <edomvd>West</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>NAME_R</attrlabl>
+                <attrdef>Transportation link name right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1st</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Z</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>TYPE_R</attrlabl>
+                <attrdef>Transportation link name type code as identified by USPS right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>(no value)</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>AcRd</edomv>
+                        						
+                        <edomvd>Access Road</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Aly</edomv>
+                        						
+                        <edomvd>Alley</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ave</edomv>
+                        						
+                        <edomvd>Avenue</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Blvd</edomv>
+                        						
+                        <edomvd>Boulevard</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Brg</edomv>
+                        						
+                        <edomvd>Bridge</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Cir</edomv>
+                        						
+                        <edomvd>Circle</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Cres</edomv>
+                        						
+                        <edomvd>Crest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ct</edomv>
+                        						
+                        <edomvd>Court</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Cto</edomv>
+                        						
+                        <edomvd>Cutoff</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Dr</edomv>
+                        						
+                        <edomvd>Drive</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Expy</edomv>
+                        						
+                        <edomvd>Express Way</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ext</edomv>
+                        						
+                        <edomvd>Extension</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Fwy</edomv>
+                        						
+                        <edomvd>Freeway</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Holw</edomv>
+                        						
+                        <edomvd>Hollow</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Hwy</edomv>
+                        						
+                        <edomvd>Highway</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ky</edomv>
+                        						
+                        <edomvd>Key</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ln</edomv>
+                        						
+                        <edomvd>Lane</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Loop</edomv>
+                        						
+                        <edomvd>Loop</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Mall</edomv>
+                        						
+                        <edomvd>Mall</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Opas</edomv>
+                        						
+                        <edomvd>Overpass</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Park</edomv>
+                        						
+                        <edomvd>Park</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Pkwy</edomv>
+                        						
+                        <edomvd>Parkway</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Pl</edomv>
+                        						
+                        <edomvd>Place</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ramp</edomv>
+                        						
+                        <edomvd>Ramp</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Rd</edomv>
+                        						
+                        <edomvd>Road</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Rise</edomv>
+                        						
+                        <edomvd>Rise</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>St</edomv>
+                        						
+                        <edomvd>Street</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Str</edomv>
+                        						
+                        <edomvd>Stair</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Ter</edomv>
+                        						
+                        <edomvd>Terrace</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Trl</edomv>
+                        						
+                        <edomvd>Trail</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Tunl</edomv>
+                        						
+                        <edomvd>Tunnel</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Vis</edomv>
+                        						
+                        <edomvd>Vista</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Walk</edomv>
+                        						
+                        <edomvd>Walk</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Way</edomv>
+                        						
+                        <edomvd>Way</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>SUFFIX_R</attrlabl>
+                <attrdef>Suffix direction code for a street name right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>E</edomv>
+                        						
+                        <edomvd>East</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>N</edomv>
+                        						
+                        <edomvd>North</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NE</edomv>
+                        						
+                        <edomvd>Northeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>NW</edomv>
+                        						
+                        <edomvd>Northwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>S</edomv>
+                        						
+                        <edomvd>South</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SE</edomv>
+                        						
+                        <edomvd>Southeast</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>SW</edomv>
+                        						
+                        <edomvd>Southwest</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>W</edomv>
+                        						
+                        <edomvd>West</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FULLNAME_L</attrlabl>
+                <attrdef>Concatenation of prefix, name, type and suffix left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1st Ave</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Z St SE</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>FULLNAME_R</attrlabl>
+                <attrdef>Concatenation of prefix, name, type and suffix right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1st Ave</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>Z St SE</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>AP_NAME_L</attrlabl>
+                <attrdef>Alternative Primary Transportation link name left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>10848</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>AP_NAME_R</attrlabl>
+                <attrdef>Alternative Primary Transportation link name right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>10848</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>A_NAME_L</attrlabl>
+                <attrdef>Alias Transportation link name left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>0</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>7090</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>A_NAME_R</attrlabl>
+                <attrdef>Alias Transportation link name right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>0</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>7090</edomv>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>JURIS_L</attrlabl>
+                <attrdef>The jurisdiction for a transportation link left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>81</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>JURIS_R</attrlabl>
+                <attrdef>The jurisdiction for a transportation link right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>81</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>ZIP_L</attrlabl>
+                <attrdef>Zipcode for a transportation link left</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>98580</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>ZIP_R</attrlabl>
+                <attrdef>Zipcode for a transportation link right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0</rdommin>
+                        						
+                        <rdommax>98580</rdommax>
+                        						
+                        <attrmres>1</attrmres>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>ROLL_LEN</attrlabl>
+                <attrdef>Length of a transportation link measured in feet by odometer</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>0.000</rdommin>
+                        						
+                        <rdommax>102778.838</rdommax>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>CAR_FLOW</attrlabl>
+                <attrdef>The traffic flow direction related to arc direction for Car Mode</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>0</edomv>
+                        						
+                        <edomvd>Both</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>1</edomv>
+                        						
+                        <edomvd>With</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+                <attrdomv>
+                    					
+                    <edom>
+                        						
+                        <edomv>2</edomv>
+                        						
+                        <edomvd>Against</edomvd>
+                        						
+                        <edomvds>King County Transit</edomvds>
+                        					
+                    </edom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>City_L</attrlabl>
+                <attrdef>The City for a transportation link left</attrdef>
+                <attrdefs>King County source</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>City_R</attrlabl>
+                <attrdef>The City for a transportation link Right</attrdef>
+                <attrdefs>King County Transit</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Shape.len</attrlabl>
+            </attr>
+        </detailed>
+    </eainfo>
+    <metainfo>
+        <metd>20140602</metd>
+        <metc>
+            <cntinfo>
+                <!--no contact person or organization name available-->
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>

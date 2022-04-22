@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <origin/>
+                <pubdate>20120904</pubdate>
+                <title>Traffic Signals Maintained by King County Road Services / signal_point</title>
+                <edition>One</edition>
+                <geoform>vector digital data</geoform>
+                <pubinfo>
+                    <pubplace/>
+                    <publish>King County</publish>
+                </pubinfo>
+                <othercit>None</othercit>
+                <onlink>https://kingcounty.maps.arcgis.com/home/item.html?id=7c0f51d833264f77acd2389da3c94ce4</onlink>
+                <onlink>https://kingcounty.maps.arcgis.com/home/item.html?id=898d607fe143466f92381e8739fa2b7a</onlink>
+                <onlink>https://www5.kingcounty.gov/sdc/Metadata.aspx?Layer=signal</onlink>
+                <onlink>https://www5.kingcounty.gov/sdc/addl_doc/KCGISCenterTermsAndConditions.pdf</onlink>
+                <onlink>https://www5.kingcounty.gov/sdc/addl_doc/KCGISCenterHelpUsingKCOpenData.pdf</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>Traffic signals are used to assign vehicular and pedestrian right-of-way. This dataset does not include traffic flashers, which is in it's own dataset.</abstract>
+            <purpose>Location of traffic signs maintained by King County Roads Division.</purpose>
+        </descript>
+        <timeperd>
+            <timeinfo>
+                <sngdate>
+                    <caldate>20120906</caldate>
+                </sngdate>
+            </timeinfo>
+            <current>publication date</current>
+        </timeperd>
+        <status>
+            <progress>Complete</progress>
+            <update>Daily</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-122.539137</westbc>
+                <eastbc>-121.089748</eastbc>
+                <northbc>47.802506</northbc>
+                <southbc>47.142076</southbc>
+            </bounding>
+        </spdom>
+        <keywords>
+            <theme>
+                <themekt>ISO 19115 Topic Categories</themekt>
+                <themekey>transportation</themekey>
+                <themekey>transportation_OpenData</themekey>
+                <themekey>kingcounty_opendata</themekey>
+                <themekey>traffic</themekey>
+                <themekey>signals</themekey>
+                <themekey>vehicles</themekey>
+                <themekey>pedestrians</themekey>
+                <themekey>maintenance</themekey>
+                <themekey>road services</themekey>
+                <themekey>signal_point</themekey>
+            </theme>
+            <place>
+                <placekt>Not applicable</placekt>
+                <placekey>Pacific NW</placekey>
+                <placekey>Washington state</placekey>
+                <placekey>King County</placekey>
+                <placekey>WA</placekey>
+            </place>
+        </keywords>
+        <accconst>None</accconst>
+        <useconst>King County data are made available with the understanding that they shall be used exclusively by the obtainer or his/her authorized agents. Digital products may not be reproduced or redistributed in any form or by any means withoutthe express written authorization of King County. Users are encouraged to appropriately evaluate and display the margin of error when analyzing and mapping this data</useconst>
+        <ptcontac>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>King County Dept of Transportation - Road Services Division</cntorg>
+                    <cntper>Tamara Davis</cntper>
+                </cntorgp>
+                <cntpos>GIS and IT Project Manager</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>201 S Jackson St</address>
+                    <city>Seattle</city>
+                    <state>WA</state>
+                    <postal>98104</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>206-684-2118</cntvoice>
+            </cntinfo>
+        </ptcontac>
+        <browse>
+            <browsen>http://www5.kingcounty.gov/sdc/DataImages/Sign.jpg</browsen>
+            <browsed>JPG File of layer overlain on base of WA counties or local cities</browsed>
+            <browset>JPG</browset>
+        </browse>
+        <datacred>King County</datacred>
+        <native>Esri ArcGIS 10.1.1.3143</native>
+    </idinfo>
+    <dataqual>
+        <complete>Traffic signs are placed manually by staff using visual approximation. This data set may be incomplete.</complete>
+    </dataqual>
+    <spdoinfo>
+        <direct>Vector</direct>
+        <ptvctinf>
+            <sdtsterm>
+                <sdtstype>Entity point</sdtstype>
+                <ptvctcnt>92190</ptvctcnt>
+            </sdtsterm>
+        </ptvctinf>
+    </spdoinfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>ROADSGIS.RSDLIB.SIGN_SPVIEW</enttypl>
+                <enttypd>point data table</enttypd>
+                <enttypds>King County</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>OBJECTID</attrlabl>
+                <attrdef>Internal feature number.</attrdef>
+                <attrdefs>ESRI</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Sequential unique whole numbers that are automatically generated.</udom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>SignID</attrlabl>
+                <attrdefs>King County</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>2.0</rdommin>
+                        						
+                        <rdommax>114562.0</rdommax>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Description</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>MUTCDCode</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Width</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Length</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>RoadName</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>ModificationDate</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>SignClass</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>PositionOnPost</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>DirectionFacing</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Mobile</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>SignMountedVia</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>MountedOn</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>NumberOfSides</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Material</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>PostHeight</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>AssetID</attrlabl>
+                <attrdefs>King County</attrdefs>
+                <attrdomv>
+                    					
+                    <rdom>
+                        						
+                        <rdommin>2.0</rdommin>
+                        						
+                        <rdommax>114562.0</rdommax>
+                        					
+                    </rdom>
+                    				
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>InstallDate</attrlabl>
+                <attrdefs>King County</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>ImageFileLoc</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>StockImgLoc</attrlabl>
+            </attr>
+            <attr>
+                <attrlabl>Shape</attrlabl>
+                <attrdef>Feature geometry.</attrdef>
+                <attrdefs>ESRI</attrdefs>
+                <attrdomv>
+                    					
+                    <udom>Coordinates defining the features.</udom>
+                    				
+                </attrdomv>
+            </attr>
+        </detailed>
+        <overview>
+            <eadetcit>King County</eadetcit>
+        </overview>
+    </eainfo>
+    <distinfo>
+        <distrib>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>KCGIS Center</cntorg>
+                    <cntper>Cheryl Wilder</cntper>
+                </cntorgp>
+                <cntpos>Data Sales Coordinator</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>201 S Jackson St, Suite 706</address>
+                    <city>Seattle</city>
+                    <state>WA</state>
+                    <postal>98104</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>206-263-5220</cntvoice>
+            </cntinfo>
+        </distrib>
+        <resdesc>/plibrary2/transportation/shapes/point/Sign.shp</resdesc>
+        <distliab>King County disclaims any warranty of use of any digital product or data beyond that for which it was designed.</distliab>
+        <stdorder>
+            <digform>
+                <digtinfo>
+                    <formname>featureclass and shapefile</formname>
+                </digtinfo>
+            </digform>
+            <fees>Contact KCGIS Client Services for the cost of reproduction - http://www.kingcounty.gov/operations/GIS/GISData/GISDataDistribution.aspx</fees>
+        </stdorder>
+    </distinfo>
+    <metainfo>
+        <metd>20140805</metd>
+        <metc>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>King County Dept of Transportation - Road Services Division</cntorg>
+                    <cntper>Tamara Davis</cntper>
+                </cntorgp>
+                <cntpos>GIS and IT Project Manager</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical</addrtype>
+                    <address>201 S Jackson St</address>
+                    <city>Seattle</city>
+                    <state>WA</state>
+                    <postal>98104</postal>
+                    <country>US</country>
+                </cntaddr>
+                <cntvoice>206-684-2118</cntvoice>
+                <cntemail>firstname.lastname@kingcounty.gov</cntemail>
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>
