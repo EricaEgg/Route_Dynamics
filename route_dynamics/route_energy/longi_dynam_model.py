@@ -111,6 +111,10 @@ class RouteTrajectory():
         # Try to determine bus stops from list of coordinates
         route_df = self._add_stops_to_df(stop_coords, signal_coords, route_df)
 
+        # Add passenger mass column to route_df
+        route_df = self._add_mass_to_df(route_df)
+
+        route_df = self._add_const_forces_to_df(route_df)
 
         # Add 'acceleration' column to route_df
         route_df = self._add_accelerations_to_df(
@@ -122,15 +126,6 @@ class RouteTrajectory():
 
         route_df = self._add_delta_times_to_df(route_df)
 
-        # Add passenger mass column to route_df
-        route_df = self._add_mass_to_df(route_df)
-
-        # Add force columns to route_df:
-        #     - 'grav_force' : gravitation force determined by road grade
-        #     - 'roll_fric' : rolling friction
-        #     - 'aero_drag' : areodynamic drag
-        #     - 'inertia' : inertial force, F = ma. Changes with passenger load
-        #                   on bus.
         route_df = self._add_forces_to_df(route_df)
 
         # Add column to route_df containing instantaneous power experted by
@@ -192,12 +187,12 @@ class RouteTrajectory():
         route_df = route_df.assign(
         is_stop = ([False] * len(route_df.index))
         )
-
-        for i in self.stop_nn_indicies.ravel()[::2]:
+ 
+        for i in self.stop_nn_indicies.ravel()[::3]:
             route_df.at[i, 'is_bus_stop'] = True
             route_df.at[i, 'is_stop'] = True
             
-        for i in signal_nn_indicies.ravel()[::2]:
+        for i in signal_nn_indicies.ravel()[::3]:
             route_df.at[i, 'is_stop'] = True
             route_df.at[i, 'is_signal'] = True
 
@@ -225,58 +220,10 @@ class RouteTrajectory():
         
 
         route_df = route_df.assign(delta_times = self.delta_times)
-        route_df = route_df.assign(total_time = self.route_time)
+        #route_df = route_df.assign(total_time = self.route_time)
 
-        # if alg is 'finite_diff':
-        #     delta_times = self._calculate_delta_times_on_linestring_distance(
-        #         route_df)
-        # elif alg is 'model':
-        #     delta_times = np.append(
-        #         0,
-        #         np.diff(self.route_time)
-        #         )
-
-        # route_df = route_df.assign(
-        #     delta_time=delta_times
-        #     )
 
         return route_df
-
-
-    # def _calculate_delta_times_on_linestring_distance(self,
-    #     route_df,
-    #     alg='finite_diff',
-    #     ):
-
-    #     back_diff_delta_x = np.full(len(route_df), 1.8288)
-
-    #     try:
-    #         velocities = route_df.velocity.values
-    #     except AttributeError:
-    #         print("Does 'route_df' have 'velocity' column? ")
-
-    #     if alg is 'finite_diff':
-    #         # Calcule average velocities along segment but backward difference
-    #         segment_avg_velocities = (
-    #             velocities
-    #             +
-    #             np.append(0,velocities[:-1])
-    #             )/2
-
-    #         self.delta_times = back_diff_delta_x * segment_avg_velocities
-
-    #     else:
-    #         raise IllegalArgumentError("time calculation only equiped to "
-    #             "implement finite difference.")
-
-
-    #     self.time_on_route = np.append(
-    #         0,
-    #         np.cumsum(self.delta_times[1:])
-    #         )
-
-    #     return self.delta_times
-
 
     def _add_accelerations_to_df(self, route_df, a_prof):
         """ For now just adds a acceleration velocity as a placeholder.
@@ -308,7 +255,6 @@ class RouteTrajectory():
             self.const_a_velocities,
             self.x_ls,
             self.x_ns,
-            self.route_time,
             self.delta_times
             ) = ca.accel_dynamics(
             route_df,
@@ -328,22 +274,8 @@ class RouteTrajectory():
             Eventually this will use Ryan's ridership module, which
             determines the ridership at each bus stop.
             """
-        # if self.mass_arg_is_list:
-
-        #     lengths_equiv = len(self.mass_array)==len(
-        #         self.stop_coords)
-            # Does mass array check out for calculation?
-            # mass_array_correct_length = (
-            #     lengths_equiv and self.mass_arg_is_list
-            #     )
-
+    
         full_mass_column = self.calculate_mass()
-
-        # full_mass_column = np.zeros(len(self.route_df.index))
-
-        # else: # Add default mass to every row
-        #     full_mass_column = self.unloaded_bus_mass*np.ones(
-        #         len(route_df.index))
 
 
         route_df = route_df.assign(
@@ -362,12 +294,6 @@ class RouteTrajectory():
             """
 
 
-        # if alg=='list_per_stop' and len_check:
-
-        # if not hasattr(self, 'stop_nn_indicies'):
-        #     raise AttributeError('Cant calculate from list')
-
-
         # Initialize array of Nan's for mass column of route_df
         full_mass_column = np.zeros(len(self.route_df.index))
         full_mass_column[:] = np.nan
@@ -383,123 +309,117 @@ class RouteTrajectory():
         full_mass_column[0] = self.unloaded_bus_mass
         full_mass_column[-1] = self.unloaded_bus_mass
 
-        # Iterate through the half constructed rdf mass column
-        # ('full_mass_column') and fill in sapce between stops with previous value
-        # for i in range(len(full_mass_column)-1):
-        #     j = 1
-        #     try:
-        #         while np.isnan(full_mass_column[i+j]):
-        #             full_mass_column[i+j] = full_mass_column[i]
-        #             # print(full_mass_column[i+j] )
-        #             j+=1
-        #     except: IndexError
 
         for i in range(len(full_mass_column)-1):
             if np.isnan(full_mass_column[i]):
                 full_mass_column[i] = full_mass_column[i-1]
             else:
-                continue 
-
-        # if np.any(full_mass_column < self.unloaded_bus_mass):
-        #     raise IllegalArgumentError("Class arg 'unloaded_bus_mass' "
-        #         "is heavier than values in arg 'mass_array'")
-
-        # elif alg=='list_per_stop' and (
-        #     self.mass_arg_is_list and not len_check
-        #     ):
-        #     raise IllegalArgumentError(
-        #         "'stop_coords' and 'mass_array' must be same length"
-        #         )
-
-        # else:
-        #     raise IllegalArgumentError(
-        #         "Algorithm for mass calculation must be 'list_per_stop'"
-        #         )
-
+                continue
 
         return full_mass_column
+
+    def _add_const_forces_to_df(self, route_df):
+
+        (
+            grav_force,
+            roll_fric,
+            ) = self.calculate_const_forces(route_df)
+
+        route_df = route_df.assign(
+            grav_force = grav_force,
+            roll_fric = roll_fric,
+            )
+
+        return route_df
 
 
     def _add_forces_to_df(self, route_df):
         """ Calculate forces on bus relevant to the Longitudinate
             dynamics model.
             """
+        vels = route_df.velocity.values
+        acce = route_df.acceleration.values
+        loaded_bus_mass = route_df.mass.values
 
         (
-            grav_force,
-            roll_fric,
             aero_drag,
             inertia
-            ) = self.calculate_forces(route_df)
+            ) = self.calculate_forces(loaded_bus_mass, acce, vels)
 
         route_df = route_df.assign(
-            grav_force = grav_force,
-            roll_fric = roll_fric,
             aero_drag = aero_drag,
             inertia = inertia,
             )
 
         return route_df
 
-
-    def calculate_forces(self, route_df):
-        """ Requires GeoDataFrame input with mass column """  
-
-        vels = route_df.velocity.values
-        acce = route_df.acceleration.values
+    def calculate_const_forces(self, route_df):
         grad = route_df.grade.values
         grad_angle = np.arctan(grad)
+        gravi_accel = 9.81
+        fric_coeff = 0.01
+
+        loaded_bus_mass = route_df.mass.values
+
+        # Calculate the gravitational force
+        grav_force = (
+            loaded_bus_mass * gravi_accel * np.sin(grad_angle)
+            )
+
+        # Calculate the rolling friction
+        roll_fric = (
+            fric_coeff * loaded_bus_mass * gravi_accel * np.cos(grad_angle)
+            )
+
+        return grav_force, roll_fric
+
+    def calculate_forces(self, loaded_bus_mass, acce, vels):
+        """ Requires GeoDataFrame input with mass column """  
 
 
         # Physical parameters
-        gravi_accel = 9.81
-        air_density = 1.225 # air density in kg/m3; consant for now,
+        air_density = 1.2 # air density in kg/m3; consant for now,
             # eventaully input from weather API
         v_wind = 0.0 # wind speed in km per hour; figure out component,
             # and also will come from weather API
-        fric_coeff = 0.01
+    
 
         # List of Bus Parameters for 40 foot bus
         # if self.mass_array is None:
         #     loaded_bus_mass = self.unloaded_bus_mass # Mass of bus in kg
         # else:
-        loaded_bus_mass = route_df.mass.values
-
+        
         width = 2.6 # in m
         height = 3.3 # in m
         bus_front_area = width * height
-        drag_coeff = 0.34 # drag coefficient estimate from paper (???)
-        rw = 0.28575 # radius of wheel in m
-
-
-        # Calculate the gravitational force
-        grav_force = -(
-            loaded_bus_mass * gravi_accel * np.sin(grad_angle)
-            )
-
-        # Calculate the rolling friction
-        roll_fric = -(
-            fric_coeff * loaded_bus_mass * gravi_accel * np.cos(grad_angle)
-            )
+        drag_coeff = 0.6
+        #rw = 0.5 # radius of wheel in m
+        factor = 1.1
+    
 
         # Calculate the aerodynamic drag
-        aero_drag = -(
+        aero_drag = (
             drag_coeff
             *
             bus_front_area
             *
             (air_density/2)
             *
-            (vels-v_wind)
+            (vels-v_wind)**2
             )
 
         # Calculate the inertial force
-        inertia = loaded_bus_mass * acce
+        inertia = factor*loaded_bus_mass * acce
 
-        return (grav_force, roll_fric, aero_drag, inertia)
+        return (aero_drag, inertia)
 
 
     def _calculate_batt_power_exert(self, route_df):
+
+        eff_motor = 0.916
+        eff_inv = 0.971
+        regen = 0.6
+        eff_aux = 0.89
 
         f_resist = (
             route_df.grav_force.values
@@ -509,22 +429,66 @@ class RouteTrajectory():
             route_df.aero_drag.values
             )
 
-        f_traction = route_df.inertia.values - f_resist
+        f_traction = route_df.inertia.values + f_resist
 
         velocity = route_df.velocity.values
+        Pout_max = self.charging_power_max
 
         # calculate raw power before capping charging ability of bus
-        batt_power_exert = (f_traction * velocity) + self.aux
-        self.raw_batt_power_exert = np.copy(batt_power_exert)
+        p_traction = f_traction * velocity
 
-        for i in range(len(batt_power_exert)):
-            if batt_power_exert[i] < -self.charging_power_max:
-                batt_power_exert[i] = -self.charging_power_max
+        for i in range(len(p_traction)):
+            if p_traction[i] < -self.charging_power_max:
+                p_traction[i] = -self.charging_power_max
 
-            elif batt_power_exert[i] > self.charging_power_max:
-                batt_power_exert[i] = self.charging_power_max
+            elif p_traction[i] > self.charging_power_max:
+                route_df.acceleration[i] = 0
+                route_df.velocity[i] = route_df.velocity[i-1]
+                route_df.delta_times[i] = route_df.delta_times[i-1]
+                loaded_bus_mass = route_df.mass[i]
 
-        return batt_power_exert
+                (
+                route_df.aero_drag[i],
+                route_df.inertia[i]
+                ) = self.calculate_forces(loaded_bus_mass, route_df.acceleration[i], route_df.velocity[i])
+
+                f_resist[i] = route_df.grav_force[i] + route_df.roll_fric[i] + route_df.aero_drag[i]
+                f_traction[i] = route_df.inertia[i] + f_resist[i]
+
+                p_traction[i] = f_traction[i] * route_df.velocity[i]
+
+                while p_traction[i] > self.charging_power_max:
+                    route_df.acceleration[i] = self.a_neg
+                    route_df.velocity[i] = np.sqrt(-2*10.972265*self.a_neg)
+                    route_df.delta_times[i] = 10.972265/route_df.velocity[i]
+                    loaded_bus_mass = route_df.mass[i]
+
+                    (
+                    route_df.aero_drag[i],
+                    route_df.inertia[i]
+                    ) = self.calculate_forces(loaded_bus_mass, route_df.acceleration[i], route_df.velocity[i])
+
+                    f_resist[i] = route_df.grav_force[i] + route_df.roll_fric[i] + route_df.aero_drag[i]
+                    f_traction[i] = route_df.inertia[i] + f_resist[i]
+
+                    p_traction[i] = f_traction[i] * route_df.velocity[i]
+
+                else:
+                    continue
+
+                 #p_traction[i] = self.charging_power_max
+
+        P_ESS = np.zeros(len(p_traction))
+
+        for i in range(len(p_traction)):
+            if f_traction[i] >= 0:
+                P_ESS[i] = (p_traction[i]/(eff_motor*eff_inv)) + (self.aux/eff_aux)
+            else:
+                P_ESS[i] = (regen*eff_motor*eff_inv*p_traction[i]) + (self.aux/eff_aux)
+            
+        #self.raw_batt_power_exert = np.copy(P_ESS)
+
+        return P_ESS
 
 
     def _add_power_to_df(self, route_df):
@@ -549,4 +513,6 @@ class RouteTrajectory():
 
         energy = np.sum(power/1000 * delta_t/3600)
 
-        return energy
+        time_on_route = np.append(0, np.cumsum(delta_t))
+
+        return energy, time_on_route 
