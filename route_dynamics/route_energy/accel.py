@@ -28,12 +28,18 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
     for i in range(1, len(data)):
         data['dist. (m)'][i] = ((data['vel. (m/s)'][i] + data['vel. (m/s)'][i-1])/2*1) + data['dist. (m)'][i-1]
 
+    
+    data['dist.(km)'] = data['dist. (m)']/1000
+    data['dist. (ft)'] = data['dist. (m)']*3.28
+
     #Create new dataframe where dist. is the indep var
 
     data2 = pd.DataFrame({'dist. (ft)': np.arange(0, 1260, 36)})
-    data2['dist. (m)'] = data2['dist. (ft)']/3.28
+    data2['dist. (m)'] = data2['dist. (ft)']/3.281
 
     data2['vel. (m/s)'] = np.zeros(len(data2.index))
+
+    data2['vel. (km/hr)'] = np.zeros(len(data2.index))
 
     data2['vel. (mph)'] = np.zeros(len(data2.index))
 
@@ -41,25 +47,15 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
 
     data2['time (s)'] = np.zeros(len(data2.index))
 
-    z = data2['dist. (m)'].iloc[2]
-    params = data.iloc[(data['dist. (m)']-z).abs().argsort()[:1]]
-    row = params.index.values
-
-    #linear interpolation
-    vel = ((data['vel. (m/s)'][row].values - data['vel. (m/s)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['vel. (m/s)'][row-1].values
-
-
-    accel = ((data['accel. (m/s^2)'][row].values - data['accel. (m/s^2)'][row-1].values)/(data['dist. (m)'][row].values - data['dist. (m)'][row-1].values) * (z/3.28 - data['dist. (m)'][row-1].values)) + data['accel. (m/s^2)'][row-1].values
-
     for i in range(1, len(data2)):
 
-        z = data2['dist. (m)'].iloc[i]
-        params = data.iloc[(data['dist. (m)']-z).abs().argsort()[:1]]
+        z = data2['dist. (ft)'].iloc[i]
+        params = data.iloc[(data['dist. (ft)']-z).abs().argsort()[:1]]
         row = params.index.values
 
 
         #Interpolate
-        if params['dist. (m)'].values < z:
+        if params['dist. (ft)'].values < z:
             vel = ((data['vel. (m/s)'][row+1].values - data['vel. (m/s)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['vel. (m/s)'][row].values
             accel = ((data['accel. (m/s^2)'][row+1].values - data['accel. (m/s^2)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['accel. (m/s^2)'][row].values
             time = ((data['time (s)'][row+1].values - data['time (s)'][row].values)/(data['dist. (m)'][row +1].values - data['dist. (m)'][row].values) * (z/3.28 - data['dist. (m)'][row].values)) + data['time (s)'][row].values
@@ -70,22 +66,14 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
         
     
         data2['vel. (m/s)'].iloc[i] = vel
+        data2['vel. (km/hr)'].iloc[i] = vel * 3.6
         data2['vel. (mph)'].iloc[i] = vel*2.2
         data2['accel. (m/s^2)'].iloc[i] = accel
         data2['time (s)'].iloc[i] = time
 
-    # Define cutoff distance for acceleration and deceleration
-    a_avg = data2['accel. (m/s^2)'].mean()
-    a_plt = data2['accel. (m/s^2)'].iloc[len(data2)-1]
-    x_a = route_df['speed_limit'].iloc[i]**2. / (2*a_avg)
-    x_d = route_df['speed_limit'].iloc[i]**2. / (2*a_neg)
-
     # Distance of accel profile
 
-    x_p = data2['dist. (m)'].iloc[34]
-
-    x_ns = np.zeros(len(route_df.index)) #next stops
-    x_ls = np.zeros(len(route_df.index)) # prev. stops
+    x_p = data2['dist. (m)'].iloc[-1]
 
     x_ns = np.zeros(len(route_df.index)) #next stops
     x_ls = np.zeros(len(route_df.index)) # prev. stops
@@ -103,7 +91,7 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
             # next stop.
             for j in range(i+1, len(x_ns)):
                 # add distance to next point to 'x_ns'
-                x_ns[i] += 10.973 
+                x_ns[i] += 10.972265 
                 if route_df.at[j, 'is_stop']:
                     break # done calulating 'x_ns' at this point
                 # elif not bus stop: move to next point, add distance
@@ -117,16 +105,16 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
                 # because the first point has no backward difference.
                 if route_df.at[j, 'is_stop']:
                     break # done calulating x_ls at this point
-                x_ls[i] += 10.973
+                x_ls[i] += 10.972265
 
     v = np.zeros(len(route_df.index)) #array for vel.
     a = np.zeros(len(route_df.index)) #array for accel.
 
     count = 0
 
-    v_lim = route_df['speed_limit'].iloc[i]
-
     for i in range(len(x_ns)):
+        x_d = route_df['speed_limit'].iloc[i]**2. / (2*a_neg)
+        v_lim = route_df['speed_limit'].iloc[i]
 
         if count > i:
             continue
@@ -140,41 +128,10 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
                 and
                 not route_df.at[i, 'is_stop']
                 ):
-                
-                if x_ns[i] < x_ls[i]:
 
-                    a[i] = a_neg
-                    v[i] = np.sqrt(-2*x_ns[i]*a_neg)
-                    count += 1
-                    
-                else:
-                    for j in range(len(data2)):
-
-                        if count < len(x_ns):
-
-                            if v[count-1] < v_lim:
-                                a[count] = data2['accel. (m/s^2)'].iloc[j]
-                                v[count] = data2['vel. (m/s)'].iloc[j]
-                                count+=1
-
-                            elif v[count-1]>v_lim:
-
-                                while x_ns[count]>abs(x_d):
-
-                                    a[count] = 0
-                                    v[count] = v_lim
-
-                                    count+=1
-
-                                else:
-                                    continue
-
-                            else:
-                                continue
-
-                        else:
-                            break
-
+                a[i] = a_neg
+                v[i] = np.sqrt(-2*x_ns[i]*a_neg)
+                count += 1
 
             #Case 2
 
@@ -193,7 +150,7 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
                     count += 1
 
                 elif v[i-1]>v_lim:
-                            
+
                     while x_ns[count]>abs(x_d):
 
                         a[count] = 0
@@ -207,7 +164,7 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
                 else:
                     continue
 
-                        
+
 
             #Case 3
 
@@ -224,22 +181,30 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
                     if count < len(x_ns):
 
                         if v[count-1] < v_lim:
-                            a[count] = data2['accel. (m/s^2)'].iloc[j]
-                            v[count] = data2['vel. (m/s)'].iloc[j]
-                            count+=1
 
-                        elif v[count-1]>v_lim:
-                            
+                            while x_ns[count]>abs(x_d) and j<len(data2) and v[count-1] < v_lim:
+                                a[count] = data2['accel. (m/s^2)'].iloc[j]
+                                v[count] = data2['vel. (m/s)'].iloc[j]
+                                j+=1
+                                count+=1
+
+                            else:
+                                continue
+
+
+
+                        elif v[count-1]>=v_lim:
+
                             while x_ns[count]>abs(x_d):
-                    
+
                                 a[count] = 0
                                 v[count] = v_lim
 
                                 count+=1
-                                
+
                             else:
                                 continue
-                                
+
                         else:
                             continue
 
@@ -251,7 +216,7 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
 
                 count += 1
 
-    back_diff_delta_x = np.full(len(route_df), 10.973)
+    back_diff_delta_x = np.full(len(route_df), 10.9728)
 
 
     segment_avg_velocities = (
@@ -267,14 +232,16 @@ def accel_dynamics(route_df, a_prof, a_pos, a_neg):
         if route_df.at[i, 'is_bus_stop']:
             delta_times[i]+=30 #make variable later
 
-        if route_df.at[i, 'is_signal']:
+        elif route_df.at[i, 'is_signal']:
             delta_times[i]+=30 #make variable later
         else:
             pass
 
-    time_on_route = np.append(0, np.cumsum(delta_times[1:]))
+    #time_on_route = np.append(0, np.cumsum(delta_times[1:]))
 
-    t = time_on_route
+    #t = time_on_route
+
+    
 
 
-    return a, v, x_ls, x_ns, t, delta_times
+    return a, v, x_ls, x_ns, delta_times
