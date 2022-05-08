@@ -1,24 +1,7 @@
 # Route Dynamics [![Build Status](https://travis-ci.com/metromojo/Route_Dynamics.svg?branch=master)](https://travis-ci.com/metromojo/Route_Dynamics)
 
-![alt text][logo]
-
-[logo]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/logo.JPG
-
-`route_dynamics` is a python package created to estimate the energy demand of King County Metro bus routes.
-The package implements a simple dynamical model for the bus moving along realistic elevation profiles gathered from LIDAR data. The modular nature of the packege facilitates exoerimentation with different estimations of:
-
-* bus speed : Current implementation assumes constant acceleration away / towards bus stops, where the bus speed is 0. Between bus stops far enough apart, the bus reaches a specified speed limit.
-
-* bus stop location : Location of bus stops prescribes the bus speed estimation.
-
-* passenger load : can tripple the bus mass, and therefore drastically effects energy demand.  
-
-
-### Quick Pitch
-
-`route_dynamics` was (and continues to be) developed in partnership with King County metro to resolve inefficiencies in their hybrid electric bus fleet through predictive modeling.
-Although the now electrified bus fleet is 20% more efficient than the old diesel busses, this gain in air quality, sound pollution, and environmental impact is seriously diminished by the fact that replacing batteries is expensive and currently unpredictable.
-We are working to plug this efficient leak by building an open-source python package to predict battery degradation along specific King Country Metro hybrid bus routes using publicly available geographic data and ridership data from KCM. These data are fed into a simple dynamical model for the bus trajectory used to compute the time integrated power output of the bus and procide a tool for both cost efficient matinence schedualing and energy efficient route design and optimization.
+`route_dynamics` is a python package created to estimate the load and energy demand for battery-electric bus routes. 
+The package implements a simple dynamical model for the bus moving along realistic elevation profiles gathered from LIDAR data, along with speed limit information, bus stop location, and passenger load. 
 
 ### Use Cases
 
@@ -141,13 +124,5 @@ Green bar indicates maximum loading and unloading power for battery modules
 
 [rank]: https://github.com/metromojo/Route_Dynamics/blob/master/examples/README_results/ranking_example.png
 
-#### Example notebook video
-Check out a short video that runs through the package functions in the example notebook and shows the corresponding results
-[here](https://drive.google.com/open?id=1ZpiIEzNWV0T_pzcjw9jkn3GkSxMLdkwo).
 
 
-
-### Acknowledements
-
-We would like to thank Dr. David Beck, Chad Curtis, and all DIRECT 2019 TA's for their
-instruction, guidance, and support.
