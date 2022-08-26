@@ -39,7 +39,7 @@ Thanks to modular design, all of the above components can be specified manually 
 
 ![alt text][flowchart]
 
-[flowchart]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/flowchart_spring.png
+[flowchart]: https://github.com/metromojo/Route_Dynamics/blob/master/Documentation/FlowChart_2020.PNG
 
 
 
@@ -82,11 +82,6 @@ machine. The raster file used for the example (seattle_dtm.tif) can be found
 
 ### Example Outputs
 ___
-#### Elevation and Road Grade Profiles:
-Route 45
-![elevation]
-
-[elevation]: https://github.com/metromojo/Route_Dynamics/blob/master/examples/README_results/route45_profile.png
 
 #### Interactive Map:
 Route 45
