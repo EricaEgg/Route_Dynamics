@@ -24,26 +24,18 @@ The foundation of `route_dynamics` is a `RouteTrajectory` object, that holds rou
 * **Modular integration of bus speed model** will allow for continued development towards parameter free prediction.
 The package is currently equiped with a "speed up, speed limt, slow down" model, which assumes,
 
-    1) the bus stops as all declared bus stops,
+    1) the bus stops as all, every other, or every third stop (as set by user)
 
-    2) the bus accelerates with constant acceleration away from bus stops and deccelerates at the same rate towards oncoming stops,
+    2) the bus accelerates from a stop following a given acceleration profile, then accelerates constantly until the speed limit is reached. It then decelerates at a constant value. 
 
     3) the bus travels at the speed limit when between stops far enough apart to fascilitate acceleration and deceleration.
 
-* **Visualize Subpackage**: All routes can be displayed on interactive maps with elevation in color.
 
 Thanks to modular design, all of the above components can be specified manually to fascilitate optimization of route design and energy demand research.
 
 
 ### Work Flow
 
-<!-- !!! UPDATE !!! -->
-
-The storage capacity of any battery module decays with the battery's power output, which can be predicted from the simple force balence on a bus moving along it's route. This dynamical model is contained in the module `route_dynamics/route_elevation/long_dynam_model`, and use is demonstrated in the jupyter notebook `examples/use_example__longi_dynam_model.ipynb`.
-
-The flexibility of model for setting the passenger load per bus stop is demonstrated the jupyter notebook `examples/use_example__loaded_bus_mass_per_stop.ipynb`.
-
-Total package structure and function is illustrated in notebook `examples/spring_quarter_example.ipynb`.
 
 ![alt text][flowchart]
 
